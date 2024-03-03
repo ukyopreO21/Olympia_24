@@ -1,0 +1,628 @@
+<!DOCTYPE html>
+<html lang="vn" spellcheck="false">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="./Others/icon.png">
+    </link>
+    <link rel="stylesheet" href="database.css">
+    <title>O24 - Cơ sở dữ liệu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+
+</head>
+
+<body>
+    <div id="header">
+        <label>Bộ đề thi: </label>
+        <select id="db">
+            <option value="1" selected>Database 1&nbsp;</option>
+            <option value="2">Database 2&nbsp;</option>
+            <option value="3">Database 3&nbsp;</option>
+            <option value="4">Database 4&nbsp;</option>
+        </select>
+        <button onclick="chooseDb()">Chọn database</button>
+        <button id="updateData" onclick="updateData()">CẬP NHẬT DỮ LIỆU</button><br>
+        <form id="upload-form" action="/database" method="post" enctype="multipart/form-data">
+            <input type="file" name="file">
+            <input type="submit" value="Nạp đề thi">
+        </form>
+        <button name="1" onclick="openRound(this)">KHỞI ĐỘNG</button>
+        <button name="2" onclick="openRound(this)">VCNV</button>
+        <button name="3" onclick="openRound(this)">TĂNG TỐC</button>
+        <button name="4" onclick="openRound(this)">VỀ ĐÍCH</button>
+        <button name="5" onclick="openRound(this)">CÂU HỎI PHỤ</button>
+    </div>
+    <div id="content">
+        <div id="main">
+            <div id="start" class="round">
+                <span class="Title">Thí sinh 1</span>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <span class="Title">Thí sinh 2</span>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <span class="Title">Thí sinh 3</span>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <span class="Title">Thí sinh 4</span>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <span class="Title">Lượt chung</span>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <textarea placeholder="Lĩnh vực" class="STR_subject"></textarea>
+                    <textarea placeholder="Câu hỏi" class="STR_question"></textarea>
+                    <textarea placeholder="Đáp án" class="STR_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="STR_note"></textarea>
+                    <textarea placeholder="Media" class="STR_media"></textarea>
+                </div>
+                <br>
+            </div>
+            <div id="obstacle">
+                <div class="OBS_image">
+                    <div id="OBS_simulator">
+                        <input type="range" min="0" max="1" value="1" step="0.01" id="simulator">
+                        <label id="sliderValue">Độ trong suốt mô phỏng tấm che: 100%</label>
+                    </div><br>
+                    <div id="OBS_hiders">
+                        <img class="OBS_hider" id="OBS_hider1" src="./Obstacle/Hider/Obstacles_Hider1.png">
+                        <img class="OBS_hider" id="OBS_hider2" src="./Obstacle/Hider/Obstacles_Hider2.png">
+                        <img class="OBS_hider" id="OBS_hider3" src="./Obstacle/Hider/Obstacles_Hider3.png">
+                        <img class="OBS_hider" id="OBS_hider4" src="./Obstacle/Hider/Obstacles_Hider4.png">
+                        <img class="OBS_hider" id="OBS_hider5" src="./Obstacle/Hider/Obstacles_Hider5.png">
+                        <img id="OBS_image"></img>
+                    </div>
+                    <div id="OBS_imageSetting">
+                        <input placeholder="Đường dẫn hình ảnh" id="OBS_imageUrl">
+                        <button onclick="updateImage()">MỞ HÌNH ẢNH</button>
+                    </div>
+                </div>
+                <div class="OBS_rows">
+                    <input id="OBS_CNV" placeholder="Chướng ngại vật"><br><br>
+                    <div class="OBS_row">
+                        <span>Hàng ngang 1:</span>
+                        <textarea placeholder="Câu hỏi" class="OBS_question"></textarea>
+                        <textarea placeholder="Đáp án" class="OBS_answer"></textarea>
+                        <textarea placeholder="Ghi chú" class="OBS_note"></textarea>
+                        <textarea placeholder="Media" class="OBS_media"></textarea>
+                    </div>
+                    <div class="OBS_row">
+                        <span>Hàng ngang 2:</span>
+                        <textarea placeholder="Câu hỏi" class="OBS_question"></textarea>
+                        <textarea placeholder="Đáp án" class="OBS_answer"></textarea>
+                        <textarea placeholder="Ghi chú" class="OBS_note"></textarea>
+                        <textarea placeholder="Media" class="OBS_media"></textarea>
+                    </div>
+                    <div class="OBS_row">
+                        <span>Hàng ngang 3:</span>
+                        <textarea placeholder="Câu hỏi" class="OBS_question"></textarea>
+                        <textarea placeholder="Đáp án" class="OBS_answer"></textarea>
+                        <textarea placeholder="Ghi chú" class="OBS_note"></textarea>
+                        <textarea placeholder="Media" class="OBS_media"></textarea>
+                    </div>
+                    <div class="OBS_row">
+                        <span>Hàng ngang 4:</span>
+                        <textarea placeholder="Câu hỏi" class="OBS_question"></textarea>
+                        <textarea placeholder="Đáp án" class="OBS_answer"></textarea>
+                        <textarea placeholder="Ghi chú" class="OBS_note"></textarea>
+                        <textarea placeholder="Media" class="OBS_media"></textarea>
+                    </div>
+                    <div class="OBS_row">
+                        <span>Ô trung tâm:</span>
+                        <textarea placeholder="Câu hỏi" class="OBS_question"></textarea>
+                        <textarea placeholder="Đáp án" class="OBS_answer"></textarea>
+                        <textarea placeholder="Ghi chú" class="OBS_note"></textarea>
+                        <textarea placeholder="Media" class="OBS_media"></textarea>
+                    </div>
+                </div>
+                <!--<div class="OBS_orders">
+                    <h3>VỊ TRÍ BẮT ĐẦU HÀNG NGANG</h3>
+                    <div class="OBS_order OBS_div1">
+                        <span>1</span>
+                        <input id="OBS_order1">
+                        <label id="OBS_check1">KHÔNG HỢP LỆ</label>
+                    </div>
+                    <div class="OBS_order OBS_div2">
+                        <span>2</span>
+                        <input id="OBS_order2">
+                        <label id="OBS_check2">KHÔNG HỢP LỆ</label>
+                    </div>
+                    <div class="OBS_order OBS_div3">
+                        <span>3</span>
+                        <input id="OBS_order3">
+                        <label id="OBS_check3">KHÔNG HỢP LỆ</label>
+                    </div>
+                    <div class="OBS_order OBS_div4">
+                        <span>4</span>
+                        <input id="OBS_order4">
+                        <label id="OBS_check4">KHÔNG HỢP LỆ</label>
+                    </div>
+                    <h4>Nếu muốn hệ thống tự động căn giữa, hãy để trống</h4>
+                </div>-->
+            </div>
+            <div id="acceleration" class="round">
+                <div class="STR_row">
+                    <label class="ACC_STT">1. </label>
+                    <textarea placeholder="Câu hỏi" class="ACC_question"></textarea>
+                    <textarea placeholder="Đáp án" class="ACC_answer"></textarea>
+                    <textarea placeholder="Type" class="ACC_mediatype"></textarea>
+                    <textarea placeholder="Ghi chú" class="ACC_note"></textarea>
+                    <textarea placeholder="Media" class="ACC_media"></textarea>
+                    <textarea placeholder="Answer Image" class="ACC_answerImage"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="ACC_STT">2. </label>
+                    <textarea placeholder="Câu hỏi" class="ACC_question"></textarea>
+                    <textarea placeholder="Đáp án" class="ACC_answer"></textarea>
+                    <textarea placeholder="Type" class="ACC_mediatype"></textarea>
+                    <textarea placeholder="Ghi chú" class="ACC_note"></textarea>
+                    <textarea placeholder="Media" class="ACC_media"></textarea>
+                    <textarea placeholder="Answer Image" class="ACC_answerImage"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="ACC_STT">3. </label>
+                    <textarea placeholder="Câu hỏi" class="ACC_question"></textarea>
+                    <textarea placeholder="Đáp án" class="ACC_answer"></textarea>
+                    <textarea placeholder="Type" class="ACC_mediatype"></textarea>
+                    <textarea placeholder="Ghi chú" class="ACC_note"></textarea>
+                    <textarea placeholder="Media" class="ACC_media"></textarea>
+                    <textarea placeholder="Answer Image" class="ACC_answerImage"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="ACC_STT">4. </label>
+                    <textarea placeholder="Câu hỏi" class="ACC_question"></textarea>
+                    <textarea placeholder="Đáp án" class="ACC_answer"></textarea>
+                    <textarea placeholder="Type" class="ACC_mediatype"></textarea>
+                    <textarea placeholder="Ghi chú" class="ACC_note"></textarea>
+                    <textarea placeholder="Media" class="ACC_media"></textarea>
+                    <textarea placeholder="Answer Image" class="ACC_answerImage"></textarea>
+                </div>
+            </div>
+            <div id="finish" class="round">
+                <span class="Title">Thí sinh 1</span>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 1</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 2</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 3</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 1</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 2</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 3</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <span class="Title">Thí sinh 2</span>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 1</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 2</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 3</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 1</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 2</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 3</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <span class="Title">Thí sinh 3</span>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 1</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 2</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 3</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 1</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 2</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 3</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <span class="Title">Thí sinh 4</span>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 1</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 2</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">20 điểm - Câu 3</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 1</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 2</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="FIN_STT">30 điểm - Câu 3</label>
+                    <textarea placeholder="Câu hỏi" class="FIN_question"></textarea>
+                    <textarea placeholder="Đáp án" class="FIN_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
+                    <textarea placeholder="Media" class="FIN_media"></textarea>
+                </div>
+            </div>
+            <div id="subFinish" class="round">
+                <div class="STR_row">
+                    <label class="SFI_STT">1.</label>
+                    <textarea placeholder="Câu hỏi" class="SFI_question"></textarea>
+                    <textarea placeholder="Đáp án" class="SFI_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="SFI_note"></textarea>
+                    <textarea placeholder="Media" class="SFI_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="SFI_STT">2.</label>
+                    <textarea placeholder="Câu hỏi" class="SFI_question"></textarea>
+                    <textarea placeholder="Đáp án" class="SFI_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="SFI_note"></textarea>
+                    <textarea placeholder="Media" class="SFI_media"></textarea>
+                </div>
+                <div class="STR_row">
+                    <label class="SFI_STT">3.</label>
+                    <textarea placeholder="Câu hỏi" class="SFI_question"></textarea>
+                    <textarea placeholder="Đáp án" class="SFI_answer"></textarea>
+                    <textarea placeholder="Ghi chú" class="SFI_note"></textarea>
+                    <textarea placeholder="Media" class="SFI_media"></textarea>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div id="footer">
+        <label id="currentVersion"></label>
+    </div>
+
+</body>
+<script src="database.js"></script>
+
+</html>

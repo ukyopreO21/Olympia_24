@@ -1,0 +1,339 @@
+<!DOCTYPE html>
+<html id="main">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LIVE - ĐTT2024</title>
+    <link rel="icon" type="image/x-icon" href="./Others/icon.png">
+    </link>
+    <link rel="stylesheet" href="live.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <video id="intro" class="intro" width="100%">
+        <source type="video/mp4">
+    </video>
+
+    <!--<img id="start" width="100%"></img>-->
+
+    <div id="ContestUI">
+        <span id="StartUI">
+            <div id="STR_Shelf"></div>
+            <span id="STR_MainUI">
+                <span id="STR_pointBar">
+                    <span id="STR_Player1" class="STR_Player">
+                        <label class="STR_Name" id="STR_Name1"></label>
+                        <label class="STR_Point" id="STR_Point1"></label>
+                        <div class="STR_playerShelf"></div>
+                    </span>
+                    <span id="STR_Player2" class="STR_Player">
+                        <label class="STR_Name" id="STR_Name2"></label>
+                        <label class="STR_Point" id="STR_Point2"></label>
+                        <div class="STR_playerShelf"></div>
+                    </span>
+                    <span id="STR_Player3" class="STR_Player">
+                        <label class="STR_Name" id="STR_Name3"></label>
+                        <label class="STR_Point" id="STR_Point3"></label>
+                        <div class="STR_playerShelf"></div>
+                    </span>
+                    <span id="STR_Player4" class="STR_Player">
+                        <label class="STR_Name" id="STR_Name4"></label>
+                        <label class="STR_Point" id="STR_Point4"></label>
+                        <div class="STR_playerShelf"></div>
+                    </span>
+                </span>
+
+                <span id="STR_questionBox">
+                    <label id="STR_Question"></label>
+                    <label id="STR_Time"></label>
+                </span>
+
+                <span id="STR_Status"></span>
+                <div id="STR_statusShelf"></div>
+            </span>
+        </span>
+        <span id="ObstacleUI">
+            <!-- <span id="showRowAnswerAnimation">
+                <span id="1" class="main"></span>
+                <span id="2" class="name name1">
+                    <label id="name1"></label>
+                </span>
+                <span id="3" class="answer answer1">
+                    <label id="answer1"></label>
+                </span>
+                <span id="4" class="name name2">
+                    <label id="name2"></label>
+                </span>
+                <span id="5" class="answer answer2">
+                    <label id="answer2"></label>
+                </span>
+                <span id="6" class="name name3">
+                    <label id="name3"></label>
+                </span>
+                <span id="7" class="answer answer3">
+                    <label id="answer3"></label>
+                </span>
+                <span id="8" class="name name4">
+                    <label id="name4"></label>
+                </span>
+                <span id="9" class="answer answer4">
+                    <label id="answer4"></label>
+                </span>
+            </span>
+
+            <div id="OBS_MainUI">
+                <div class="OBS_Row" id="OBS_Row1">
+                    <div class="OBS_Order">1</div>
+                    <div class="OBS_Char" id="OBS_Char1.1"></div>
+                    <div class="OBS_Char" id="OBS_Char1.2"></div>
+                    <div class="OBS_Char" id="OBS_Char1.3"></div>
+                    <div class="OBS_Char" id="OBS_Char1.4"></div>
+                    <div class="OBS_Char" id="OBS_Char1.5"></div>
+                    <div class="OBS_Char" id="OBS_Char1.6"></div>
+                    <div class="OBS_Char" id="OBS_Char1.7"></div>
+                    <div class="OBS_Char" id="OBS_Char1.8"></div>
+                    <div class="OBS_Char" id="OBS_Char1.9"></div>
+                    <div class="OBS_Char" id="OBS_Char1.10"></div>
+                    <div class="OBS_Char" id="OBS_Char1.11"></div>
+                    <div class="OBS_Char" id="OBS_Char1.12"></div>
+                    <div class="OBS_Char" id="OBS_Char1.13"></div>
+                    <div class="OBS_Char" id="OBS_Char1.14"></div>
+                    <div class="OBS_Char" id="OBS_Char1.15"></div>
+                    <div class="OBS_Char" id="OBS_Char1.16"></div>
+                    <div class="OBS_Char" id="OBS_Char1.17"></div>
+                    <div class="OBS_Char" id="OBS_Char1.18"></div>
+                </div>
+                <div class="OBS_Row" id="OBS_Row2">
+                    <div class="OBS_Order">2</div>
+                    <div class="OBS_Char" id="OBS_Char2.1"></div>
+                    <div class="OBS_Char" id="OBS_Char2.2"></div>
+                    <div class="OBS_Char" id="OBS_Char2.3"></div>
+                    <div class="OBS_Char" id="OBS_Char2.4"></div>
+                    <div class="OBS_Char" id="OBS_Char2.5"></div>
+                    <div class="OBS_Char" id="OBS_Char2.6"></div>
+                    <div class="OBS_Char" id="OBS_Char2.7"></div>
+                    <div class="OBS_Char" id="OBS_Char2.8"></div>
+                    <div class="OBS_Char" id="OBS_Char2.9"></div>
+                    <div class="OBS_Char" id="OBS_Char2.10"></div>
+                    <div class="OBS_Char" id="OBS_Char2.11"></div>
+                    <div class="OBS_Char" id="OBS_Char2.12"></div>
+                    <div class="OBS_Char" id="OBS_Char2.13"></div>
+                    <div class="OBS_Char" id="OBS_Char2.14"></div>
+                    <div class="OBS_Char" id="OBS_Char2.15"></div>
+                    <div class="OBS_Char" id="OBS_Char2.16"></div>
+                    <div class="OBS_Char" id="OBS_Char2.17"></div>
+                    <div class="OBS_Char" id="OBS_Char2.18"></div>
+                </div>
+                <div class="OBS_Row" id="OBS_Row3">
+                    <div class="OBS_Order">3</div>
+                    <div class="OBS_Char" id="OBS_Char3.1"></div>
+                    <div class="OBS_Char" id="OBS_Char3.2"></div>
+                    <div class="OBS_Char" id="OBS_Char3.3"></div>
+                    <div class="OBS_Char" id="OBS_Char3.4"></div>
+                    <div class="OBS_Char" id="OBS_Char3.5"></div>
+                    <div class="OBS_Char" id="OBS_Char3.6"></div>
+                    <div class="OBS_Char" id="OBS_Char3.7"></div>
+                    <div class="OBS_Char" id="OBS_Char3.8"></div>
+                    <div class="OBS_Char" id="OBS_Char3.9"></div>
+                    <div class="OBS_Char" id="OBS_Char3.10"></div>
+                    <div class="OBS_Char" id="OBS_Char3.11"></div>
+                    <div class="OBS_Char" id="OBS_Char3.12"></div>
+                    <div class="OBS_Char" id="OBS_Char3.13"></div>
+                    <div class="OBS_Char" id="OBS_Char3.14"></div>
+                    <div class="OBS_Char" id="OBS_Char3.15"></div>
+                    <div class="OBS_Char" id="OBS_Char3.16"></div>
+                    <div class="OBS_Char" id="OBS_Char3.17"></div>
+                    <div class="OBS_Char" id="OBS_Char3.18"></div>
+                </div>
+                <div class="OBS_Row" id="OBS_Row4">
+                    <div class="OBS_Order">4</div>
+                    <div class="OBS_Char" id="OBS_Char4.1"></div>
+                    <div class="OBS_Char" id="OBS_Char4.2"></div>
+                    <div class="OBS_Char" id="OBS_Char4.3"></div>
+                    <div class="OBS_Char" id="OBS_Char4.4"></div>
+                    <div class="OBS_Char" id="OBS_Char4.5"></div>
+                    <div class="OBS_Char" id="OBS_Char4.6"></div>
+                    <div class="OBS_Char" id="OBS_Char4.7"></div>
+                    <div class="OBS_Char" id="OBS_Char4.8"></div>
+                    <div class="OBS_Char" id="OBS_Char4.9"></div>
+                    <div class="OBS_Char" id="OBS_Char4.10"></div>
+                    <div class="OBS_Char" id="OBS_Char4.11"></div>
+                    <div class="OBS_Char" id="OBS_Char4.12"></div>
+                    <div class="OBS_Char" id="OBS_Char4.13"></div>
+                    <div class="OBS_Char" id="OBS_Char4.14"></div>
+                    <div class="OBS_Char" id="OBS_Char4.15"></div>
+                    <div class="OBS_Char" id="OBS_Char4.16"></div>
+                    <div class="OBS_Char" id="OBS_Char4.17"></div>
+                    <div class="OBS_Char" id="OBS_Char4.18"></div>
+                </div>
+            </div>
+            <div id="OBS_ImageUI">
+                <div id="OBS_Hider">
+                    <img id="OBS_Q1" src="./Obstacle/Hider/Obstacles_Hider1.png"></img>
+                    <img id="OBS_Q2" src="./Obstacle/Hider/Obstacles_Hider2.png"></img>
+                    <img id="OBS_Q3" src="./Obstacle/Hider/Obstacles_Hider3.png"></img>
+                    <img id="OBS_Q4" src="./Obstacle/Hider/Obstacles_Hider4.png"></img>
+                    <img id="OBS_Q5" src="./Obstacle/Hider/Obstacles_Hider5.png"></img>
+                </div>
+                <img id="OBS_Image" src=""></img>
+            </div> -->
+            <div id="OBS_printSignal">
+            </div>
+            <div id="OBS_Shelf"></div>
+            <div id="OBS_questionZone">
+                <div id="OBS_Circle" class="Circle"></div>
+                <div id="OBS_Line" class="Line"></div>
+                <div id="OBS_Question"></div>
+            </div>
+        </span>
+        <span id="AccelerationUI">
+            <!-- <span id="ACC_questionZone">
+                <span id="ACC_questionBar">
+                    <label id="ACC_Question"></label>
+                </span>
+                <span id="ACC_mediaBox">
+                    <img id="ACC_imageMedia" class="ACC_Media"></img>
+                    <video poster="none.png" id="ACC_videoMedia" class="ACC_Media" width="100%">
+                        <source type="video/mp4">
+                    </video>
+                    <div id="ACC_Circle" class="Circle"></div>
+                    <div id="ACC_Line" class="Line"></div>
+                </span>
+                <div id="ACC_Shelf"></div>
+            </span>
+            <span id="ACC_showAnswerAnimation">
+                <div id="test"></div>
+                <div id="ACC_mainLine"></div>
+                <div id="ACC_Player1" class="ACC_Player">
+                    <span id="ACC_ithCircle1" class="ACC_ithCircle">1</span>
+                    <span id="ACC_Time1" class="ACC_Time">
+                        <label id="ACC_timeLabel1" class="ACC_timeLabel"></label>
+                    </span>
+                    <span id="ACC_Name1" class="ACC_Name">
+                        <label id="ACC_nameLabel1" class="ACC_nameLabel"></label>
+                    </span>
+                    <span id="ACC_Answer1" class="ACC_Answer"></span>
+                </div>
+                <div id="ACC_Player2" class="ACC_Player">
+                    <span id="ACC_ithCircle2" class="ACC_ithCircle">2</span>
+                    <span id="ACC_Time2" class="ACC_Time">
+                        <label id="ACC_timeLabel2" class="ACC_timeLabel"></label>
+                    </span>
+                    <span id="ACC_Name2" class="ACC_Name">
+                        <label id="ACC_nameLabel2" class="ACC_nameLabel"></label>
+                    </span>
+                    <span id="ACC_Answer2" class="ACC_Answer"></span>
+                </div>
+                <div id="ACC_Player3" class="ACC_Player">
+                    <span id="ACC_ithCircle3" class="ACC_ithCircle">3</span>
+                    <span id="ACC_Time3" class="ACC_Time">
+                        <label id="ACC_timeLabel3" class="ACC_timeLabel"></label>
+                    </span>
+                    <span id="ACC_Name3" class="ACC_Name">
+                        <label id="ACC_nameLabel3" class="ACC_nameLabel"></label>
+                    </span>
+                    <span id="ACC_Answer3" class="ACC_Answer"></span>
+                </div>
+                <div id="ACC_Player4" class="ACC_Player">
+                    <span id="ACC_ithCircle4" class="ACC_ithCircle">4</span>
+                    <span id="ACC_Time4" class="ACC_Time">
+                        <label id="ACC_timeLabel4" class="ACC_timeLabel"></label>
+                    </span>
+                    <span id="ACC_Name4" class="ACC_Name">
+                        <label id="ACC_nameLabel4" class="ACC_nameLabel"></label>
+                    </span>
+                    <span id="ACC_Answer4" class="ACC_Answer"></span>
+                </div>
+            </span> -->
+        </span>
+        <span id="FinishUI">
+            <span id="FIN_packAnimation">
+                <span id="FIN_packShelf"></span>
+                <span id="FIN_Pack20" class="FIN_Pack">
+                    <span class="FIN_checkBox">
+                        <span id="FIN_1.20" class="FIN_1"></span>
+                        <span id="FIN_2.20" class="FIN_2"></span>
+                        <span id="FIN_3.20" class="FIN_3"></span>
+                    </span>
+                    <span class="FIN_packPoint">20</span>
+                </span>
+                <span id="FIN_Pack30" class="FIN_Pack">
+                    <span class="FIN_checkBox">
+                        <span id="FIN_1.30" class="FIN_1"></span>
+                        <span id="FIN_2.30" class="FIN_2"></span>
+                        <span id="FIN_3.30" class="FIN_3"></span>
+                    </span>
+                    <span class="FIN_packPoint">30</span>
+                </span>
+            </span>
+
+            <div id="FIN_Shelf"></div>
+
+            <span id="FIN_MainUI">
+                <span id="FIN_pointBar">
+                    <span id="FIN_Point1" class="FIN_Point">
+                        <label id="FIN_Data1"></label>
+                    </span>
+                    <span id="FIN_Point2" class="FIN_Point">
+                        <label id="FIN_Data2"></label>
+                    </span>
+                    <span id="FIN_Point3" class="FIN_Point">
+                        <label id="FIN_Data3"></label>
+                    </span>
+                    <span id="FIN_Point4" class="FIN_Point">
+                        <label id="FIN_Data4"></label>
+                    </span>
+                </span>
+
+                <span id="FIN_questionBox">
+                    <label id="FIN_Question"></label>
+                    <div id="FIN_Circle" class="Circle"></div>
+                    <div id="FIN_Line" class="Line"></div>
+                    <div class="FIN_Star">
+                        <img id="FIN_Star" width="100%" height="auto" src=""></img>
+                    </div>
+                </span>
+
+                <span id="FIN_questionStatus">
+                    <span id="FIN_1" class="FIN_questionList"></span>
+                    <span id="FIN_2" class="FIN_questionList"></span>
+                    <span id="FIN_3" class="FIN_questionList"></span>
+                </span>
+
+                <span id="FIN_currentPoint"></span>
+            </span>
+        </span>
+        <span id="SubFinishUI">
+            <div id="SFI_Shelf"></div>
+            <span id="SFI_MainUI">
+                <span id="SFI_roundName">CÂU HỎI PHỤ</span>
+                <span id="SFI_playersTab">
+                </span>
+                <span id="SFI_questionBox">
+                    <div id="SFI_Circle" class="Circle"></div>
+                    <div id="SFI_Line" class=Line></div>
+                    <label id="SFI_Question"></label>
+                </span>
+            </span>
+        </span>
+    </div>
+
+    <div id="ResultUI">
+        <div id="Namebar" class="Namebar">
+            <label id="resultName"></label>
+        </div>
+        <div id="Pointbar" class="Pointbar">
+            <label id="resultPoint"></label>
+        </div>
+    </div>
+</body>
+<script src="live.js">
+</script>
+
+</html>

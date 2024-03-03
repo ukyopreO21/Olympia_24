@@ -1,0 +1,566 @@
+html {
+    font-family: 'Montserrat', sans-serif;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./Others/Background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 100% 100%;
+    overflow: hidden; 
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 0.3vw;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background-color: #A80000;
+    border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: white;
+}
+
+#blurbg {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    right: 0%;
+    bottom: 0%;
+    background-color: rgb(0, 0, 0, 0.8);
+    z-index: 9;
+}
+
+#dbFrame, #Media {
+    border: calc(10vw/48) solid orange;
+    z-index: 10;
+    position: absolute;
+    top: 3%;
+    height: 94%;
+    left: 3%;
+    width: 94%;
+}
+
+#Media {
+    user-select: none;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("./Others/Background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 100% 100%;
+    overflow: hidden; 
+}
+
+#Media button {
+    margin-top: 1%;
+    margin-left: 0.5%;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.95vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 0.2vw solid #A80000;
+    cursor: pointer;
+    transition: border-color 0.5s ease;
+    box-sizing: border-box;
+    color: white;
+    height: 2.4vw;
+}
+
+#Media button:hover {
+    border-color: #f1a621;
+}
+
+.mediaTitle {
+    margin-left: 1%;
+    font-size: 1vw;
+    color: white;
+    font-weight: bold;
+}
+
+.mediaType {
+    margin-left: 1%;
+    margin-top: 1%;
+    font-size: 1.5vw;
+    color: orange;
+    font-weight: bolder;
+}
+
+select {
+    display: inline-block;
+    width: 25%;
+    font-family: 'Montserrat', sans-serif;
+    background: none;
+    border: calc(5vw/96) solid white;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    font-size: 0.8vw;
+}
+
+#rounds {
+    width: 40%;
+}
+
+#dbNumber {
+    width: 30%;
+}
+
+select option {
+    color: black;
+}
+
+#currentVersion {
+    position: fixed;
+    right: 0%;
+    bottom: 0%;
+    opacity: 0.5;
+    color: white;
+    font-size: 0.85vw;
+}
+
+/*Title*/
+.preMain div,
+#endH3,
+.inRound {
+    color: orange;
+    font-size: 1vw;
+    font-weight: bold;
+    margin: 2% 0;
+}
+
+.text {
+    display: inline-block;
+    height: 2vw;
+    font-size: 0.9vw;
+    color: white;
+    box-sizing: border-box;
+    padding: 0.5vh 0;
+}
+
+.button {
+    display: inline-block;
+    padding: 0.5vh 0.75vh;
+    height: 2vw;
+    font-size: 0.8vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 0.2vw solid #A80000;
+    color: white;
+    cursor: pointer;
+    transition: border-color 0.5s ease;
+    box-sizing: border-box;
+}
+
+.button:hover,
+#confirmPoint:hover {
+    border-color: #f1a621;
+}
+
+#TechnicalZone {
+    user-select: none;
+    position: absolute;
+    top: 2%;
+    left: 1%;
+    width: 30%;
+    bottom: 2%;
+    color: white;
+    border-right: calc(5vw/48) solid rgb(255, 255, 255, 0.3);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#TechnicalZone span {
+    margin: 1% 0;
+}
+
+.subject {
+    position: absolute;
+    left: 0.5vw;
+    top: 0.5vw;
+    font-size: 1vw;
+    font-weight: bold;
+    color: cyan;
+}
+
+#PlayerZone {
+    position: absolute;
+    top: 3%;
+    right: 1%;
+    left: 65%;
+    bottom: 73%;
+    color: white;
+    border: calc(5vw/48) dotted grey;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#PlayerZone .PlayerMain {
+    position: absolute;
+    left: 0.5vw;
+    right: 0.5vw;
+    top: 20%;
+    height: 60%;
+}
+
+#confirmPoint {
+    position: absolute;
+    bottom: 0.5vw;
+    right: 0.5vw;
+    font-family: Montserrat;
+    height: calc(100%/6);
+    font-size: 0.8vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 0.2vw solid #A80000;
+    color: white;
+    cursor: pointer;
+    transition: border-color 0.5s ease;
+    box-sizing: border-box;
+}
+
+.PlayerZone_Info {
+    position: absolute;
+    width: 100%;
+    height: 25%;
+    box-sizing: border-box;
+}
+
+.PlayerZone_Info1 {
+    top: 0%;
+}
+
+.PlayerZone_Info2 {
+    top: 25%
+}
+
+.PlayerZone_Info3 {
+    top: 50%;
+}
+
+.PlayerZone_Info4 {
+    top: 75%;
+}
+
+.playerName {
+    position: absolute;
+    height: 100%;
+    font-size: 0.95vw;
+    font-weight: bold;
+}
+
+.nameInput,
+.pointInput {
+    position: absolute;
+    background: transparent;
+    outline: none;
+    border: none;
+    border-bottom: calc(5vw/96) solid white;
+    transition: border-color 0.5s ease;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9vw;
+    height: 1.1vw;
+    color: white;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.nameInput {
+    left: 10%;
+    width: 70%;
+}
+
+.pointInput {
+    width: 10%;
+    right: 1%;
+}
+
+#AnswerZone {
+    position: absolute;
+    top: 30%;
+    right: 1%;
+    left: 65%;
+    bottom: 33%;
+    color: white;
+    border: calc(5vw/48) dotted grey;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#AnswerZone .table {
+    position: absolute;
+    top: 12.5%;
+    left: 0.5vw;
+    right: 0.5vw;
+    bottom: 0.5vw;
+}
+
+#AnswerZone table {
+    position: absolute;
+}
+
+table {
+    font-size: 0.9vw;
+    width: 100%;
+    height: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    color: #f1a621;
+}
+
+td,
+th {
+    padding: 0.15625vw;
+    text-align: center;
+    border: calc(5vw/96) dotted grey;
+}
+
+.STT {
+    width: 6%;
+}
+
+.ThiSinh {
+    width: 25%;
+}
+
+.ThoiGian {
+    width: 17%;
+}
+
+.Chon {
+    width: 10%;
+}
+
+#AnswerZone input {
+    width: 0.8vw;
+    height: 0.8vw;
+}
+
+#ChatZone {
+    position: absolute;
+    padding: 0.5vw;
+    top: 70%;
+    right: 1%;
+    left: 65%;
+    bottom: 3%;
+    color: white;
+    border: calc(5vw/48) dotted grey;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#chatbox {
+    position: absolute;
+    top: 15%;
+    left: 0.5vw;
+    right: 0.5vw;
+    bottom: calc(0.5vw + 11%);
+    border: calc(5vw/48) dotted grey;
+    font-size: 0.9vw;
+    line-height: 1.2;
+    overflow-y: auto;
+    line-height: 1.5;
+    padding: 1% 2%;
+}
+
+#chatInput {
+    position: absolute;
+    height: 10%;
+    bottom: 0.5vw;
+    left: 0.5vw;
+    right: 0.5vw;
+    background: rgb(0, 0, 0, 0.5);
+    outline: none;
+    border: calc(5vw/48) solid white;
+    color: white;
+    font-size: 0.8vw;
+    font-family: Montserrat;
+    transition: border-color ease 0.5s;
+}
+
+.chatInput:hover {
+    border-color: #A80000;
+}
+
+#StatusZone {
+    position: absolute;
+    top: 39%;
+    left: 33%;
+    right: 37%;
+    bottom: 3%;
+    color: white;
+    border: calc(5vw/48) dotted grey;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#QuestionZone {
+    position: absolute;
+    top: 2%;
+    left: 33%;
+    right: 37%;
+    height: 35%;
+}
+
+#question {
+    position: absolute;
+    top: 0%;
+    height: 60%;
+    width: 100%;
+}
+
+#question label {
+    position: absolute;
+    top: 0%;
+    height: 15%;
+    width: 100%;
+    display: flex;
+    align-items: end;
+    font-weight: bold;
+    font-size: 0.9vw;
+}
+
+#questionText {
+    position: absolute;
+    line-height: 1.5;
+    font-size: 1vw;
+    top: 17%;
+    bottom: 0%;
+    left: 0%;
+    right: 0%;
+    text-align: justify;
+    overflow-y: auto;
+    padding-right: 1%;
+    color: white;
+    border: calc(5vw/48) dotted rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#answer {
+    position: absolute;
+    bottom: 0%;
+    height: 40%;
+    width: 100%;
+}
+
+#answer label {
+    position: absolute;
+    top: 0%;
+    height: 22.5%;
+    width: 100%;
+    display: flex;
+    align-items: end;
+    font-weight: bold;
+    font-size: 0.9vw;
+}
+
+#answerText {
+    position: absolute;
+    bottom: 0%;
+    line-height: 1.5;
+    font-size: 1vw;
+    top: 24.5%;
+    left: 0%;
+    right: 0%;
+    text-align: justify;
+    overflow-y: auto;
+    padding-right: 1%;
+    color: white;
+    border: calc(5vw/48) dotted rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#OBS_ithRow,
+#STR_ithStart,
+#ACC_ithQuestion,
+#FIN_ithPlayer,
+#FIN_ithQuestion,
+#SFI_ithQuestion,
+#CB_chooseQuestion {
+    height: calc(25vw/24);
+    width: 5%;
+    background: transparent;
+    border: calc(5vw/96) solid white;
+    outline: none;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.8vw;
+    transition: border-color 0.5s ease;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: white;
+    text-align: center;
+}
+
+#OBS_ithRow:hover,
+#STR_ithStart:hover,
+#ACC_ithQuestion:hover,
+.nameInput:hover,
+.pointInput:hover,
+.nameInput:focus,
+.pointInput:focus,
+#FIN_ithPlayer:hover,
+#FIN_ithQuestion:hover,
+#SFI_ithQuestion:hover,
+#CB_chooseQuestion:hover {
+    border-color: #A80000;
+}
+
+#OBS_ithRow:focus,
+#STR_ithStart:focus,
+#ACC_ithQuestion:focus,
+#FIN_ithPlayer:focus,
+#FIN_ithQuestion:focus,
+#SFI_ithQuestion:focus,
+#CB_chooseQuestion:focus {
+    border-color: initial;
+}
+
+#OBS_Info {
+    position: absolute;
+    margin: 2%;
+    font-size: 1vw;
+    line-height: 2;
+}
+
+#FIN_chooseQuestionBoard {
+    position: absolute;
+    width: 75%;
+}
+
+#FIN_chooseQuestionBoard th,
+#FIN_chooseQuestionBoard td {
+    width: 6vw;
+    height: 2vw;
+    border: 2px #73f7ff solid;
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#blank button {
+    width: 100%;
+    height: 100%;
+    border: none;
+    background-color: transparent;
+    color: white;
+    cursor: pointer;
+    font-family: Montserrat;
+    font-size: 0.8vw;
+}
+
+#SFI_Players #SFI_1 {
+    border: 2px solid #f1a621;
+}
+
+#SFI_Players #SFI_2 {
+    border: 2px solid #f1a621;
+}
+
+#SFI_Players #SFI_3 {
+    border: 2px solid #f1a621;
+}
+
+#SFI_Players #SFI_4 {
+    border: 2px solid #f1a621;
+}

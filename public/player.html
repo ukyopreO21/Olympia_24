@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O24 - Phòng thi</title>
+    <link rel="icon" type="image/x-icon" href="./Others/icon.png">
+    </link>
+    <link rel="stylesheet" href="player.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <label id="currentVersion"></label>
+    <!--Giao diện phòng chat-->
+    <span id="ChatUI">
+        <div id="roundStatus">
+            <label style="color: white">Vòng thi hiện tại: </label>
+            <b><label id="roundName">CHƯA BẮT ĐẦU</label></b>
+        </div>
+        <div id="chatRoom">
+            <span id="chatBox">
+            </span>
+            <span id="userData">
+                <label class="Title"><span class="material-symbols-outlined">
+                        person
+                    </span><b>&nbsp;THÔNG TIN CỦA BẠN</b></label>
+                <label id="nameTag" style="color: white">Username: </label>
+                <input id="username" autocomplete="off" placeholder="Nhập tên bạn muốn hiển thị (chat only)">
+                <div id="yourStartPosition"></div>
+            </span>
+
+            <span id="pointTable">
+                <label class="Title"><span class="material-symbols-outlined">format_list_numbered</span><b>&nbsp;ĐIỂM
+                        SỐ HIỆN TẠI</b></label>
+                <span class="waitingRoom_player" id="waitingRoom_player1">
+                    <img class="avatar" src="./Others/avatar.png"></img>
+                    <span class="waitingRoom_name" id="waitingRoom_name1"></span>
+                    <span class="waitingRoom_point" id="waitingRoom_point1"></span>
+                </span>
+                <span class="waitingRoom_player" id="waitingRoom_player2">
+                    <img class="avatar" src="./Others/avatar.png"></img>
+                    <span class="waitingRoom_name" id="waitingRoom_name2"></span>
+                    <span class="waitingRoom_point" id="waitingRoom_point2"></span>
+                </span>
+                <span class="waitingRoom_player" id="waitingRoom_player3">
+                    <img class="avatar" src="./Others/avatar.png"></img>
+                    <span class="waitingRoom_name" id="waitingRoom_name3"></span>
+                    <span class="waitingRoom_point" id="waitingRoom_point3"></span>
+                </span>
+                <span class="waitingRoom_player" id="waitingRoom_player4">
+                    <img class="avatar" src="./Others/avatar.png"></img>
+                    <span class="waitingRoom_name" id="waitingRoom_name4"></span>
+                    <span class="waitingRoom_point" id="waitingRoom_point4"></span>
+                </span>
+            </span>
+
+            <button id="readyButton" onclick="sendReady()">SẴN SÀNG</button>
+        </div>
+        <input id="message-input" autocomplete="off" placeholder="Nhập tin nhắn và nhấn Enter" align="center"
+            style="color: white" />
+    </span>
+
+    <!--Giao diện phòng chơi-->
+    <div id="ContestUI">
+        <div id="currentRound"></div>
+        <div id="currentPoint">
+            <div class="currentPoint" id="currentPoint1">
+                <div class="Name" id="Name1"></div>
+                <div class="Point" id="Point1"></div>
+            </div>
+            <div class="currentPoint" id="currentPoint2">
+                <div class="Name" id="Name2"></div>
+                <div class="Point" id="Point2"></div>
+            </div>
+            <div class="currentPoint" id="currentPoint3">
+                <div class="Name" id="Name3"></div>
+                <div class="Point" id="Point3"></div>
+            </div>
+            <div class="currentPoint" id="currentPoint4">
+                <div class="Name" id="Name4"></div>
+                <div class="Point" id="Point4"></div>
+            </div>
+        </div>
+        <div id="MainUI">
+            <div id="Media"></div>
+            <div id="ObstacleUI">
+                <div id="OBS_Rows">
+                    <div id="OBS_Key"></div>
+                    <div class="OBS_Row" id="OBS_Row1"></div>
+                    <div class="OBS_Row" id="OBS_Row2"></div>
+                    <div class="OBS_Row" id="OBS_Row3"></div>
+                    <div class="OBS_Row" id="OBS_Row4"></div>
+                </div>
+                <div id="OBS_Image">
+                    <div class="OBS_Hider">
+                        <img id="OBS_Q1" src="./Obstacle/Hider/Obstacles_Hider1.png"></img>
+                        <img id="OBS_Q2" src="./Obstacle/Hider/Obstacles_Hider2.png"></img>
+                        <img id="OBS_Q3" src="./Obstacle/Hider/Obstacles_Hider3.png"></img>
+                        <img id="OBS_Q4" src="./Obstacle/Hider/Obstacles_Hider4.png"></img>
+                        <img id="OBS_Q5" src="./Obstacle/Hider/Obstacles_Hider5.png"></img>
+                    </div>
+                    <img id="OBS_imageKey" src=""></img>
+                </div>
+                <div id="OBS_printSignal">
+                </div>
+            </div>
+            <div id="FinishUI">
+                <div class="FIN_Pack" id="FIN_Pack20">
+                    <label>20</label>
+                    <div class="FIN_Question FIN_Question1"></div>
+                    <div class="FIN_Question FIN_Question2"></div>
+                    <div class="FIN_Question FIN_Question3"></div>
+                </div>
+                <div class="FIN_Pack" id="FIN_Pack30">
+                    <label>30</label>
+                    <div class="FIN_Question FIN_Question1"></div>
+                    <div class="FIN_Question FIN_Question2"></div>
+                    <div class="FIN_Question FIN_Question3"></div>
+                </div>
+            </div>
+        </div>
+        <div id="questionZone">
+            <div id="questionStatus">
+                <label id="questionLabel">Câu hỏi</label>
+                <div id="customStatus">
+                </div>
+            </div>
+            <div id="Question">
+                <label id="questionText">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum</label>
+            </div>
+            <button id="upFont" onclick="changeFontSize(this)">+ FONT</button>
+            <button id="downFont" onclick="changeFontSize(this)">- FONT</button>
+        </div>
+        <div id="Answer">
+            <label>Đáp án:</label>
+            <input id="answerInput" placeholder="Nhập đáp án vào đây và ấn Enter để gửi đáp án..." autocomplete="off"
+                align="center" style="color: white"></input>
+        </div>
+        <div id="saveAnswer">
+            <label>Đáp án đã lưu: </label>
+            <div id="saveAnswerText"></div>
+        </div>
+        <div id="playerAnswers">
+            <div class="Answer" id="Answer1">
+                <div class="answerName" id="answerName1"></div>
+                <div class="answerText" id="answerText1"></div>
+            </div>
+            <div class="Answer" id="Answer2">
+                <div class="answerName" id="answerName2"></div>
+                <div class="answerText" id="answerText2"></div>
+            </div>
+            <div class="Answer" id="Answer3">
+                <div class="answerName" id="answerName3"></div>
+                <div class="answerText" id="answerText3"></div>
+            </div>
+            <div class="Answer" id="Answer4">
+                <div class="answerName" id="answerName4"></div>
+                <div class="answerText" id="answerText4"></div>
+            </div>
+        </div>
+        <div id="timeLeft"></div>
+        <button id="sendSignal"></button>
+    </div>
+
+</body>
+<script src="player.js">
+</script>
+
+</html>
