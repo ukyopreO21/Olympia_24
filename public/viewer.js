@@ -1055,9 +1055,13 @@ socket.on("_ACC_openQuestion", function (ACC_questionData) {
 	document.getElementById("ACC_Question").textContent =
 		ACC_questionData.question;
 	if (ACC_questionData.type == "Video") {
+		document.getElementById("ACC_imageMedia").style.display = "none";
+		document.getElementById("ACC_videoMedia").style.display = "block";
 		document.getElementById("ACC_imageMedia").src = "";
 		document.getElementById("ACC_videoMedia").src = ACC_questionData.source;
 	} else {
+		document.getElementById("ACC_videoMedia").style.display = "none";
+		document.getElementById("ACC_imageMedia").style.display = "block";
 		document.getElementById("ACC_videoMedia").src = "";
 		document.getElementById("ACC_imageMedia").src = ACC_questionData.source;
 	}
