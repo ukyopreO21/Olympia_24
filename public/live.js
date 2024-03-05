@@ -328,6 +328,10 @@ function ResultUI() {
 //Xử lý chuẩn bị
 document.getElementById("intro").style.visibility = "hidden";
 
+socket.on("serverRestarted", function () {
+	window.location.reload();
+});
+
 //RESET TRẠNG THÁI VÒNG THI
 socket.on("_resetStatus", function (roundID) {
 	if (roundID == 2) {

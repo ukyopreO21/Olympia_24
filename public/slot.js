@@ -1,4 +1,8 @@
 var socket = io();
+socket.on("serverRestarted", function () {
+	alert("Server đã khởi động trở lại, vui lòng F5 để cập nhật lại tình trạng.");
+	window.location.reload();
+});
 socket.emit("getVersion");
 socket.on("_getVersion", function (appVersion) {
 	document.getElementById("currentVersion").textContent = appVersion;

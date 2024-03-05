@@ -132,6 +132,11 @@ var SFI_pauseTime;
 var SFI_timeLeft;
 var socket = io();
 
+socket.on("serverRestarted", function () {
+	alert("Server đã khởi động trở lại, vui lòng F5 để cập nhật lại tình trạng.");
+	window.location.reload();
+});
+
 socket.emit("getVersion");
 socket.on("_getVersion", function (appVersion) {
 	document.getElementById("currentVersion").textContent = appVersion;
@@ -926,7 +931,6 @@ socket.on("_ACC_openQuestion", function (ACC_questionData) {
 	document.getElementById("Media").innerHTML = "";
 	if (ACC_questionData.type == "Video") {
 		let sourceNum = ACC_questionData.source.length;
-		console.log(sourceNum);
 		document.getElementById("Media").innerHTML +=
 			"<video poster='none.png' preload='auto' disablePictureInPicture controlsList='nodownload'><source src='" +
 			ACC_questionData.source +

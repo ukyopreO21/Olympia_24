@@ -1,31 +1,96 @@
 var socket = io();
 
-window.addEventListener("resize", function () {
-	for (let i = 1; i <= 5; i++) {
-		if (i <= 4) {
+async function listenOBSLength() {
+	await markId();
+	for (let i = 1; i <= 4; i++) {
+		document
+			.getElementById("OBS_startPos" + i)
+			.addEventListener("blur", function (event) {
+				let name = event.target.name;
+				let pos = Number(
+					document.getElementById(event.target.id).value.replace(/\s/g, "")
+				);
+				document.getElementById(event.target.id).value = pos;
+				let rowLength = document
+					.querySelector("#OBS_row" + name + " .OBS_answer")
+					.value.replace(/\s/g, "").length;
+				OBS_checkLegitStartPos(rowLength, pos, name);
+			});
+
+		document
+			.querySelector("#OBS_row" + i + " .OBS_answer")
+			.addEventListener("keyup", function (event) {
+				let name = event.target.name;
+				let length = document
+					.querySelector("#OBS_row" + name + " .OBS_answer")
+					.value.replace(/\s/g, "").length;
+				let rcmPos = Math.floor((18 - length) / 2 + 1);
+				let currentPos = Number(
+					document
+						.getElementById("OBS_startPos" + name)
+						.value.replace(/\s/g, "")
+				);
+				document.getElementById("OBS_rcmPos" + name).innerHTML = rcmPos;
+				OBS_checkLegitStartPos(length, currentPos, name);
+			});
+	}
+}
+
+listenOBSLength();
+
+function OBS_checkLegitStartPos(rowLength, pos, name) {
+	if (rowLength > 0 && rowLength + Number(pos) - 1 <= 18 && pos > 0)
+		document.getElementById("OBS_resultPos" + name).innerHTML =
+			"<font color='white'>Hợp lệ</font>";
+	else
+		document.getElementById("OBS_resultPos" + name).innerHTML =
+			"<font color='#FF6961'>Không hợp lệ</font>";
+}
+
+function resize(type, round) {
+	if (!type || round == 0) {
+		for (let i = 1; i <= 5; i++) {
+			if (i <= 4) {
+				for (let j = 1; j <= 6; j++) {
+					autoResizeByServer("STR" + i + "." + j);
+				}
+			} else {
+				for (let j = 1; j <= 12; j++) {
+					autoResizeByServer("STR" + i + "." + j);
+				}
+			}
+		}
+	}
+	if (!type || round == 1) {
+		for (let i = 1; i <= 5; i++) {
+			autoResizeByServer("OBS_row" + i);
+		}
+	}
+	if (!type || round == 2) {
+		for (let i = 1; i <= 4; i++) {
+			autoResizeByServer("ACC" + i);
+		}
+	}
+	if (!type || round == 3) {
+		for (let i = 1; i <= 4; i++) {
 			for (let j = 1; j <= 6; j++) {
-				autoResizeByServer("STR" + i + "." + j);
-			}
-		} else {
-			for (let j = 1; j <= 12; j++) {
-				autoResizeByServer("STR" + i + "." + j);
+				autoResizeByServer("FIN" + i + "." + j);
 			}
 		}
 	}
-	for (let i = 1; i <= 5; i++) {
-		autoResizeByServer("OBS_row" + i);
-	}
-	for (let i = 1; i <= 4; i++) {
-		autoResizeByServer("ACC" + i);
-	}
-	for (let i = 1; i <= 4; i++) {
-		for (let j = 1; j <= 6; j++) {
-			autoResizeByServer("FIN" + i + "." + j);
+	if (!type || round == 4) {
+		for (let i = 1; i <= 3; i++) {
+			autoResizeByServer("SFI" + i);
 		}
 	}
-	for (let i = 1; i <= 3; i++) {
-		autoResizeByServer("SFI" + i);
-	}
+}
+
+window.addEventListener("resize", function () {
+	resize(0);
+});
+
+socket.on("serverRestarted", function () {
+	window.location.reload();
 });
 
 socket.emit("getVersion");
@@ -62,21 +127,17 @@ function updateImage() {
 }
 
 function openQuestion(roundName) {
-	let dad = document.getElementById("main");
-	let child = dad.querySelectorAll("*");
-	for (let i = 0; i < child.length; i++) {
-		child[i].style.visibility = "hidden";
-	}
-	if (roundName != undefined) {
-		dad = document.getElementById(roundName);
-		child = dad.querySelectorAll("*");
-		for (let i = 0; i < child.length; i++) {
-			child[i].style.visibility = "visible";
+	let dad = document.querySelectorAll(".round");
+	for (let i = 0; i < dad.length; i++) {
+		if (dad[i].id != roundName) dad[i].style.display = "none";
+		else {
+			dad[i].style.display = "block";
+			resize(1, i);
 		}
 	}
 }
 
-function markId() {
+async function markId() {
 	let strDiv = document.querySelectorAll("#start div");
 	for (let i = 1; i <= 5; i++) {
 		if (i < 5) {
@@ -153,7 +214,6 @@ function addAutoScale() {
 }
 
 openQuestion();
-markId();
 addAutoScale();
 
 function openRound(button) {
@@ -219,6 +279,19 @@ socket.on("_chooseDb", function (dbData) {
 		div.querySelector("textarea.OBS_answer").value =
 			dbData.obstacleDb[i - 1].answer;
 		autoResizeByServer("OBS_row" + i);
+		if (i < 5) {
+			document.getElementById("OBS_startPos" + i).value =
+				dbData.obstacleDb[i - 1].startPos;
+			document.getElementById("OBS_rcmPos" + i).innerHTML = Math.floor(
+				(18 - dbData.obstacleDb[i - 1].rowLength) / 2 + 1
+			);
+			OBS_checkLegitStartPos(
+				dbData.obstacleDb[i - 1].rowLength,
+				dbData.obstacleDb[i - 1].startPos,
+				i,
+				1
+			);
+		}
 	}
 	//Acceleration
 	for (let i = 1; i <= 4; i++) {
@@ -301,6 +374,10 @@ function updateData() {
 			let dad = document.getElementById("OBS_row" + (i + 1));
 			obsData.row[i].question = dad.querySelector(".OBS_question").value;
 			obsData.row[i].answer = dad.querySelector(".OBS_answer").value;
+			if (i < 4)
+				obsData.row[i].startPos = document.getElementById(
+					"OBS_startPos" + (i + 1)
+				).value;
 		}
 		data.push(obsData);
 		//Acceleration

@@ -299,7 +299,7 @@
                 </div>
                 <br>
             </div>
-            <div id="obstacle">
+            <div id="obstacle" class="round">
                 <div class="OBS_image">
                     <div id="OBS_simulator">
                         <input type="range" min="0" max="1" value="1" step="0.01" id="simulator">
@@ -319,32 +319,33 @@
                     </div>
                 </div>
                 <div class="OBS_rows">
+                    <br>
                     <input id="OBS_CNV" placeholder="Chướng ngại vật"><br><br>
                     <div class="OBS_row">
                         <span>Hàng ngang 1:</span>
                         <textarea placeholder="Câu hỏi" class="OBS_question"></textarea>
-                        <textarea placeholder="Đáp án" class="OBS_answer"></textarea>
+                        <textarea name="1" placeholder="Đáp án" class="OBS_answer"></textarea>
                         <textarea placeholder="Ghi chú" class="OBS_note"></textarea>
                         <textarea placeholder="Media" class="OBS_media"></textarea>
                     </div>
                     <div class="OBS_row">
                         <span>Hàng ngang 2:</span>
                         <textarea placeholder="Câu hỏi" class="OBS_question"></textarea>
-                        <textarea placeholder="Đáp án" class="OBS_answer"></textarea>
+                        <textarea name="2" placeholder="Đáp án" class="OBS_answer"></textarea>
                         <textarea placeholder="Ghi chú" class="OBS_note"></textarea>
                         <textarea placeholder="Media" class="OBS_media"></textarea>
                     </div>
                     <div class="OBS_row">
                         <span>Hàng ngang 3:</span>
                         <textarea placeholder="Câu hỏi" class="OBS_question"></textarea>
-                        <textarea placeholder="Đáp án" class="OBS_answer"></textarea>
+                        <textarea name="3" placeholder="Đáp án" class="OBS_answer"></textarea>
                         <textarea placeholder="Ghi chú" class="OBS_note"></textarea>
                         <textarea placeholder="Media" class="OBS_media"></textarea>
                     </div>
                     <div class="OBS_row">
                         <span>Hàng ngang 4:</span>
                         <textarea placeholder="Câu hỏi" class="OBS_question"></textarea>
-                        <textarea placeholder="Đáp án" class="OBS_answer"></textarea>
+                        <textarea name="4" placeholder="Đáp án" class="OBS_answer"></textarea>
                         <textarea placeholder="Ghi chú" class="OBS_note"></textarea>
                         <textarea placeholder="Media" class="OBS_media"></textarea>
                     </div>
@@ -355,33 +356,53 @@
                         <textarea placeholder="Ghi chú" class="OBS_note"></textarea>
                         <textarea placeholder="Media" class="OBS_media"></textarea>
                     </div>
+                    <div class="OBS_orders">
+                        <br>
+                        <table>
+                            <tr>
+                                <th class="OBS_col1">Hàng ngang</th>
+                                <th class="OBS_col2">Vị trí bắt đầu</th>
+                                <th class="OBS_col3">Kiểm tra hợp lệ</th>
+                                <th class="OBS_col4">Gợi ý vị trí giữa</th>
+                            </tr>
+                            <tr>
+                                <th>1</th>
+                                <th><input name="1" id="OBS_startPos1"></th>
+                                <th id="OBS_resultPos1">
+                                    <font color="#FF6961">Không hợp lệ</font>
+                                </th>
+                                <th id="OBS_rcmPos1">10</th>
+                            </tr>
+                            <tr>
+                                <th>2</th>
+                                <th><input name="2" id="OBS_startPos2"></th>
+                                <th id="OBS_resultPos2">
+                                    <font color="#FF6961">Không hợp lệ</font>
+                                </th>
+                                <th id="OBS_rcmPos2">10</th>
+                            </tr>
+                            <tr>
+                                <th>3</th>
+                                <th><input name="3" id="OBS_startPos3"></th>
+                                <th id="OBS_resultPos3">
+                                    <font color="#FF6961">Không hợp lệ</font>
+                                </th>
+                                <th id="OBS_rcmPos3">10</th>
+                            </tr>
+                            <tr>
+                                <th>4</th>
+                                <th><input name="4" id="OBS_startPos4"></th>
+                                <th id="OBS_resultPos4">
+                                    <font color="#FF6961">Không hợp lệ</font>
+                                </th>
+                                <th id="OBS_rcmPos4">10</th>
+                            </tr>
+                        </table>
+                    </div>
                 </div>
-                <!--<div class="OBS_orders">
-                    <h3>VỊ TRÍ BẮT ĐẦU HÀNG NGANG</h3>
-                    <div class="OBS_order OBS_div1">
-                        <span>1</span>
-                        <input id="OBS_order1">
-                        <label id="OBS_check1">KHÔNG HỢP LỆ</label>
-                    </div>
-                    <div class="OBS_order OBS_div2">
-                        <span>2</span>
-                        <input id="OBS_order2">
-                        <label id="OBS_check2">KHÔNG HỢP LỆ</label>
-                    </div>
-                    <div class="OBS_order OBS_div3">
-                        <span>3</span>
-                        <input id="OBS_order3">
-                        <label id="OBS_check3">KHÔNG HỢP LỆ</label>
-                    </div>
-                    <div class="OBS_order OBS_div4">
-                        <span>4</span>
-                        <input id="OBS_order4">
-                        <label id="OBS_check4">KHÔNG HỢP LỆ</label>
-                    </div>
-                    <h4>Nếu muốn hệ thống tự động căn giữa, hãy để trống</h4>
-                </div>-->
             </div>
             <div id="acceleration" class="round">
+                <br>
                 <div class="STR_row">
                     <label class="ACC_STT">1. </label>
                     <textarea placeholder="Câu hỏi" class="ACC_question"></textarea>
@@ -592,8 +613,10 @@
                     <textarea placeholder="Ghi chú" class="FIN_note"></textarea>
                     <textarea placeholder="Media" class="FIN_media"></textarea>
                 </div>
+                <br>
             </div>
             <div id="subFinish" class="round">
+                <br>
                 <div class="STR_row">
                     <label class="SFI_STT">1.</label>
                     <textarea placeholder="Câu hỏi" class="SFI_question"></textarea>

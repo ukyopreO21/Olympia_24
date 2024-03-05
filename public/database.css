@@ -78,7 +78,7 @@ input[type='submit'] {
     font-weight: bold;
     font-family: 'Montserrat', bold;
     font-size: 0.8vw;
-    border: calc(5vw/48) solid #FF6961;
+    border: calc(5vw/48) solid #A80000;
     color: white;
     cursor: pointer;
     transition: border-color 0.5s ease;
@@ -156,6 +156,8 @@ button:hover {
     display: block;
     font-size: 1vw;
     margin: 1% 0;
+    color: orange;
+    font-weight: bolder;
 }
 
 .STR_row {
@@ -185,6 +187,10 @@ textarea:last-line {
     text-align: left;
 }
 
+textarea:focus {
+    border: calc(5vw/96) solid cyan;
+}
+
 .STR_subject {
     width: 10%;
 }
@@ -211,11 +217,15 @@ textarea:last-line {
     width: 22vw;
     box-sizing: border-box;
     outline: none;
-    border: calc(5vw/96) solid #FF6961;
+    border: calc(5vw/96) solid #A80000;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.85vw;
     color: white;
     background: none;
+}
+
+#OBS_imageUrl:focus {
+    border: calc(5vw/96) solid cyan;
 }
 
 .OBS_image button {
@@ -265,13 +275,19 @@ textarea:last-line {
     width: 50%;
     height: 2vw;
     outline: none;
-    border: calc(5vw/96) solid #FF6961;
+    border: calc(5vw/96) solid #A80000;
     font-family: 'Montserrat', sans-serif;
     font-size: 0.9vw;
     color: white;
-    text-align: right;
     text-transform: uppercase;
+    text-align: right;
     background: none;
+    gap: 2%;
+}
+
+
+.OBS_rows input:focus {
+    border: calc(5vw/96) solid cyan;
 }
 
 .OBS_rows {
@@ -301,102 +317,62 @@ textarea:last-line {
 
 .OBS_orders {
     position: absolute;
-    height: 60%;
+    width: 55%;
+    right: 0%;
+    display: flex;
+    justify-content: center;
+}
+
+.OBS_orders table {
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.9vw;
+    text-align: center;
+}
+
+.OBS_orders table tr {
+    height: 2vw;
+}
+
+.OBS_orders table tr, .OBS_orders table th {
+    border: 0.1vw solid greenyellow;
+}
+
+.OBS_orders table input {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    border: none;
+}
+
+.OBS_orders table input:focus {
+    border: none;
+}
+
+.OBS_col1 {
+    width: 20%;
+}
+
+.OBS_col2 {
+    width: 25%;
+}
+
+.OBS_col3 {
     width: 30%;
 }
 
-.OBS_orders h4 {
-    position: absolute;
-    left: 0;
-    bottom: 10%;
-}
-
-.OBS_order {
-    position: absolute;
-    height: 10%;
-    width: 100%;
-}
-
-.OBS_div1 {
-    top: 20%;
-}
-
-.OBS_div2 {
-    top: 32.5%;
-}
-
-.OBS_div3 {
-    top: 45%;
-}
-
-.OBS_div4 {
-    top: 57.5%;
-}
-
-.OBS_order span {
-    position: absolute;
-    height: 100%;
-    width: 20%;
-    display: flex;
-    align-items: center;
-    font-size: 1vw;
-}
-
-.OBS_order input {
-    position: absolute;
-    left: 5%;
-    width: 20%;
-    height: 75%;
-    outline: none;
-    border: calc(5vw/96) solid orange;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.9vw;
-    color: white;
-    display: flex;
-    align-items: center;
-}
-
-.OBS_order label {
-    position: absolute;
-    left: 30%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    font-size: 1vw;
+.OBS_col4 {
+    width: 25%;
 }
 
 .OBS_question {
     width: 36%;
 }
 
-#CQ_phone label {
-    width: auto;
-}
-
-.CQ_STT,
 .ACC_STT {
     font-size: 0.9vw;
     width: 2%;
-}
-
-.CQ_diff {
-    width: 4%;
-}
-
-.CQ_question {
-    width: 45%;
-}
-
-.CQ_answer {
-    width: 20%;
-}
-
-.CQ_note {
-    width: 15%;
-}
-
-.CQ_media {
-    width: 15%;
 }
 
 .ACC_question {

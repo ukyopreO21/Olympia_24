@@ -27,6 +27,11 @@ var downloadTimer;
 
 var socket = io();
 
+socket.on("serverRestarted", function () {
+	alert("Server đã khởi động trở lại, vui lòng F5 để cập nhật lại tình trạng.");
+	window.location.reload();
+});
+
 //CHAT
 document
 	.getElementById("chatInput")
