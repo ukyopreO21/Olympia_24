@@ -19,6 +19,71 @@ select option {
     color: black;
 }
 
+#password {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    left: 0%;
+    bottom: 0%;
+    background-color: aliceblue;
+    z-index: 99;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#password div {
+    position: absolute;
+    top: 40%;
+    width: 100%;
+    text-align: center;
+    font-size: 1.75vw;
+    font-weight: bold;
+    color: black;
+}
+
+#password span {
+    position: absolute;
+    height: 5%;
+    width: 20%;
+}
+
+#password input {
+    position: absolute;
+    left: 0%;
+    width: 60%;
+    text-align: center;
+    height: 100%;
+    box-sizing: border-box;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.5vw;
+    border: 0.2vw solid #A80000;
+    background: none;
+}
+
+#password input:focus {
+    border: orange;
+}
+
+#password button {
+    border: 0.2vw solid #A80000;
+    position: absolute;
+    right: 0%;
+    width: 35%;
+    background: none;
+    cursor: pointer;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    height: 100%;
+    transition: all 0.2s ease;
+    font-size: 1.2vw;
+    color: black;
+}
+
+#password button:hover {
+    background-color: orange;
+}
+
 #header {
     padding: calc(15vw/32);
 }

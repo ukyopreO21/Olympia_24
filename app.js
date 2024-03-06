@@ -1,29 +1,108 @@
 //Tạo server
 const express = require("express");
+const { get } = require("https");
 const multer = require("multer");
 const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
-const PORT = process.env.PORT || 3000;
-
-app.use(express.static("public"));
+const fs = require("fs").promises;
+const os = require("os");
+const readXlsxFile = require("read-excel-file/node");
+const XlsxPopulate = require("xlsx-populate");
 
 var appVersion;
+var ipv4Addresses = [];
+var adminPassword;
 
-const fs = require("fs").promises;
+async function getAdminPassword() {
+	const min = 100000;
+	const max = 999999;
+	return Math.floor(Math.random() * (max - min + 1)) + min;
+}
 
 async function readPackageJson() {
 	try {
 		const data = await fs.readFile("package.json");
 		const package = JSON.parse(data);
 		appVersion = "v" + package.version;
-		console.log("Phiên bản hiện tại: " + appVersion);
 	} catch (err) {
 		console.error(err);
 	}
 }
 
-readPackageJson();
+const networkInterfaces = os.networkInterfaces();
+
+Object.keys(networkInterfaces).forEach((interfaceName) => {
+	const interfaceData = networkInterfaces[interfaceName];
+	interfaceData.forEach((interfaceInfo) => {
+		if (interfaceInfo.family === "IPv4" && !interfaceInfo.internal) {
+			ipv4Addresses.push(interfaceInfo.address);
+		}
+	});
+});
+
+async function startServer() {
+	await readPackageJson();
+	adminPassword = await getAdminPassword();
+	console.clear();
+	console.log("-----------------------------------------");
+	try {
+		const data = await fs.readFile("Port.txt", { encoding: "utf-8" });
+		const PORT = parseInt(data.trim(), 10);
+
+		if (isNaN(PORT)) {
+			console.error("Port không phải là số, vui lòng kiểm tra lại:", data);
+			return;
+		}
+
+		server.listen(PORT, () => {
+			setTimeout(function () {
+				io.emit("serverRestarted");
+			}, 1000);
+			console.log(
+				"Phiên bản hiện tại:",
+				"\x1b[91m\x1b[1m",
+				appVersion,
+				"\x1b[0m"
+			);
+			console.log(
+				"\x1b[91m\x1b[1m" +
+					"ĐÂY LÀ SERVER, KHÔNG ĐƯỢC TẮT CMD NÀY CHO TỚI KHI KHÔNG MỞ SERVER NỮA",
+				"\x1b[0m"
+			);
+			console.log(
+				"Danh sách địa chỉ IP của server:",
+				"\x1b[1m",
+				ipv4Addresses,
+				"\x1b[0m"
+			);
+			console.log("Server đã được mở tại cổng: \x1b[33m\x1b[1m", PORT);
+			console.log(
+				"Hãy đảm bảo các user kết nối đều sử dụng chung một mạng để có thể kết nối đến một trong những địa chỉ IP trên",
+				"\x1b[0m"
+			);
+			console.log(
+				"Mật khẩu cho trang điều khiển và cơ sở dữ liệu: \x1b[96m%s\x1b[1m",
+				adminPassword,
+				"\x1b[0m"
+			);
+			console.log(
+				"Truy cập các đường liên kết của ứng dụng bằng \x1b[36m%s\x1b[1m",
+				"[Địa chỉ IP của máy này]:" + PORT,
+				"\x1b[0m"
+			);
+			console.log(
+				"Thí sinh: /\nĐiểm: /point\nKĩ thuật: /admin\nNgười xem: /viewer\nTrình chiếu đồ hoạ nền xanh: /live\nCơ sở dữ liệu: /database"
+			);
+			console.log("-----------------------------------------");
+		});
+	} catch (err) {
+		console.error("Lỗi không thể đọc file Port.txt:", err);
+		console.log("-----------------------------------------");
+	}
+}
+
+startServer();
 
 //Quản lý đề và slot
 var databaseChosen = 1;
@@ -34,7 +113,6 @@ var playerName = ["", "", "", ""];
 var playerPoint = [0, 0, 0, 0];
 
 //Ghi database
-const XlsxPopulate = require("xlsx-populate");
 
 function updateData(data) {
 	let dbNumber = data.dbNumber;
@@ -87,6 +165,8 @@ function updateData(data) {
 					for (let q = 0; q < 5; q++) {
 						sheet.cell("C" + (q + 2)).value(data.data[i].row[q].question);
 						sheet.cell("D" + (q + 2)).value(data.data[i].row[q].answer);
+						if (q < 4)
+							sheet.cell("B" + (11 + q)).value(data.data[i].row[q].startPos);
 					}
 					sheet.cell("D7").value(data.data[i].CNV);
 					sheet.cell("F7").value(data.data[i].imageUrl);
@@ -122,8 +202,6 @@ function updateData(data) {
 }
 
 //DATABASE
-const readXlsxFile = require("read-excel-file/node");
-const { format } = require("path");
 
 async function readDatabase(path, isReadBase64) {
 	let startDb = [];
@@ -247,6 +325,7 @@ async function readDatabase(path, isReadBase64) {
 	};
 }
 
+var disconnectTime;
 var STR_QnA = [];
 var OBS_QnA = [];
 var OBS_CNV;
@@ -327,13 +406,16 @@ function formatTime(date) {
 	return hours + ":" + minutes + ":" + seconds;
 }
 
-var disconnectTime;
-
 //Tín hiệu
 io.on("connection", function (socket) {
 	//Lấy version
 	socket.on("getVersion", function () {
 		socket.emit("_getVersion", appVersion);
+	});
+
+	//login admin
+	socket.on("sendAdminPassword", function (password) {
+		if (Number(password) == adminPassword) socket.emit("_sendAdminPassword", password);
 	});
 
 	//Set database
@@ -851,6 +933,8 @@ io.on("connection", function (socket) {
 	});
 });
 
+app.use(express.static("public"));
+
 const upload = multer({ storage: multer.memoryStorage() });
 
 app.post("/database", upload.single("file"), async (req, res) => {
@@ -901,16 +985,4 @@ app.get("/database", function (req, res) {
 	res.sendFile("database.html", {
 		root: __dirname + "/public",
 	});
-});
-
-server.listen(PORT, () => {
-	console.log(
-		"Server đã được mở tại cổng " +
-			PORT +
-			". Truy cập các đường liên kết của ứng dụng bằng [Địa chỉ IP của máy này]:" +
-			PORT
-	);
-	console.log(
-		"Thí sinh: /\nĐiểm: /point\nKĩ thuật: /admin\nNgười xem: /viewer\nTrình chiếu đồ hoạ nền xanh: /live\nCơ sở dữ liệu: /database"
-	);
 });

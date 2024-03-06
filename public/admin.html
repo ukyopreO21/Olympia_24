@@ -17,6 +17,13 @@
 </head>
 
 <body>
+    <div id="password">
+        <div>Nhập mật khẩu quản lý</div>
+        <span>
+            <input id="passwordInput">
+            <button onclick="sendAdminPassword()">Kiểm tra</button>
+        </span>
+    </div>
     <label id="currentVersion"></label>
     <div id="TechnicalZone">
         <span class="button" id="database" onclick="openDatabase()">Quản lý đề thi</span>
@@ -183,7 +190,7 @@
         <div id="FIN_chooseQuestionBoard" style="visibility: hidden"></div>
     </div>
     <div id="blurbg" onclick="closeExtraUI()" style="visibility: hidden;"></div>
-    <iframe src="/database" id="dbFrame" style="visibility: hidden;"></iframe>
+    <iframe src="" id="dbFrame" style="visibility: hidden;"></iframe>
     <div id="Media" style="visibility: hidden;">
         <div class="mediaType">BẮT ĐẦU CHƯƠNG TRÌNH</div>
         <span class="mediaTitle">- Intro chương trình:</span>

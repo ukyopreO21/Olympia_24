@@ -1,3 +1,25 @@
+var socket = io();
+socket.emit("sendAdminPassword", sessionStorage.getItem("adminPassword"));
+
+function sendAdminPassword() {
+	socket.emit(
+		"sendAdminPassword",
+		document.getElementById("passwordInput").value
+	);
+}
+
+document
+	.getElementById("passwordInput")
+	.addEventListener("keyup", function (event) {
+		if (event.key === "Enter") sendAdminPassword();
+	});
+
+socket.on("_sendAdminPassword", function (password) {
+	document.getElementById("dbFrame").src = "/database?url=" + password;
+	sessionStorage.setItem("adminPassword", password);
+	document.getElementById("password").style.display = "none";
+});
+
 function closeEndPart() {
 	document.getElementById("endH3").style.visibility = "hidden";
 	document.getElementById("Result").style.visibility = "hidden";
@@ -24,8 +46,6 @@ var FIN_signalPlayer = 0;
 var SFI_signalPlayer = 0;
 var SFI_timeLeft;
 var downloadTimer;
-
-var socket = io();
 
 socket.on("serverRestarted", function () {
 	alert("Server đã khởi động trở lại, vui lòng F5 để cập nhật lại tình trạng.");

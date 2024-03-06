@@ -1,4 +1,26 @@
 var socket = io();
+const urlParams = new URLSearchParams(window.location.search);
+const password = Number(urlParams.get("url"));
+socket.emit("sendAdminPassword", sessionStorage.getItem("adminPassword"));
+socket.emit("sendAdminPassword", password);
+
+function sendAdminPassword() {
+	socket.emit(
+		"sendAdminPassword",
+		document.getElementById("passwordInput").value
+	);
+}
+
+document
+	.getElementById("passwordInput")
+	.addEventListener("keyup", function (event) {
+		if (event.key === "Enter") sendAdminPassword();
+	});
+
+socket.on("_sendAdminPassword", function (password) {
+	sessionStorage.setItem("adminPassword", password);
+	document.getElementById("password").style.display = "none";
+});
 
 async function listenOBSLength() {
 	await markId();
