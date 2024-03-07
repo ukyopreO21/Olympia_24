@@ -1,6 +1,5 @@
 //Tạo server
 const express = require("express");
-const { get } = require("https");
 const multer = require("multer");
 const app = express();
 const server = require("http").createServer(app);
