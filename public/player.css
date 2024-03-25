@@ -397,7 +397,6 @@ html {
     color: white;
     background: none;
     cursor: pointer;
-    width: 6%;
     height: 10%;
     font-size: 0.75vw;
     visibility: hidden;
@@ -407,12 +406,21 @@ html {
     position: absolute;
     bottom: 0%;
     right: 0%;
+    width: 6%;
 }
 
 #upFont {
     position: absolute;
     bottom: 0%;
-    right: 6.25%;
+    right: 6%;
+    width: 6%;
+}
+
+#allowBlankAnswer {
+    position: absolute;
+    bottom: 0%;
+    right: 12%;
+    width: 16%;
 }
 
 #questionStatus {
