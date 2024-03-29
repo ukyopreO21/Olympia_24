@@ -13,6 +13,8 @@ socket.on("_sendAdminPassword", function (password) {
     document.getElementById("dbFrame").src = "/database?url=" + password;
     sessionStorage.setItem("adminPassword", password);
     document.getElementById("password").style.display = "none";
+    socket.emit("hostEnterRoom");
+    socket.emit("getVersion");
 });
 
 function closeEndPart() {
@@ -88,12 +90,9 @@ socket.on("_sendChat", function (data) {
     if (checkScroll) box.scrollTop = box.scrollHeight;
 });
 
-socket.emit("getVersion");
 socket.on("_getVersion", function (appVersion) {
     document.getElementById("currentVersion").textContent = appVersion;
 });
-
-socket.emit("adminEnterRoom");
 
 socket.on("serverData", function (data) {
     document.getElementById("dbNumber").value = data.databaseChosen;
@@ -172,6 +171,7 @@ function resetStatus() {
 closeEndPart();
 function Select() {
     document.getElementById("OBS_Info").innerHTML = "";
+    document.getElementById("ACC_Info").innerHTML = "";
     document.getElementById("FIN_chooseQuestionBoard").innerHTML = "";
     roundID = document.getElementById("rounds").value;
     socket.emit("RoundChosen", roundID);
@@ -236,6 +236,7 @@ function Select() {
         temp.innerHTML += '<span class="button" onclick="OBS_deleteSignal()">Xoá tín hiệu</span>';
         openEndPart();
     } else if (roundID == "3") {
+        ACC_printPlayerVideoStatus();
         temp.innerHTML += "<div class='inRound'>TRONG PHẦN THI</div>";
         temp.innerHTML += '<span class="button" onclick="playIntro()">Intro</span> ';
         temp.innerHTML += '<span class="button" onclick="startRound()">Bắt đầu</span><br>';
@@ -395,6 +396,7 @@ function Confirm() {
     for (let i = 1; i <= 4; i++) {
         currentPlayerPoint[i - 1] = Number(document.getElementById("player" + i + "Point").value);
         currentPlayerName[i - 1] = document.getElementById("player" + i + "Name").value;
+        document.getElementById("name" + i).textContent = currentPlayerName[i - 1];
     }
     socket.emit("sendAdminData", { currentPlayerName, currentPlayerPoint });
 }
@@ -438,7 +440,7 @@ function OBS_chooseRow() {
     document.getElementById("OBS_suggestObsPoint").textContent = 60 - (count - 1) * 10 - OBS_pointChange;
 
     if (rowIth == 5) document.getElementById("OBS_suggestObsPoint").textContent = 10;
-    for (i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 4; i++) {
         document.getElementById("answer" + i).textContent = "";
     }
     socket.emit("OBS_chooseRow", rowIth);
@@ -512,7 +514,7 @@ function OBS_rightRow() {
 
 function OBS_wrongRow() {
     let currentRow = document.getElementById("OBS_ithRow").value;
-    for (i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 4; i++) {
         document.getElementById("check" + i).checked = false;
         socket.emit("OBS_wrongRow", i);
     }
@@ -565,6 +567,7 @@ function endGame() {
     socket.emit("endGame");
     document.getElementById("RoundMenu").innerHTML = "";
     document.getElementById("OBS_Info").innerHTML = "";
+    document.getElementById("ACC_Info").innerHTML = "";
     document.getElementById("FIN_chooseQuestionBoard").innerHTML = "";
     closeEndPart();
     if (document.getElementById("UIName").textContent == "Phòng thi") UI();
@@ -664,18 +667,50 @@ function STR_finishTurn() {
 }
 
 //TĂNG TỐC
+function ACC_printPlayerVideoStatus() {
+    let dad = document.getElementById("ACC_Info");
+    dad.innerHTML += "<div id='ACC_playerVideoStatus'>";
+    let status = document.getElementById("ACC_playerVideoStatus");
+    status.innerHTML = "";
+    status.innerHTML += "<div>Trạng thái load video của thí sinh:</div>";
+    status.innerHTML += "<div id='ACC_Status1'>TS1: <font color='#FF6961'>Chưa tải được video</font></div>";
+    status.innerHTML += "<div id='ACC_Status2'>TS2: <font color='#FF6961'>Chưa tải được video</font></div>";
+    status.innerHTML += "<div id='ACC_Status3'>TS3: <font color='#FF6961'>Chưa tải được video</font></div>";
+    status.innerHTML += "<div id='ACC_Status4'>TS4: <font color='#FF6961'>Chưa tải được video</font></div>";
+    dad.innerHTML += "<div id='ACC_Media'>";
+    let media = document.getElementById("ACC_Media");
+    media.innerHTML += "<img id='ACC_Image'>";
+    media.innerHTML += "<video id='ACC_Video'></video>";
+}
+
 function ACC_chooseQuestion() {
     socket.emit("ACC_chooseQuestion");
     Confirm();
 }
 
 function ACC_openQuestion() {
+    for (let i = 1; i <= 4; i++) {
+        document.getElementById("ACC_Status" + i).innerHTML = "TS" + i + ": <font color='#FF6961'>Chưa tải được video</font></div>";
+    }
     let ithQuestion = Number(document.getElementById("ACC_ithQuestion").value);
     socket.emit("ACC_openQuestion", ithQuestion);
 }
 
 socket.on("_ACC_openQuestion", function (question) {
     setQuestionData(question);
+    if (question.type == "Video") {
+        document.getElementById("ACC_Video").src = question.source;
+        document.getElementById("ACC_Video").style.visibility = "visible";
+        document.getElementById("ACC_Image").style.visibility = "hidden";
+    } else {
+        document.getElementById("ACC_Image").src = question.source;
+        document.getElementById("ACC_Video").style.visibility = "hidden";
+        document.getElementById("ACC_Image").style.visibility = "visible";
+    }
+});
+
+socket.on("_ACC_checkVideoSource", function (playerNumber) {
+    document.getElementById("ACC_Status" + playerNumber).innerHTML = "TS" + playerNumber + ": <font color='greenyellow'>Đã tải được video</font>";
 });
 
 function ACC_timing(time) {
@@ -692,7 +727,7 @@ function ACC_timing(time) {
 }
 
 function ACC_startTiming() {
-    for (i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 4; i++) {
         document.getElementById("time" + i).textContent = "0.00";
         document.getElementById("answer" + i).textContent = "";
     }
@@ -700,6 +735,10 @@ function ACC_startTiming() {
     ACC_timing(ithQuestion * 10);
     socket.emit("ACC_startTiming", ithQuestion);
 }
+
+socket.on("_ACC_startTiming", function () {
+    document.getElementById("ACC_Video").play();
+});
 
 socket.on("_ACC_sentAnswer", function (serverData) {
     let answerLabel = "answer" + serverData.answerData.playerNumber;
@@ -721,9 +760,9 @@ function ACC_showAnswers() {
     });
 
     let ACC_rank = 0;
-    for (i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
         if (answerData[i].time == 0) answerData[i].time = "0.00";
-        for (j = 0; j < 4; j++) {
+        for (let j = 0; j < 4; j++) {
             if (document.getElementById("time" + (j + 1)).textContent == answerData[i].time && answerData[i].answer != "") {
                 document.getElementById("signal" + (j + 1)).textContent = ++ACC_rank;
                 break;
@@ -738,11 +777,17 @@ function ACC_showQuestionAnswer() {
     socket.emit("ACC_showQuestionAnswer", ithQuestion);
 }
 
+socket.on("_ACC_showQuestionAnswer", function (ACC_Data) {
+    if (ACC_Data.type == "Image") {
+        document.getElementById("ACC_Image").src = ACC_Data.answerImage;
+    }
+});
+
 function ACC_countPoint(ACC_playerAnswerInfo) {
     let currentPoint = 40;
     let firstRight = false;
     let point = 0;
-    for (i = 0; i < 4; i++) {
+    for (let i = 0; i < 4; i++) {
         if (ACC_playerAnswerInfo[i].checked) {
             if (!firstRight) {
                 ACC_playerAnswerInfo[i].point = currentPoint;
@@ -763,7 +808,7 @@ function ACC_countPoint(ACC_playerAnswerInfo) {
 
 function ACC_Right() {
     let ACC_playerAnswerInfo = [];
-    for (i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 4; i++) {
         ACC_playerAnswerInfo[i - 1] = {};
         ACC_playerAnswerInfo[i - 1].time = Number(document.getElementById("time" + i).textContent);
         ACC_playerAnswerInfo[i - 1].playerNumber = i;
@@ -779,7 +824,7 @@ function ACC_Right() {
 }
 
 function ACC_Wrong() {
-    for (i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 4; i++) {
         document.getElementById("check" + i).checked = false;
     }
     socket.emit("ACC_Wrong");
@@ -790,7 +835,7 @@ function ACC_turnOffQuestion() {
 }
 
 function ACC_clearData() {
-    for (i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 4; i++) {
         document.getElementById("signal" + i).textContent = "";
         document.getElementById("answer" + i).textContent = "";
         document.getElementById("time" + i).textContent = "0.00";
@@ -954,7 +999,7 @@ socket.on("_FIN_blockSignal", function (playerNumber) {
 
 function FIN_deleteSignal() {
     FIN_signalPlayer = 0;
-    for (i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 4; i++) {
         document.getElementById("p" + i).style.border = "calc(5vw/96) dotted grey";
     }
 }
@@ -981,7 +1026,7 @@ function SFI_choosePlayers() {
     if (document.getElementById("SFI_startRound")) document.getElementById("SFI_startRound").style.display = "block";
     temp = document.getElementById("SFI_Players");
     temp.innerHTML = "";
-    for (i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 4; i++) {
         temp.innerHTML += '<span class="button" data-ispicked="false" id="SFI_' + i + '" onclick="SFI_Pick(this)"></span> ';
         document.getElementById("SFI_" + i).textContent = document.getElementById("player" + i + "Name").value;
     }
@@ -1004,7 +1049,7 @@ function SFI_startRound() {
     let SFI_Chosen = [];
     document.getElementById("SFI_Players").style.pointerEvents = "none";
     document.getElementById("SFI_startRound").style.display = "none";
-    for (i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 4; i++) {
         if (document.getElementById("SFI_" + i).getAttribute("data-ispicked") == "true") {
             socket.emit("SFI_chosenPlayer", i);
             SFI_Chosen.push(Number(i));
@@ -1070,7 +1115,7 @@ socket.on("_SFI_blockSignal", function (playerNumber) {
 });
 
 function SFI_deleteSignal() {
-    for (i = 1; i <= 4; i++) {
+    for (let i = 1; i <= 4; i++) {
         document.getElementById("p" + i).style.border = "calc(5vw/96) dotted grey";
     }
 }

@@ -605,7 +605,7 @@ socket.on("_OBS_serverObsSignal", function (signalData) {
         ". " +
         signalData.signalDataFromAdmin.name +
         "</div>";
-    document.getElementById("OBS_Signal" + signalData.OBS_numberOfObsSignal).style.left = 25.25 * (Number(signalData.OBS_numberOfObsSignal) - 1) + "%";
+    document.getElementById("OBS_Signal" + signalData.OBS_numberOfObsSignal).style.left = 25 * (Number(signalData.OBS_numberOfObsSignal) - 1) + "%";
 });
 
 var showAnswer;
@@ -672,7 +672,9 @@ socket.on("_OBS_rightObs", function (obsData) {
 });
 
 socket.on("OBS_keepRightObs", function (value) {
-    for (let i = 1; i <= 4; i++) if (i != Number(value) && document.getElementById("OBS_Signal" + i)) document.getElementById("OBS_Signal" + i).style.opacity = 0.5;
+    for (let i = 1; i <= 4; i++) {
+        if (i != Number(value) && document.getElementById("OBS_Signal" + i)) document.getElementById("OBS_Signal" + i).style.opacity = 0.5;
+    }
 });
 
 socket.on("_OBS_wrongObs", function () {
