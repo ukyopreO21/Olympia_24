@@ -65,7 +65,7 @@ async function startServer() {
             console.log("Hãy đảm bảo các user kết nối đều sử dụng chung một mạng để có thể kết nối đến một trong những địa chỉ IP trên", "\x1b[0m");
             console.log("Mật khẩu cho trang điều khiển và cơ sở dữ liệu: \x1b[96m%s\x1b[1m", adminPassword, "\x1b[0m");
             console.log("Truy cập các đường liên kết của ứng dụng bằng \x1b[36m%s\x1b[1m", "[Địa chỉ IP của máy này]:" + PORT, "\x1b[0m");
-            console.log("Thí sinh: /\nĐiểm: /point\nKĩ thuật: /admin\nNgười xem: /viewer\nTrình chiếu đồ hoạ nền xanh: /live\nCơ sở dữ liệu: /database");
+            console.log("Thí sinh: /\nĐiểm: /point\nKĩ thuật: /admin\nNgười xem: /viewer\nTrình chiếu đồ hoạ nền xanh: /live\nCơ sở dữ liệu: /database\nMC: /mc");
             console.log("-----------------------------------------");
         });
     } catch (err) {
@@ -100,6 +100,7 @@ function updateData(data) {
                             sheet.cell("C" + (2 + 6 * p + q)).value(data.data[i][p][q].subject);
                             sheet.cell("D" + (2 + 6 * p + q)).value(data.data[i][p][q].question);
                             sheet.cell("E" + (2 + 6 * p + q)).value(data.data[i][p][q].answer);
+                            sheet.cell("F" + (2 + 6 * p + q)).value(data.data[i][p][q].note);
                             sheet.cell("G" + (2 + 6 * p + q)).value(data.data[i][p][q].media);
                         }
                     } else {
@@ -107,6 +108,7 @@ function updateData(data) {
                             sheet.cell("C" + (2 + 6 * p + q)).value(data.data[i][p][q].subject);
                             sheet.cell("D" + (2 + 6 * p + q)).value(data.data[i][p][q].question);
                             sheet.cell("E" + (2 + 6 * p + q)).value(data.data[i][p][q].answer);
+                            sheet.cell("F" + (2 + 6 * p + q)).value(data.data[i][p][q].note);
                             sheet.cell("G" + (2 + 6 * p + q)).value(data.data[i][p][q].media);
                         }
                     }
@@ -115,6 +117,8 @@ function updateData(data) {
                 for (let q = 0; q < 5; q++) {
                     sheet.cell("C" + (q + 2)).value(data.data[i].row[q].question);
                     sheet.cell("D" + (q + 2)).value(data.data[i].row[q].answer);
+                    sheet.cell("E" + (q + 2)).value(data.data[i].row[q].note);
+                    sheet.cell("F" + (q + 2)).value(data.data[i].row[q].media);
                     if (q < 4) sheet.cell("B" + (11 + q)).value(data.data[i].row[q].startPos);
                 }
                 sheet.cell("D7").value(data.data[i].CNV);
@@ -124,6 +128,7 @@ function updateData(data) {
                     sheet.cell("B" + (q + 2)).value(data.data[i][q].question);
                     sheet.cell("C" + (q + 2)).value(data.data[i][q].answer);
                     sheet.cell("D" + (q + 2)).value(data.data[i][q].type);
+                    sheet.cell("E" + (q + 2)).value(data.data[i][q].note);
                     sheet.cell("F" + (q + 2)).value(data.data[i][q].media);
                     sheet.cell("G" + (q + 2)).value(data.data[i][q].answerImage);
                 }
@@ -132,12 +137,16 @@ function updateData(data) {
                     for (let q = 0; q < 6; q++) {
                         sheet.cell("C" + (2 + 6 * p + q)).value(data.data[i][p][q].question);
                         sheet.cell("D" + (2 + 6 * p + q)).value(data.data[i][p][q].answer);
+                        sheet.cell("E" + (2 + 6 * p + q)).value(data.data[i][p][q].note);
+                        sheet.cell("F" + (2 + 6 * p + q)).value(data.data[i][p][q].media);
                     }
                 }
             } else {
                 for (let q = 0; q < 3; q++) {
                     sheet.cell("B" + (q + 2)).value(data.data[i][q].question);
                     sheet.cell("C" + (q + 2)).value(data.data[i][q].answer);
+                    sheet.cell("D" + (q + 2)).value(data.data[i][q].note);
+                    sheet.cell("E" + (q + 2)).value(data.data[i][q].media);
                 }
             }
         }
@@ -181,6 +190,7 @@ async function readDatabase(path, isReadBase64) {
                     temp[j].subject = Database[6 * i + j + 1][2];
                     temp[j].question = Database[6 * i + j + 1][3];
                     temp[j].answer = Database[6 * i + j + 1][4];
+                    temp[j].note = Database[6 * i + j + 1][5];
                     temp[j].media = Database[6 * i + j + 1][6];
                 }
             } else {
@@ -189,6 +199,7 @@ async function readDatabase(path, isReadBase64) {
                     temp[j].subject = Database[6 * i + j + 1][2];
                     temp[j].question = Database[6 * i + j + 1][3];
                     temp[j].answer = Database[6 * i + j + 1][4];
+                    temp[j].note = Database[6 * i + j + 1][5];
                     temp[j].media = Database[6 * i + j + 1][6];
                 }
             }
@@ -200,9 +211,11 @@ async function readDatabase(path, isReadBase64) {
     await readXlsxFile(path, { sheet: "Obstacle" }).then((Database) => {
         for (let i = 0; i < 5; i++) {
             obstacleDb[i] = {};
+            obstacleDb[i].rowLength = Database[i + 1][1];
             obstacleDb[i].question = Database[i + 1][2];
             obstacleDb[i].answer = Database[i + 1][3];
-            obstacleDb[i].rowLength = Database[i + 1][1];
+            obstacleDb[i].note = Database[i + 1][4];
+            obstacleDb[i].media = Database[i + 1][5];
             if (obstacleDb[i].rowLength == null) {
                 if (obstacleDb[i].answer == null) obstacleDb[i].rowLength = 0;
                 else obstacleDb[i].rowLength = String(obstacleDb[i].answer).replace(/\s/g, "").length;
@@ -212,6 +225,7 @@ async function readDatabase(path, isReadBase64) {
             }
         }
         obstacleCNV.answer = Database[6][3];
+        obstacleCNV.note = Database[6][4];
         obstacleCNV.media = Database[6][5];
     });
 
@@ -222,6 +236,7 @@ async function readDatabase(path, isReadBase64) {
                 accelerationDb[i].question = Database[i + 1][1];
                 accelerationDb[i].answer = Database[i + 1][2];
                 accelerationDb[i].type = Database[i + 1][3];
+                accelerationDb[i].note = Database[i + 1][4];
                 accelerationDb[i].source = Database[i + 1][5];
                 accelerationDb[i].answerImage = Database[i + 1][6];
             }
@@ -233,6 +248,7 @@ async function readDatabase(path, isReadBase64) {
             accelerationDb[i].question = Database[i + 1][1];
             accelerationDb[i].answer = Database[i + 1][2];
             accelerationDb[i].type = Database[i + 1][3];
+            accelerationDb[i].note = Database[i + 1][4];
             if (accelerationDb[i].type == "Video") {
                 let videoSource = "./public" + Database[i + 1][5].slice(1);
                 try {
@@ -256,6 +272,8 @@ async function readDatabase(path, isReadBase64) {
                 temp[j].point = Database[6 * i + j + 1][1];
                 temp[j].question = Database[6 * i + j + 1][2];
                 temp[j].answer = Database[6 * i + j + 1][3];
+                temp[j].note = Database[6 * i + j + 1][4];
+                temp[j].media = Database[6 * i + j + 1][5];
             }
             finishDb.push(temp);
         }
@@ -266,6 +284,8 @@ async function readDatabase(path, isReadBase64) {
             subFinishDb[i] = {};
             subFinishDb[i].question = Database[i + 1][1];
             subFinishDb[i].answer = Database[i + 1][2];
+            subFinishDb[i].note = Database[i + 1][3];
+            subFinishDb[i].media = Database[i + 1][4];
         }
     });
 
@@ -435,7 +455,7 @@ io.on("connection", function (socket) {
         }
     });
 
-    socket.on("adminEnterRoom", function () {
+    socket.on("hostEnterRoom", function () {
         io.emit("serverData", { playerName, playerPoint, isReady, databaseChosen });
     });
 
@@ -573,7 +593,7 @@ io.on("connection", function (socket) {
     //VCNV
 
     socket.on("OBS_adminGetRoundData", function () {
-        socket.emit("_OBS_adminGetRoundData", { OBS_CNV, OBS_QnA });
+        io.emit("_OBS_adminGetRoundData", { OBS_CNV, OBS_QnA });
     });
 
     socket.on("OBS_showNumberOfCharacter", function () {
@@ -694,9 +714,10 @@ io.on("connection", function (socket) {
     });
 
     socket.on("ACC_checkVideoSource", function (playerData) {
-        if (playerData.sourceNum == ACC_QnA[ACC_currentQuestion - 1].source.length)
+        if (playerData.sourceNum == ACC_QnA[ACC_currentQuestion - 1].source.length) {
             console.log("Thí sinh " + playerData.playerNumber + " đã tải thành công video tăng tốc " + ACC_currentQuestion);
-        else console.log("Thí sinh " + playerData.playerNumber + " không thể tải video tăng tốc " + ACC_currentQuestion);
+            io.emit("_ACC_checkVideoSource", playerData.playerNumber);
+        } else console.log("Thí sinh " + playerData.playerNumber + " không thể tải video tăng tốc " + ACC_currentQuestion);
     });
 
     socket.on("ACC_startTiming", function (ithQuestion) {
@@ -949,6 +970,12 @@ app.get("/live", function (req, res) {
 
 app.get("/database", function (req, res) {
     res.sendFile("database.html", {
+        root: __dirname + "/public",
+    });
+});
+
+app.get("/mc", function (req, res) {
+    res.sendFile("mc.html", {
         root: __dirname + "/public",
     });
 });
