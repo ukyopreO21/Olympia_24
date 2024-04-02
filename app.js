@@ -4,6 +4,7 @@ const multer = require("multer");
 const app = express();
 const server = require("http").createServer(app);
 const io = require("socket.io")(server);
+const path = require("path");
 const fs = require("fs").promises;
 const os = require("os");
 const readXlsxFile = require("read-excel-file/node");
@@ -66,6 +67,8 @@ async function startServer() {
             console.log("Mật khẩu cho trang điều khiển và cơ sở dữ liệu: \x1b[96m%s\x1b[1m", adminPassword, "\x1b[0m");
             console.log("Truy cập các đường liên kết của ứng dụng bằng \x1b[36m%s\x1b[1m", "[Địa chỉ IP của máy này]:" + PORT, "\x1b[0m");
             console.log("Thí sinh: /\nĐiểm: /point\nKĩ thuật: /admin\nNgười xem: /viewer\nTrình chiếu đồ hoạ nền xanh: /live\nCơ sở dữ liệu: /database\nMC: /mc");
+            console.log("Gõ lệnh 'rs' để có thể restart lại server");
+            console.log("Vui lòng nhấn tổ hợp phím 'Control + C' để tắt server trước khi tắt CMD này.");
             console.log("-----------------------------------------");
         });
     } catch (err) {
@@ -84,6 +87,7 @@ var userID = ["", "", "", ""];
 var playerName = ["", "", "", ""];
 var playerPoint = [0, 0, 0, 0];
 var disconnectTimes = [];
+var chatLog = [];
 
 //Ghi database
 
@@ -186,21 +190,23 @@ async function readDatabase(path, isReadBase64) {
             temp = [];
             if (i < 4) {
                 for (let j = 0; j < 6; j++) {
-                    temp[j] = {};
-                    temp[j].subject = Database[6 * i + j + 1][2];
-                    temp[j].question = Database[6 * i + j + 1][3];
-                    temp[j].answer = Database[6 * i + j + 1][4];
-                    temp[j].note = Database[6 * i + j + 1][5];
-                    temp[j].media = Database[6 * i + j + 1][6];
+                    temp[j] = {
+                        subject: Database[6 * i + j + 1][2],
+                        question: Database[6 * i + j + 1][3],
+                        answer: Database[6 * i + j + 1][4],
+                        note: Database[6 * i + j + 1][5],
+                        media: Database[6 * i + j + 1][6],
+                    };
                 }
             } else {
                 for (let j = 0; j < 12; j++) {
-                    temp[j] = {};
-                    temp[j].subject = Database[6 * i + j + 1][2];
-                    temp[j].question = Database[6 * i + j + 1][3];
-                    temp[j].answer = Database[6 * i + j + 1][4];
-                    temp[j].note = Database[6 * i + j + 1][5];
-                    temp[j].media = Database[6 * i + j + 1][6];
+                    temp[j] = {
+                        subject: Database[6 * i + j + 1][2],
+                        question: Database[6 * i + j + 1][3],
+                        answer: Database[6 * i + j + 1][4],
+                        note: Database[6 * i + j + 1][5],
+                        media: Database[6 * i + j + 1][6],
+                    };
                 }
             }
 
@@ -210,12 +216,13 @@ async function readDatabase(path, isReadBase64) {
 
     await readXlsxFile(path, { sheet: "Obstacle" }).then((Database) => {
         for (let i = 0; i < 5; i++) {
-            obstacleDb[i] = {};
-            obstacleDb[i].rowLength = Database[i + 1][1];
-            obstacleDb[i].question = Database[i + 1][2];
-            obstacleDb[i].answer = Database[i + 1][3];
-            obstacleDb[i].note = Database[i + 1][4];
-            obstacleDb[i].media = Database[i + 1][5];
+            obstacleDb[i] = {
+                rowLength: Database[i + 1][1],
+                question: Database[i + 1][2],
+                answer: Database[i + 1][3],
+                note: Database[i + 1][4],
+                media: Database[i + 1][5],
+            };
             if (obstacleDb[i].rowLength == null) {
                 if (obstacleDb[i].answer == null) obstacleDb[i].rowLength = 0;
                 else obstacleDb[i].rowLength = String(obstacleDb[i].answer).replace(/\s/g, "").length;
@@ -232,23 +239,26 @@ async function readDatabase(path, isReadBase64) {
     if (!isReadBase64) {
         await readXlsxFile(path, { sheet: "Acceleration" }).then((Database) => {
             for (let i = 0; i < 4; i++) {
-                accelerationDb[i] = {};
-                accelerationDb[i].question = Database[i + 1][1];
-                accelerationDb[i].answer = Database[i + 1][2];
-                accelerationDb[i].type = Database[i + 1][3];
-                accelerationDb[i].note = Database[i + 1][4];
-                accelerationDb[i].source = Database[i + 1][5];
-                accelerationDb[i].answerImage = Database[i + 1][6];
+                accelerationDb[i] = {
+                    question: Database[i + 1][1],
+                    answer: Database[i + 1][2],
+                    type: Database[i + 1][3],
+                    note: Database[i + 1][4],
+                    source: Database[i + 1][5],
+                    answerImage: Database[i + 1][6],
+                };
             }
         });
     } else {
         const Database = await readXlsxFile(path, { sheet: "Acceleration" });
         for (let i = 0; i < 4; i++) {
-            accelerationDb[i] = {};
-            accelerationDb[i].question = Database[i + 1][1];
-            accelerationDb[i].answer = Database[i + 1][2];
-            accelerationDb[i].type = Database[i + 1][3];
-            accelerationDb[i].note = Database[i + 1][4];
+            accelerationDb[i] = {
+                question: Database[i + 1][1],
+                answer: Database[i + 1][2],
+                type: Database[i + 1][3],
+                note: Database[i + 1][4],
+            };
+
             if (accelerationDb[i].type == "Video") {
                 let videoSource = "./public" + Database[i + 1][5].slice(1);
                 try {
@@ -268,12 +278,13 @@ async function readDatabase(path, isReadBase64) {
         for (let i = 0; i < 4; i++) {
             temp = [];
             for (let j = 0; j < 6; j++) {
-                temp[j] = {};
-                temp[j].point = Database[6 * i + j + 1][1];
-                temp[j].question = Database[6 * i + j + 1][2];
-                temp[j].answer = Database[6 * i + j + 1][3];
-                temp[j].note = Database[6 * i + j + 1][4];
-                temp[j].media = Database[6 * i + j + 1][5];
+                temp[j] = {
+                    point: Database[6 * i + j + 1][1],
+                    question: Database[6 * i + j + 1][2],
+                    answer: Database[6 * i + j + 1][3],
+                    note: Database[6 * i + j + 1][4],
+                    media: Database[6 * i + j + 1][5],
+                };
             }
             finishDb.push(temp);
         }
@@ -281,19 +292,21 @@ async function readDatabase(path, isReadBase64) {
 
     await readXlsxFile(path, { sheet: "Sub Finish" }).then((Database) => {
         for (let i = 0; i < 3; i++) {
-            subFinishDb[i] = {};
-            subFinishDb[i].question = Database[i + 1][1];
-            subFinishDb[i].answer = Database[i + 1][2];
-            subFinishDb[i].note = Database[i + 1][3];
-            subFinishDb[i].media = Database[i + 1][4];
+            subFinishDb[i] = {
+                question: Database[i + 1][1],
+                answer: Database[i + 1][2],
+                note: Database[i + 1][3],
+                media: Database[i + 1][4],
+            };
         }
     });
 
     await readXlsxFile(path, { sheet: "Match Data" }).then((Database) => {
         for (let i = 0; i < 4; i++) {
-            matchDataDb[i] = {};
-            matchDataDb[i].name = Database[i + 1][1];
-            matchDataDb[i].totalPoint = Database[i + 1][6];
+            matchDataDb[i] = {
+                name: Database[i + 1][1],
+                totalPoint: Database[i + 1][6],
+            };
         }
     });
 
@@ -442,6 +455,9 @@ io.on("connection", function (socket) {
         clearInterval(disconnectTimes[playerNumber - 1]);
         socket.emit("_playerEnterRoom");
         socket.emit("sendPlayersData", { playerName, playerPoint, isReady });
+        socket.emit("_getVersion", appVersion);
+        socket.emit("sendChatLog", chatLog);
+        io.emit("getCurrentUI");
         console.log("Player " + playerNumber + " entered the room.");
     });
 
@@ -456,7 +472,9 @@ io.on("connection", function (socket) {
     });
 
     socket.on("hostEnterRoom", function () {
-        io.emit("serverData", { playerName, playerPoint, isReady, databaseChosen });
+        socket.emit("serverData", { playerName, playerPoint, isReady, databaseChosen });
+        socket.emit("_getVersion", appVersion);
+        socket.emit("sendChatLog");
     });
 
     socket.on("signOut", function (playerNumber) {
@@ -480,6 +498,11 @@ io.on("connection", function (socket) {
         let message = dataUser.message;
         let username = dataUser.username;
         if (dataUser.playerNumber != 0) username = playerName[dataUser.playerNumber - 1] + dataUser.username;
+        chatLog.push({
+            time: time,
+            username: username,
+            message: dataUser.message,
+        });
         io.emit("_sendChat", { username, message, time });
     });
 
@@ -518,10 +541,6 @@ io.on("connection", function (socket) {
 
     socket.on("mute-all", function () {
         io.emit("_mute-all");
-    });
-
-    socket.on("getCurrentUI", function () {
-        io.emit("_getCurrentUI");
     });
 
     socket.on("sendCurrentUI", function (UIData) {
@@ -926,14 +945,41 @@ const upload = multer({ storage: multer.memoryStorage() });
 
 app.post("/database", upload.single("file"), async (req, res) => {
     try {
-        let path = req.file.buffer;
-        let data = await readDatabase(path, 0);
+        let filePath = req.file.buffer;
+        let data = await readDatabase(filePath, 0);
         io.emit("_chooseDb", data);
         res.send("File đã được server đọc và gửi dữ liệu trả về.");
     } catch (error) {
         console.error(error);
         res.status(500).send("Có lỗi xảy ra khi đọc dữ liệu từ file.");
     }
+});
+
+const storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+        cb(null, "./public/temp/");
+    },
+    filename: function (req, file, cb) {
+        cb(null, file.fieldname + "-" + Date.now() + path.extname(file.originalname));
+    },
+});
+
+const uploadMedia = multer({ storage: storage });
+
+app.post("/uploadMedia", uploadMedia.any(), (req, res) => {
+    let mediaType = String(req.files[0].mimetype).substring(0, 5);
+    let time = formatTime(new Date());
+    let mediaUrl = "./temp/" + req.files[0].filename;
+    let userData = JSON.parse(req.body.userData);
+    let username = userData.username;
+    if (userData.playerNumber != 0) username = playerName[userData.playerNumber - 1] + userData.username;
+    chatLog.push({
+        time: time,
+        mediaUrl: mediaUrl,
+        mediaType: mediaType,
+        username: username,
+    });
+    io.emit("_sendChat", { mediaUrl, mediaType, username, time });
 });
 
 app.get("/", function (req, res) {

@@ -1,5 +1,5 @@
 html {
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./Others/Background.png");
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -20,7 +20,7 @@ html {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background-color: #A80000;
+    background-color: #a80000;
     border-radius: 100px;
 }
 
@@ -64,9 +64,9 @@ html {
     text-align: center;
     height: 100%;
     box-sizing: border-box;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 1.5vw;
-    border: 0.2vw solid #A80000;
+    border: 0.2vw solid #a80000;
     background: none;
 }
 
@@ -75,13 +75,13 @@ html {
 }
 
 #password button {
-    border: 0.2vw solid #A80000;
+    border: 0.2vw solid #a80000;
     position: absolute;
     right: 0%;
     width: 35%;
     background: none;
     cursor: pointer;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-weight: bold;
     height: 100%;
     transition: all 0.2s ease;
@@ -104,7 +104,7 @@ html {
 
 #dbFrame,
 #Media {
-    border: calc(10vw/48) solid orange;
+    border: calc(10vw / 48) solid orange;
     z-index: 10;
     position: absolute;
     top: 3%;
@@ -126,10 +126,10 @@ html {
 #Media button {
     margin-top: 1%;
     margin-left: 0.5%;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 0.95vw;
     background-color: rgba(0, 0, 0, 0.5);
-    border: 0.2vw solid #A80000;
+    border: 0.2vw solid #a80000;
     cursor: pointer;
     transition: border-color 0.5s ease;
     box-sizing: border-box;
@@ -158,14 +158,14 @@ html {
 
 select {
     display: inline-block;
-    width: 25%;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     background: none;
-    border: calc(5vw/96) solid white;
+    border: calc(5vw / 96) solid white;
     outline: none;
     color: white;
     cursor: pointer;
-    font-size: 0.8vw;
+    font-size: 0.9vw;
+    height: 2.75%;
 }
 
 #rounds {
@@ -214,7 +214,7 @@ select option {
     height: 2vw;
     font-size: 0.8vw;
     background-color: rgba(0, 0, 0, 0.5);
-    border: 0.2vw solid #A80000;
+    border: 0.2vw solid #a80000;
     color: white;
     cursor: pointer;
     transition: border-color 0.5s ease;
@@ -234,7 +234,7 @@ select option {
     width: 30%;
     bottom: 2%;
     color: white;
-    border-right: calc(5vw/48) solid rgb(255, 255, 255, 0.3);
+    border-right: calc(5vw / 48) solid rgb(255, 255, 255, 0.3);
     overflow-y: auto;
     overflow-x: hidden;
 }
@@ -259,7 +259,7 @@ select option {
     left: 65%;
     bottom: 73%;
     color: white;
-    border: calc(5vw/48) dotted grey;
+    border: calc(5vw / 48) dotted grey;
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -276,10 +276,10 @@ select option {
     bottom: 0.5vw;
     right: 0.5vw;
     font-family: Montserrat;
-    height: calc(100%/6);
+    height: calc(100% / 6);
     font-size: 0.8vw;
     background-color: rgba(0, 0, 0, 0.5);
-    border: 0.2vw solid #A80000;
+    border: 0.2vw solid #a80000;
     color: white;
     cursor: pointer;
     transition: border-color 0.5s ease;
@@ -298,7 +298,7 @@ select option {
 }
 
 .PlayerZone_Info2 {
-    top: 25%
+    top: 25%;
 }
 
 .PlayerZone_Info3 {
@@ -322,9 +322,9 @@ select option {
     background: transparent;
     outline: none;
     border: none;
-    border-bottom: calc(5vw/96) solid white;
+    border-bottom: calc(5vw / 96) solid white;
     transition: border-color 0.5s ease;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 0.9vw;
     height: 1.1vw;
     color: white;
@@ -350,7 +350,7 @@ select option {
     left: 65%;
     bottom: 33%;
     color: white;
-    border: calc(5vw/48) dotted grey;
+    border: calc(5vw / 48) dotted grey;
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -381,7 +381,7 @@ td,
 th {
     padding: 0.15625vw;
     text-align: center;
-    border: calc(5vw/96) dotted grey;
+    border: calc(5vw / 96) dotted grey;
 }
 
 .STT {
@@ -413,7 +413,7 @@ th {
     left: 65%;
     bottom: 3%;
     color: white;
-    border: calc(5vw/48) dotted grey;
+    border: calc(5vw / 48) dotted grey;
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -423,12 +423,17 @@ th {
     left: 0.5vw;
     right: 0.5vw;
     bottom: calc(0.5vw + 11%);
-    border: calc(5vw/48) dotted grey;
+    border: calc(5vw / 48) dotted grey;
     font-size: 0.9vw;
     line-height: 1.2;
     overflow-y: auto;
     line-height: 1.5;
     padding: 1% 2%;
+}
+
+#chatbox div .chatMedia {
+    max-width: 60%;
+    width: auto;
 }
 
 #chatInput {
@@ -439,7 +444,7 @@ th {
     right: 0.5vw;
     background: rgb(0, 0, 0, 0.5);
     outline: none;
-    border: calc(5vw/48) solid white;
+    border: calc(5vw / 48) solid white;
     color: white;
     font-size: 0.8vw;
     font-family: Montserrat;
@@ -447,7 +452,7 @@ th {
 }
 
 .chatInput:hover {
-    border-color: #A80000;
+    border-color: #a80000;
 }
 
 #StatusZone {
@@ -457,7 +462,7 @@ th {
     right: 37%;
     bottom: 3%;
     color: white;
-    border: calc(5vw/48) dotted grey;
+    border: calc(5vw / 48) dotted grey;
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -499,7 +504,7 @@ th {
     overflow-y: auto;
     padding-right: 1%;
     color: white;
-    border: calc(5vw/48) dotted rgba(255, 255, 255, 0.5);
+    border: calc(5vw / 48) dotted rgba(255, 255, 255, 0.5);
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -533,7 +538,7 @@ th {
     overflow-y: auto;
     padding-right: 1%;
     color: white;
-    border: calc(5vw/48) dotted rgba(255, 255, 255, 0.5);
+    border: calc(5vw / 48) dotted rgba(255, 255, 255, 0.5);
     background-color: rgba(0, 0, 0, 0.2);
 }
 
@@ -542,18 +547,8 @@ th {
 #ACC_ithQuestion,
 #FIN_ithPlayer,
 #FIN_ithQuestion,
-#SFI_ithQuestion,
-#CB_chooseQuestion {
-    height: calc(25vw/24);
-    width: 5%;
-    background: transparent;
-    border: calc(5vw/96) solid white;
-    outline: none;
-    font-family: 'Montserrat', sans-serif;
-    font-size: 0.8vw;
-    transition: border-color 0.5s ease;
-    background-color: rgba(255, 255, 255, 0.1);
-    color: white;
+#SFI_ithQuestion {
+    width: auto;
     text-align: center;
 }
 
@@ -566,9 +561,8 @@ th {
 .pointInput:focus,
 #FIN_ithPlayer:hover,
 #FIN_ithQuestion:hover,
-#SFI_ithQuestion:hover,
-#CB_chooseQuestion:hover {
-    border-color: #A80000;
+#SFI_ithQuestion:hover {
+    border-color: #a80000;
 }
 
 #OBS_ithRow:focus,
@@ -576,9 +570,8 @@ th {
 #ACC_ithQuestion:focus,
 #FIN_ithPlayer:focus,
 #FIN_ithQuestion:focus,
-#SFI_ithQuestion:focus,
-#CB_chooseQuestion:focus {
-    border-color: initial;
+#SFI_ithQuestion:focus {
+    border-color: #a80000;
 }
 
 #OBS_Info {
@@ -614,7 +607,7 @@ th {
     box-sizing: border-box;
 }
 
-#ACC_Media>* {
+#ACC_Media > * {
     position: absolute;
     max-width: 100%;
     max-height: 100%;

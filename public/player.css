@@ -5,7 +5,7 @@ html {
     height: 100%;
     clip: auto;
     position: absolute;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     overflow: hidden;
     background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("./Others/Background.png") no-repeat fixed center / 100% 100%;
     background-repeat: no-repeat;
@@ -30,7 +30,7 @@ html {
 
 /* width */
 ::-webkit-scrollbar {
-    width: calc(25vw/48);
+    width: calc(25vw / 48);
 }
 
 /* Track */
@@ -40,7 +40,7 @@ html {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background-color: #FF6961;
+    background-color: #ff6961;
 }
 
 /* Handle on hover */
@@ -65,7 +65,7 @@ html {
     font-size: 0.9vw;
 }
 
-#roundStatus>* {
+#roundStatus > * {
     background-color: rgb(0, 0, 0, 0.4);
 }
 
@@ -87,7 +87,7 @@ html {
     left: 0;
     top: 0;
     bottom: 0;
-    border: calc(5vw/96) solid orange;
+    border: calc(5vw / 96) solid orange;
     overflow-y: auto;
     transition: border-color 0.5s ease;
     background-color: rgba(0, 0, 0, 0.5);
@@ -102,6 +102,11 @@ html {
     line-height: 1.5;
 }
 
+#chatBox div .chatMedia {
+    max-width: 60%;
+    width: auto;
+}
+
 #userData {
     color: #01083a;
     position: absolute;
@@ -109,7 +114,7 @@ html {
     top: 0;
     right: 0;
     height: 36%;
-    border: calc(5vw/96) solid orange;
+    border: calc(5vw / 96) solid orange;
     transition: border-color 0.5s ease;
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -120,7 +125,7 @@ html {
     left: 77%;
     right: 0;
     height: 50%;
-    border: calc(5vw/96) solid orange;
+    border: calc(5vw / 96) solid orange;
     transition: border-color 0.5s ease;
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -132,8 +137,8 @@ html {
     height: 6%;
     bottom: 0%;
     cursor: pointer;
-    border-radius: calc(25vw/96);
-    font-family: 'Montserrat', sans-serif;
+    border-radius: calc(25vw / 96);
+    font-family: "Montserrat", sans-serif;
     font-weight: bold;
     font-size: 1vw;
     border: none;
@@ -145,7 +150,7 @@ html {
 #readyButton.active {
     color: white;
     background-color: rgba(0, 0, 0, 0.7);
-    border: calc(5vw/96) solid orange;
+    border: calc(5vw / 96) solid orange;
 }
 
 #message-input {
@@ -155,9 +160,9 @@ html {
     right: 1%;
     height: 4.5%;
     background: transparent;
-    border: calc(5vw/96) solid orange;
+    border: calc(5vw / 96) solid orange;
     outline: none;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 0.75vw;
     transition: border-color 0.5s ease;
     background-color: rgba(0, 0, 0, 0.5);
@@ -210,9 +215,9 @@ html {
     left: 25%;
     top: 15%;
     border: none;
-    border-bottom: calc(5vw/96) solid white;
+    border-bottom: calc(5vw / 96) solid white;
     transition: border-color 0.5s ease;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 0.75vw;
     max-width: 70%;
     width: 70%;
@@ -307,7 +312,7 @@ html {
 
 #currentPoint {
     position: absolute;
-    border: calc(5vw/96) solid white;
+    border: calc(5vw / 96) solid white;
     top: 7.5%;
     right: 3%;
     left: 76%;
@@ -371,7 +376,7 @@ html {
 
 #MainUI {
     position: absolute;
-    border: calc(5vw/48) solid white;
+    border: calc(5vw / 48) solid white;
     top: 7.5%;
     left: 3%;
     right: 27.5%;
@@ -387,13 +392,13 @@ html {
     height: 25%;
     left: 3%;
     top: 65%;
-    border: calc(5vw/48) solid white;
+    border: calc(5vw / 48) solid white;
     visibility: hidden;
 }
 
 #questionZone button {
     z-index: 1;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     color: white;
     background: none;
     cursor: pointer;
@@ -455,7 +460,7 @@ html {
     visibility: hidden;
 }
 
-#customStatus>* {
+#customStatus > * {
     font-size: 1vw;
     color: white;
     visibility: hidden;
@@ -472,7 +477,7 @@ html {
     top: 20%;
     height: 80%;
     box-sizing: border-box;
-    border-top: calc(5vw/48) solid white;
+    border-top: calc(5vw / 48) solid white;
     visibility: hidden;
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -505,7 +510,7 @@ html {
     display: flex;
     align-items: center;
     visibility: hidden;
-    border: calc(5vw/48) solid white;
+    border: calc(5vw / 48) solid white;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -536,9 +541,8 @@ html {
     display: flex;
     align-items: center;
     text-align: left;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     outline: none;
-
 }
 
 #saveAnswer {
@@ -553,7 +557,7 @@ html {
     font-size: 1vw;
     font-weight: bold;
     visibility: hidden;
-    border: calc(5vw/48) solid white;
+    border: calc(5vw / 48) solid white;
     background-color: rgba(0, 0, 0, 0.5);
 }
 
@@ -575,7 +579,7 @@ html {
     height: 30%;
     right: 3%;
     left: 76%;
-    border: calc(5vw/48) solid white;
+    border: calc(5vw / 48) solid white;
     visibility: hidden;
     background-color: rgba(0, 0, 0, 0.5);
 }
@@ -610,7 +614,6 @@ html {
     position: absolute;
     width: 100%;
     height: 25%;
-
 }
 
 #Answer1 {
@@ -631,7 +634,7 @@ html {
 
 #timeLeft {
     position: absolute;
-    border: calc(5vw/48) solid white;
+    border: calc(5vw / 48) solid white;
     left: 76%;
     height: 15%;
     right: 3%;
@@ -656,13 +659,13 @@ html {
     top: 92%;
     color: black;
     font-weight: bold;
-    font-family: 'Montserrat', sans-serif;
+    font-family: "Montserrat", sans-serif;
     font-size: 1vw;
     border: none;
     transition: border 0.5s ease;
     visibility: hidden;
     background: none;
-    background-color: #FF6961;
+    background-color: #ff6961;
     transition: background-color 0.5s ease-in-out;
 }
 
@@ -676,7 +679,7 @@ html {
     align-items: center;
 }
 
-#Media>* {
+#Media > * {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
@@ -748,7 +751,7 @@ html {
 }
 
 #OBS_imageKey {
-    border: calc(5vw/192) solid white;
+    border: calc(5vw / 192) solid white;
     z-index: 0;
 }
 
@@ -768,7 +771,7 @@ html {
     justify-content: center;
     font-size: 0.95vw;
     background-image: linear-gradient(to right bottom, #df2453, #e12048, #e21d3c, #e21e2f, #e12121);
-    border: calc(5vw/48) solid orange;
+    border: calc(5vw / 48) solid orange;
     color: white;
     font-weight: bold;
     box-sizing: border-box;
@@ -785,7 +788,7 @@ html {
 
 .FIN_Pack {
     position: absolute;
-    border: 0.3vw solid #A80000;
+    border: 0.3vw solid #a80000;
     width: 40%;
     height: 100%;
     box-sizing: border-box;
@@ -801,13 +804,13 @@ html {
     justify-content: center;
     font-size: 4vw;
     font-weight: bolder;
-    border-bottom: 0.3vw solid #A80000;
+    border-bottom: 0.3vw solid #a80000;
     background: orange;
     color: black;
 }
 
 #FIN_Pack20 {
-    left: 0%
+    left: 0%;
 }
 
 #FIN_Pack30 {
@@ -818,7 +821,7 @@ html {
     position: absolute;
     top: 75%;
     bottom: 0%;
-    width: calc(100%/3);
+    width: calc(100% / 3);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -830,16 +833,16 @@ html {
 
 .FIN_Question1 {
     left: 0%;
-    border-right: 0.3vw solid #A80000;
+    border-right: 0.3vw solid #a80000;
 }
 
 .FIN_Question2 {
-    left: calc(100%/3);
+    left: calc(100% / 3);
 }
 
 .FIN_Question3 {
-    left: calc(200%/3);
-    border-left: 0.3vw solid #A80000;
+    left: calc(200% / 3);
+    border-left: 0.3vw solid #a80000;
 }
 
 .FIN_Chosen {
@@ -856,7 +859,7 @@ html {
     position: absolute;
     height: 100%;
     left: 0%;
-    width: calc(2700%/89);
+    width: calc(2700% / 89);
     display: flex;
     align-items: center;
     justify-content: right;
@@ -866,7 +869,7 @@ html {
     position: absolute;
     height: 100%;
     left: 33.63%;
-    width: calc(2700%/89);
+    width: calc(2700% / 89);
     display: flex;
     align-items: center;
     justify-content: right;

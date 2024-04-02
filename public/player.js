@@ -119,7 +119,6 @@ socket.on("serverRestarted", function () {
     sessionStorage.clear();
 });
 
-socket.emit("getVersion");
 socket.on("_getVersion", function (appVersion) {
     document.getElementById("currentVersion").textContent = appVersion;
 });
@@ -147,7 +146,6 @@ socket.on("_sendReady", function (data) {
 
 function legitLogIn() {
     socket.emit("legitLogIn", playerNumber);
-    socket.emit("getCurrentUI");
 }
 
 socket.on("firstLogIn", function () {
@@ -191,6 +189,7 @@ window.addEventListener("beforeunload", function () {
 ChatUI();
 offContestUI();
 document.getElementById("message-input").addEventListener("keypress", sendText);
+document.getElementById("message-input").addEventListener("paste", sendMedia);
 
 //Xử lý khi player đăng nhập
 socket.on("_playerEnterRoom", function () {
@@ -219,6 +218,61 @@ socket.on("_sendCurrentUI", function (UIData) {
     }
     if (UIData.isChatBan == false) document.getElementById("message-input").addEventListener("keypress", sendText);
     else document.getElementById("message-input").removeEventListener("keypress", sendText);
+});
+
+function printChat(data) {
+    let box = document.getElementById("chatBox");
+    let textColor;
+    if (data.username == "Host") textColor = "#FE9D88";
+    else textColor = "white";
+    if (data.mediaType) {
+        if (data.mediaType == "image") {
+            box.innerHTML +=
+                "<div> <span style='font-family: \"Chivo Mono\", monospace; color: cyan'>" +
+                data.time +
+                "</span> | <font color='orange'>" +
+                data.username +
+                "</font>:<br><img class='chatMedia' src='" +
+                data.mediaUrl +
+                "'></div>";
+        } else if (data.mediaType == "video") {
+            box.innerHTML +=
+                "<div> <span style='font-family: \"Chivo Mono\", monospace; color: cyan'>" +
+                data.time +
+                "</span> | <font color='orange'>" +
+                data.username +
+                "</font>:<br><video class='chatMedia' controls src='" +
+                data.mediaUrl +
+                "'></video></div>";
+        } else {
+            //audio
+            box.innerHTML +=
+                "<div> <span style='font-family: \"Chivo Mono\", monospace; color: cyan'>" +
+                data.time +
+                "</span> | <font color='orange'>" +
+                data.username +
+                "</font>:<br><audio class='chatMedia' controls src='" +
+                data.mediaUrl +
+                "'></audio></div>";
+        }
+    } else {
+        box.innerHTML +=
+            "<div> <span style='font-family: \"Chivo Mono\", monospace; color: cyan'>" +
+            data.time +
+            "</span> | <font color='orange'>" +
+            data.username +
+            "</font>: <font color='" +
+            textColor +
+            "'>" +
+            data.message +
+            "</font></div>";
+    }
+}
+
+socket.on("sendChatLog", function (chatLog) {
+    for (let i = 0; i < chatLog.length; i++) {
+        printChat(chatLog[i]);
+    }
 });
 
 //RESET TRẠNG THÁI VÒNG THI
@@ -260,6 +314,27 @@ function sendText(event) {
     }
 }
 
+function sendMedia(event) {
+    let items = (event.clipboardData || event.originalEvent.clipboardData).items;
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf("image") !== -1 || items[i].type.indexOf("video") !== -1 || items[i].type.indexOf("audio") !== -1) {
+            let blob = items[i].getAsFile();
+            let formData = new FormData();
+            let username = String(document.getElementById("username").value).trim();
+            let userData = JSON.stringify({ username: username, playerNumber: playerNumber });
+            formData.append("media", blob);
+            formData.append("userData", userData);
+            fetch("/uploadMedia", {
+                method: "POST",
+                body: formData,
+            }).catch((error) => {
+                console.error("Error:", error);
+            });
+            return;
+        }
+    }
+}
+
 function scrollDown() {
     let chatBox = document.getElementById("chatBox");
     return chatBox.scrollHeight - chatBox.scrollTop <= chatBox.clientHeight * 1.1;
@@ -268,16 +343,7 @@ function scrollDown() {
 socket.on("_sendChat", function (data) {
     let checkScroll = scrollDown();
     let box = document.getElementById("chatBox");
-    if (data.username == "Host") {
-        box.innerHTML +=
-            "<div> <span style='font-family: \"Chivo Mono\", monospace; color: cyan'>" +
-            data.time +
-            "</span> | <font color='orange'>" +
-            data.username +
-            "</font>: <font color='#FE9D88'>" +
-            data.message +
-            "</font></div>";
-    } else box.innerHTML += "<div> <span style='font-family: \"Chivo Mono\", monospace; color: cyan'>" + data.time + "</span> | <font color='orange'>" + data.username + "</font>: " + data.message + "</div>";
+    printChat(data);
     if (checkScroll) box.scrollTop = box.scrollHeight;
 });
 

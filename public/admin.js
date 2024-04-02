@@ -14,7 +14,6 @@ socket.on("_sendAdminPassword", function (password) {
     sessionStorage.setItem("adminPassword", password);
     document.getElementById("password").style.display = "none";
     socket.emit("hostEnterRoom");
-    socket.emit("getVersion");
 });
 
 function closeEndPart() {
@@ -68,25 +67,86 @@ document.getElementById("chatInput").addEventListener("keyup", function (event) 
     }
 });
 
+document.getElementById("chatInput").addEventListener("paste", function (event) {
+    let items = (event.clipboardData || event.originalEvent.clipboardData).items;
+    for (let i = 0; i < items.length; i++) {
+        if (items[i].type.indexOf("image") !== -1 || items[i].type.indexOf("video") !== -1 || items[i].type.indexOf("audio") !== -1) {
+            let blob = items[i].getAsFile();
+            let formData = new FormData();
+            let username = "Host";
+            let userData = JSON.stringify({ username: username, playerNumber: "0" });
+            formData.append("media", blob);
+            formData.append("userData", userData);
+            fetch("/uploadMedia", {
+                method: "POST",
+                body: formData,
+            }).catch((error) => {
+                console.error("Error:", error);
+            });
+            return;
+        }
+    }
+});
+
 function scrollDown() {
     let chatbox = document.getElementById("chatbox");
     let isAtBottom = chatbox.scrollHeight - chatbox.scrollTop <= chatbox.clientHeight * 1.1;
     return isAtBottom;
 }
 
-socket.on("_sendChat", function (data) {
-    let checkScroll = scrollDown();
+function printChat(data) {
     let box = document.getElementById("chatbox");
-    if (data.username == "Host") {
+    let textColor;
+    if (data.username == "Host") textColor = "#FE9D88";
+    else textColor = "white";
+    if (data.mediaType) {
+        if (data.mediaType == "image") {
+            box.innerHTML +=
+                "<div> <span style='font-family: \"Chivo Mono\", monospace; color: cyan'>" +
+                data.time +
+                "</span> | <font color='orange'>" +
+                data.username +
+                "</font>:<br><img class='chatMedia' src='" +
+                data.mediaUrl +
+                "'></div>";
+        } else if (data.mediaType == "video") {
+            box.innerHTML +=
+                "<div> <span style='font-family: \"Chivo Mono\", monospace; color: cyan'>" +
+                data.time +
+                "</span> | <font color='orange'>" +
+                data.username +
+                "</font>:<br><video class='chatMedia' controls src='" +
+                data.mediaUrl +
+                "'></video></div>";
+        } else {
+            //audio
+            box.innerHTML +=
+                "<div> <span style='font-family: \"Chivo Mono\", monospace; color: cyan'>" +
+                data.time +
+                "</span> | <font color='orange'>" +
+                data.username +
+                "</font>:<br><audio class='chatMedia' controls src='" +
+                data.mediaUrl +
+                "'></audio></div>";
+        }
+    } else {
         box.innerHTML +=
             "<div> <span style='font-family: \"Chivo Mono\", monospace; color: cyan'>" +
             data.time +
             "</span> | <font color='orange'>" +
             data.username +
-            "</font>: <font color='#FE9D88'>" +
+            "</font>: <font color='" +
+            textColor +
+            "'>" +
             data.message +
             "</font></div>";
-    } else box.innerHTML += "<div> <span style='font-family: \"Chivo Mono\", monospace; color: cyan'>" + data.time + "</span> | <font color='orange'>" + data.username + "</font>: " + data.message + "</div>";
+    }
+}
+
+socket.on("_sendChat", function (data) {
+    let checkScroll = scrollDown();
+    let box = document.getElementById("chatbox");
+    printChat(data);
     if (checkScroll) box.scrollTop = box.scrollHeight;
 });
 
@@ -99,7 +159,14 @@ socket.on("serverData", function (data) {
     for (let i = 1; i <= 4; i++) {
         document.getElementById("player" + i + "Name").value = data.playerName[i - 1];
         document.getElementById("player" + i + "Point").value = data.playerPoint[i - 1];
+        document.getElementById("name" + i).textContent = data.playerName[i - 1];
         if (data.isReady[i - 1]) document.getElementById("TS" + i).style.color = "yellowgreen";
+    }
+});
+
+socket.on("sendChatLog", function (chatLog) {
+    for (let i = 0; i < chatLog.length; i++) {
+        printChat(chatLog[i]);
     }
 });
 
@@ -182,7 +249,8 @@ function Select() {
         temp.innerHTML += '<span class="button" onclick="playIntro()">Intro</span> ';
         temp.innerHTML += '<span class="button" onclick="startRound()">Bắt đầu</span><br>';
         temp.innerHTML += "<span class='text'>Lượt:&nbsp</span>";
-        temp.innerHTML += '<input id="STR_ithStart"></input> ';
+        temp.innerHTML +=
+            '<select id="STR_ithStart"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">Chung</option></select> ';
         temp.innerHTML += '<span class="button" onclick="STR_choosePlayer()">Confirm</span><br>';
         temp.innerHTML += '<span class="button" onclick="STR_startPlayerTurn()">Vào lượt</span> ';
         temp.innerHTML += '<span class="button" onclick="STR_openQuestionBoard()">Mở bảng câu hỏi</span> ';
@@ -206,7 +274,8 @@ function Select() {
         temp.innerHTML += '<span class="button" onclick="OBS_showNumberOfCharacter()">Tiết lộ số kí tự</span> ';
         temp.innerHTML += '<span class="button" onclick="OBS_showRows()">Hiện hàng ngang</span><br>';
         temp.innerHTML += "<span class='text'>Chọn hàng ngang số:&nbsp</span>";
-        temp.innerHTML += '<input id="OBS_ithRow"></input> ';
+        temp.innerHTML +=
+            '<select id="OBS_ithRow"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option><option value="5">Trung tâm</option></select> ';
         temp.innerHTML += '<span class="button" onclick="OBS_chooseRow()">Confirm</span><br>';
         temp.innerHTML += "<span class='text'>Khu vực câu hỏi:&nbsp</span>";
         temp.innerHTML += '<span class="button" onclick="OBS_showRowQuestion()">Mở câu hỏi</span> ';
@@ -241,7 +310,8 @@ function Select() {
         temp.innerHTML += '<span class="button" onclick="playIntro()">Intro</span> ';
         temp.innerHTML += '<span class="button" onclick="startRound()">Bắt đầu</span><br>';
         temp.innerHTML += "<span class='text'>Câu hỏi số:&nbsp</span>";
-        temp.innerHTML += '<input id="ACC_ithQuestion"></input> ';
+        temp.innerHTML +=
+            '<select id="ACC_ithQuestion"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select> ';
         temp.innerHTML += '<span class="button" onclick="ACC_chooseQuestion()">Confirm</span><br>';
         temp.innerHTML += '<span class="button" onclick="ACC_openQuestion()">Mở câu hỏi</span> ';
         temp.innerHTML += '<span class="button" onclick="ACC_startTiming()">Bắt đầu tính giờ</span> ';
@@ -261,11 +331,12 @@ function Select() {
         temp.innerHTML += '<span class="button" onclick="playIntro()">Intro</span> ';
         temp.innerHTML += '<span class="button" onclick="startRound()">Bắt đầu</span><br>';
         temp.innerHTML += "<span class='text'>Vị trí về đích:</span> ";
-        temp.innerHTML += '<input id="FIN_ithPlayer"> ';
+        temp.innerHTML +=
+            '<select id="FIN_ithPlayer"><option value="1">1</option><option value="2">2</option><option value="3">3</option><option value="4">4</option></select> ';
         temp.innerHTML += '<span class="button" onclick="FIN_choosePlayer()">Confirm</span><br>';
         temp.innerHTML += '<span class="button" onclick="FIN_showQuestionPack()">Chọn gói</span><br>';
         temp.innerHTML += "<span class='text'>Câu hỏi số:</span> ";
-        temp.innerHTML += '<input id="FIN_ithQuestion"> ';
+        temp.innerHTML += '<select id="FIN_ithQuestion"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select> ';
         temp.innerHTML += '<span class="button" onclick="FIN_chooseQuestion()">Mở câu hỏi</span><br>';
         temp.innerHTML += '<span class="button" onclick="FIN_Star()">Ngôi sao hi vọng</span> ';
         temp.innerHTML += '<span class="text" id="FIN_starStatus">Trạng thái: Đang tắt</span><br>';
@@ -283,7 +354,7 @@ function Select() {
         temp.innerHTML += '<span class="button" onclick="SFI_choosePlayers()">Chọn thí sinh</span><br>';
         temp.innerHTML += '<div id="SFI_Players"></div>';
         temp.innerHTML += "<span class='text'>Câu hỏi số</span> ";
-        temp.innerHTML += '<input id="SFI_ithQuestion"> ';
+        temp.innerHTML += '<select id="SFI_ithQuestion"><option value="1">1</option><option value="2">2</option><option value="3">3</option></select> ';
         temp.innerHTML += '<span class="button" onclick="SFI_openQuestion()">Mở câu hỏi</span> ';
         temp.innerHTML += '<span class="button" onclick="SFI_closeQuestion()">Tắt câu hỏi</span><br>';
         temp.innerHTML += '<span class="button" onclick="SFI_startTiming()">Bắt đầu tính giờ</span> ';
@@ -330,7 +401,7 @@ socket.on("getroundID", function () {
     socket.emit("_getroundID", document.getElementById("rounds").value);
 });
 
-socket.on("_getCurrentUI", function () {
+socket.on("getCurrentUI", function () {
     let roundID = document.getElementById("rounds").value;
     let UIName = document.getElementById("UIName").textContent;
     socket.emit("sendCurrentUI", { isChatBan, roundID, UIName });
