@@ -198,10 +198,10 @@ socket.on("_playerEnterRoom", function () {
         isAllowBlankAnswer = false;
     } else isAllowBlankAnswer = sessionStorage.getItem("allowBlankAnswer");
     if (isAllowBlankAnswer) {
-        document.getElementById("allowBlankAnswer").textContent = "Nộp đáp án rỗng: Có";
+        document.getElementById("allowBlankAnswer").innerHTML = "<i class='fa-solid fa-lightbulb'></i>&nbsp&nbspNộp đáp án rỗng: Có";
     } else {
         isAllowBlankAnswer = false;
-        document.getElementById("allowBlankAnswer").textContent = "Nộp đáp án rỗng: Không";
+        document.getElementById("allowBlankAnswer").innerHTML = "<i class='fa-solid fa-lightbulb'></i>&nbsp&nbspNộp đáp án rỗng: Không";
     }
 });
 
@@ -524,9 +524,9 @@ function changeFontSize(button) {
 function allowBlankAnswer() {
     isAllowBlankAnswer = !isAllowBlankAnswer;
     if (isAllowBlankAnswer) {
-        document.getElementById("allowBlankAnswer").textContent = "Nộp đáp án rỗng: Có";
+        document.getElementById("allowBlankAnswer").innerHTML = "<i class='fa-solid fa-lightbulb'></i>&nbsp&nbspNộp đáp án rỗng: Có";
     } else {
-        document.getElementById("allowBlankAnswer").textContent = "Nộp đáp án rỗng: Không";
+        document.getElementById("allowBlankAnswer").innerHTML = "<i class='fa-solid fa-lightbulb'></i>&nbsp&nbspNộp đáp án rỗng: Không";
     }
     sessionStorage.setItem("allowBlankAnswer", isAllowBlankAnswer);
 }
@@ -539,20 +539,20 @@ function roundUI() {
 
     if (currentRoundID == "1") {
         parent.innerHTML += '<div id="STR_Player"></div><div id="STR_Progress"></div><div id="STR_Subject"></div>';
-        document.getElementById("sendSignal").textContent = "GIÀNH QUYỀN TRẢ LỜI";
+        document.getElementById("sendSignal").innerHTML = "<i class='fa-solid fa-bell'></i>&nbsp&nbspGIÀNH QUYỀN TRẢ LỜI";
         startRoundAudio.src = "./Start/Sounds/KDBatDauVongThi.mp3";
     } else if (currentRoundID == "2") {
         parent.innerHTML += '<div id="OBS_ACC_SFI_Status"></div>';
         useAnswerInput();
         useSendSignal();
-        document.getElementById("sendSignal").textContent = "TRẢ LỜI CHƯỚNG NGẠI VẬT";
+        document.getElementById("sendSignal").innerHTML = "<i class='fa-solid fa-bell'></i>&nbsp&nbspTRẢ LỜI CHƯỚNG NGẠI VẬT";
         startRoundAudio.src = "./Obstacle/Sounds/VCNVBatDauVongThi.mp3";
     } else if (currentRoundID == "3") {
         parent.innerHTML += '<div id="OBS_ACC_SFI_Status"></div>';
         startRoundAudio.src = "./Acceleration/Sounds/TTBatDauVongThi.mp3";
     } else if (currentRoundID == "4") {
         parent.innerHTML += '<div id="FIN_Star"><img></div><div id="FIN_Player"></div><div id="FIN_Pack"></div><div id="FIN_Question"></div>';
-        document.getElementById("sendSignal").textContent = "GIÀNH QUYỀN TRẢ LỜI";
+        document.getElementById("sendSignal").innerHTML = "<i class='fa-solid fa-bell'></i>&nbsp&nbspGIÀNH QUYỀN TRẢ LỜI";
         startRoundAudio.src = "./Finish/Sounds/VDBatDauVongThi.mp3";
     }
 }
@@ -609,10 +609,10 @@ socket.on("_OBS_chooseRow", function (data) {
     OBS_chosenRow.currentTime = 0;
     OBS_chosenRow.play();
     resetAnswerZone();
-    if (data.rowIth == 5) document.getElementById("OBS_ACC_SFI_Status").textContent = "Ô trung tâm";
+    if (data.rowIth == 5) document.getElementById("OBS_ACC_SFI_Status").innerHTML = "<i class='fa-solid fa-pencil'></i>&nbsp&nbspÔ trung tâm";
     else {
         document.getElementById("OBS_Row" + data.rowIth).style.color = "orange";
-        document.getElementById("OBS_ACC_SFI_Status").textContent = "Hàng ngang " + data.rowIth;
+        document.getElementById("OBS_ACC_SFI_Status").innerHTML = "<i class='fa-solid fa-pencil'></i>&nbsp&nbspHàng ngang " + data.rowIth;
     }
 });
 
@@ -663,14 +663,7 @@ socket.on("_OBS_serverObsSignal", function (signalData) {
     OBS_obsSignalAudio.play();
     if (playerNumber == Number(signalData.signalDataFromAdmin.numberOfPlayer)) document.getElementById("answerInput").removeEventListener("keypress", sendAnswer);
     let print = document.getElementById("OBS_printSignal");
-    print.innerHTML +=
-        '<div class="OBS_Signal" id="OBS_Signal' +
-        signalData.OBS_numberOfObsSignal +
-        '">' +
-        signalData.OBS_numberOfObsSignal +
-        ". " +
-        signalData.signalDataFromAdmin.name +
-        "</div>";
+    print.innerHTML += '<div class="OBS_Signal" id="OBS_Signal' + signalData.OBS_numberOfObsSignal + '">' + signalData.OBS_numberOfObsSignal + ". " + signalData.signalDataFromAdmin.name + "</div>";
     document.getElementById("OBS_Signal" + signalData.OBS_numberOfObsSignal).style.left = 25 * (Number(signalData.OBS_numberOfObsSignal) - 1) + "%";
 });
 
@@ -752,7 +745,7 @@ socket.on("_OBS_last15s", function () {
     SFI_mainTime.pause();
     SFI_mainTime.currentTime = 0;
     SFI_mainTime.play();
-    document.getElementById("OBS_ACC_SFI_Status").textContent = "15 giây cuối cùng";
+    document.getElementById("OBS_ACC_SFI_Status").innerHTML = "<i class='fa-solid fa-pencil'></i>&nbsp&nbsp15 giây cuối cùng";
     countDown(15, true);
 });
 
@@ -769,8 +762,9 @@ var STR_signalPlayer;
 
 socket.on("_STR_choosePlayer", function (ithStart) {
     STR_currentPlayer = Number(ithStart);
-    if (STR_currentPlayer != 5) document.getElementById("STR_Player").innerHTML = "<font color='orange'>Lượt:</font>" + "&nbsp;" + allPlayerName[STR_currentPlayer - 1];
-    else document.getElementById("STR_Player").innerHTML = "<font color='orange'>Lượt:</font>&nbsp" + "Chung";
+    if (STR_currentPlayer != 5)
+        document.getElementById("STR_Player").innerHTML = "<font color='orange'><i class='fa-solid fa-user'></i>&nbsp&nbspLượt:</font>" + "&nbsp;" + allPlayerName[STR_currentPlayer - 1];
+    else document.getElementById("STR_Player").innerHTML = "<font color='orange'><i class='fa-solid fa-user'></i>&nbsp&nbspLượt:</font>&nbsp" + "Chung";
 });
 
 socket.on("_STR_startPlayerTurn", function () {
@@ -778,8 +772,8 @@ socket.on("_STR_startPlayerTurn", function () {
     STR_startTurn.pause();
     STR_startTurn.currentTime = 0;
     STR_startTurn.play();
-    if (STR_currentPlayer != 5) document.getElementById("STR_Progress").innerHTML = "<font color='orange'>Câu:</font>" + "&nbsp;" + "0/6";
-    else document.getElementById("STR_Progress").innerHTML = "<font color='orange'>Câu:</font>" + "&nbsp;" + "0/12";
+    if (STR_currentPlayer != 5) document.getElementById("STR_Progress").innerHTML = "<font color='orange'><i class='fa-solid fa-list'></i>&nbsp&nbspCâu:</font>" + "&nbsp;" + "0/6";
+    else document.getElementById("STR_Progress").innerHTML = "<font color='orange'><i class='fa-solid fa-list'></i>&nbsp&nbspCâu:</font>" + "&nbsp;" + "0/12";
 });
 
 socket.on("_STR_openQuestionBoard", function () {
@@ -799,12 +793,12 @@ function STR_printNextQuestion(question) {
         questionAudio.play();
     }
     document.getElementById("questionText").textContent = question.question;
-    document.getElementById("STR_Subject").textContent = STR_ithQuestion + ". " + question.subject;
+    document.getElementById("STR_Subject").innerHTML = "<i class='fa-solid fa-pencil'></i>&nbsp&nbsp" + STR_ithQuestion + ". " + question.subject;
 }
 
 function STR_printPassStatus() {
-    if (STR_currentPlayer != 5) document.getElementById("STR_Progress").innerHTML = "<font color='orange'>Câu:</font>" + "&nbsp;" + STR_ithQuestion + "/6";
-    else document.getElementById("STR_Progress").innerHTML = "<font color='orange'>Câu:</font>" + "&nbsp;" + STR_ithQuestion + "/12";
+    if (STR_currentPlayer != 5) document.getElementById("STR_Progress").innerHTML = "<font color='orange'><i class='fa-solid fa-list'></i>&nbsp&nbspCâu:</font>" + "&nbsp;" + STR_ithQuestion + "/6";
+    else document.getElementById("STR_Progress").innerHTML = "<font color='orange'><i class='fa-solid fa-list'></i>&nbsp&nbspCâu:</font>" + "&nbsp;" + STR_ithQuestion + "/12";
 }
 
 socket.on("_STR_startTurn", function (question) {
@@ -888,9 +882,9 @@ socket.on("_STR_finishTurn", function () {
     document.getElementById("sendSignal").onclick = "";
     for (let i = 1; i <= 4; i++) document.getElementById("currentPoint" + i).classList.remove("FIN_Granted");
     document.getElementById("questionText").textContent = "";
-    document.getElementById("STR_Player").textContent = "";
-    document.getElementById("STR_Progress").textContent = "";
-    document.getElementById("STR_Subject").textContent = "";
+    document.getElementById("STR_Player").innerHTML = "";
+    document.getElementById("STR_Progress").innerHTML = "";
+    document.getElementById("STR_Subject").innerHTML = "";
     STR_mainTime.pause();
     STR_finishTurn.pause();
     STR_finishTurn.currentTime = 0;
@@ -925,9 +919,7 @@ socket.on("_ACC_openQuestion", function (ACC_questionData) {
     if (ACC_questionData.type == "Video") {
         let sourceNum = ACC_questionData.source.length;
         document.getElementById("Media").innerHTML +=
-            "<video poster='none.png' preload='auto' disablePictureInPicture controlsList='nodownload'><source src='" +
-            ACC_questionData.source +
-            "' type='video/mp4'></source></video>";
+            "<video poster='none.png' preload='auto' disablePictureInPicture controlsList='nodownload'><source src='" + ACC_questionData.source + "' type='video/mp4'></source></video>";
         socket.emit("ACC_checkVideoSource", { sourceNum, playerNumber });
     } else {
         document.getElementById("Media").innerHTML += "<img src='" + ACC_questionData.source + "'>";
@@ -936,7 +928,7 @@ socket.on("_ACC_openQuestion", function (ACC_questionData) {
 });
 
 socket.on("ACC_sendQuestionNumber", function (number) {
-    document.getElementById("OBS_ACC_SFI_Status").textContent = "Tăng tốc " + number;
+    document.getElementById("OBS_ACC_SFI_Status").innerHTML = "<i class='fa-solid fa-pencil'></i>&nbsp&nbspTăng tốc " + number;
 });
 
 socket.on("_ACC_sentAnswer", function (serverData) {
@@ -1027,7 +1019,7 @@ socket.on("_FIN_choosePlayer", function (player) {
     FIN_startTurnAudio.currentTime = 0;
     FIN_startTurnAudio.play();
     FIN_currentPlayer = player;
-    document.getElementById("FIN_Player").innerHTML = "<font color='orange'>Lượt:</font>" + "&nbsp;" + allPlayerName[FIN_currentPlayer - 1];
+    document.getElementById("FIN_Player").innerHTML = "<font color='orange'><i class='fa-solid fa-user'></i>&nbsp&nbspLượt:</font>" + "&nbsp;" + allPlayerName[FIN_currentPlayer - 1];
 });
 
 socket.on("_FIN_showQuestionPack", function () {
@@ -1070,12 +1062,12 @@ socket.on("_FIN_packChosen", function (list) {
         offFinishUI();
     }, 3000);
     document.getElementById("FIN_Pack").innerHTML =
-        "<font color='orange'>Bộ" + "&nbsp;" + totalPack + " điểm:</font>" + "&nbsp;" + list[0] + " - " + list[1] + " - " + list[2];
+        "<font color='orange'><i class='fa-solid fa-cubes'></i>&nbsp&nbspBộ" + "&nbsp;" + totalPack + " điểm:</font>" + "&nbsp;" + list[0] + " - " + list[1] + " - " + list[2];
 });
 
 socket.on("_FIN_chooseQuestion", function (question) {
     for (let i = 1; i <= 4; i++) document.getElementById("currentPoint" + i).classList.remove("FIN_Granted");
-    document.getElementById("FIN_Question").textContent = "Câu " + question.ithQuestion + " - " + question.questionData.point + " điểm";
+    document.getElementById("FIN_Question").innerHTML = "<i class='fa-solid fa-pencil'></i>&nbsp&nbspCâu " + question.ithQuestion + " - " + question.questionData.point + " điểm";
     document.getElementById("questionText").textContent = question.questionData.question;
 });
 
@@ -1148,9 +1140,9 @@ socket.on("_FIN_finishTurn", function () {
     FIN_finishTurnAudio.currentTime = 0;
     FIN_finishTurnAudio.play();
     document.getElementById("questionText").textContent = "";
-    document.getElementById("FIN_Player").textContent = "";
-    document.getElementById("FIN_Pack").textContent = "";
-    document.getElementById("FIN_Question").textContent = "";
+    document.getElementById("FIN_Player").innerHTML = "";
+    document.getElementById("FIN_Pack").innerHTML = "";
+    document.getElementById("FIN_Question").innerHTML = "";
 });
 
 //CÂU HỎI PHỤ
@@ -1164,7 +1156,7 @@ socket.on("_SFI_chosenPlayer", function (chosenPlayer) {
 socket.on("_SFI_startRound", function (playerList) {
     ContestUI();
     defaultPlayerFunction();
-    document.getElementById("sendSignal").textContent = "GIÀNH QUYỀN TRẢ LỜI";
+    document.getElementById("sendSignal").innerHTML = "<i class='fa-solid fa-bell'></i>&nbsp&nbspGIÀNH QUYỀN TRẢ LỜI";
     for (let i = 0; i < playerList.length; i++) {
         SFI_Hash[playerList[i] - 1] = i + 1;
         document.getElementById("answerName" + (i + 1)).textContent = allPlayerName[playerList[i] - 1];
@@ -1174,7 +1166,7 @@ socket.on("_SFI_startRound", function (playerList) {
 
 socket.on("_SFI_openQuestion", function (serverData) {
     SFI_Eliminated = false;
-    document.getElementById("OBS_ACC_SFI_Status").textContent = "Câu hỏi số " + serverData.openedCount;
+    document.getElementById("OBS_ACC_SFI_Status").innerHTML = "<i class='fa-solid fa-pencil'></i>&nbsp&nbspCâu hỏi số " + serverData.openedCount;
     document.getElementById("questionText").textContent = serverData.questionData.question;
     document.getElementById("timeLeft").textContent = 15;
     SFI_timeLeft = 15;

@@ -65,7 +65,7 @@ html {
     font-size: 0.9vw;
 }
 
-#roundStatus > * {
+#roundStatus>* {
     background-color: rgb(0, 0, 0, 0.4);
 }
 
@@ -425,7 +425,7 @@ html {
     position: absolute;
     bottom: 0%;
     right: 12%;
-    width: 16%;
+    width: 17%;
 }
 
 #questionStatus {
@@ -460,7 +460,7 @@ html {
     visibility: hidden;
 }
 
-#customStatus > * {
+#customStatus>* {
     font-size: 1vw;
     color: white;
     visibility: hidden;
@@ -679,7 +679,7 @@ html {
     align-items: center;
 }
 
-#Media > * {
+#Media>* {
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
