@@ -353,7 +353,7 @@ socket.on("_playIntro", function (roundID) {
     currentRoundID = roundID;
     document.getElementById("intro").style.visibility = "visible";
     // document.getElementById("start").style.visibility = "visible";
-    var intro = document.getElementById("intro");
+    let intro = document.getElementById("intro");
     if (roundID == "1") {
         intro.src = "./Start/Start.mp4";
         // start.src = "./Start/Start.png";
@@ -394,9 +394,9 @@ socket.on("_playIntro", function (roundID) {
         document.getElementById("SubFinishUI").style.visibility = "visible";
     }
     intro.play();
-    setTimeout(function () {
+    intro.onended = function () {
         document.getElementById("intro").style.visibility = "hidden";
-    }, 6500);
+    };
 });
 
 socket.on("_startRound", function () {
@@ -795,15 +795,17 @@ socket.on("_STR_openQuestionBoard", function () {
     STR_openQuestionBoard.play();
     document.getElementById("StartUI").style.visibility = "visible";
     let questionBox = document.getElementById("STR_questionBox");
+    questionBox.classList.remove("STR_moveBoard");
     void questionBox.offsetWidth;
     let shelf = document.getElementById("STR_Shelf");
+    shelf.classList.remove("STR_moveQuestionShelf");
     void shelf.offsetWidth;
     let status = document.getElementById("STR_statusZone");
+    status.classList.remove("STR_moveStatus");
     void status.offsetWidth;
-    let statusShelf = document.getElementById("STR_statusShelf");
-    void statusShelf.offsetWidth;
     let players = document.querySelectorAll(".STR_Player");
     for (let i = 0; i < players.length; i++) {
+        players[i].classList.remove("STR_movePlayer");
         players[i].offsetWidth;
         players[i].classList.add("STR_movePlayer");
         document.getElementById(players[i].id).style.animationDelay = (i + 1) * 250 + "ms";
@@ -923,53 +925,6 @@ socket.on("_STR_finishTurn", function () {
     STR_finishTurn.currentTime = 0;
     STR_finishTurn.play();
     document.getElementById("StartUI").style.visibility = "hidden";
-});
-
-socket.on("_result", function () {
-    offContestUI();
-    ResultUI();
-    clearTimeout(showResult);
-    clearInterval(repeat);
-    document.getElementById("resultName").textContent = "";
-    document.getElementById("resultPoint").textContent = "";
-    var sortedList = new Array(4);
-    for (var i = 1; i <= 4; i++) {
-        var playerName = allPlayerName[i - 1];
-        var playerPoint = allPlayerPoint[i - 1];
-        sortedList.push({ name: playerName, point: playerPoint });
-    }
-
-    sortedList.sort(function (a, b) {
-        return a.point - b.point;
-    });
-
-    resultAudio.pause();
-    resultAudio.currentTime = 0;
-    resultAudio.play();
-    document.querySelector(".Namebar").classList.remove("namebarMove");
-    var namebarMove = document.getElementById("Namebar");
-    void namebarMove.offsetWidth;
-    document.querySelector(".Namebar").classList.add("namebarMove");
-
-    document.querySelector(".Pointbar").classList.remove("pointbarMove");
-    var pointbarMove = document.getElementById("Pointbar");
-    void pointbarMove.offsetWidth;
-    document.querySelector(".Pointbar").classList.add("pointbarMove");
-
-    function setNameAndPoint(name, point) {
-        document.getElementById("resultName").textContent = name;
-        document.getElementById("resultPoint").textContent = point;
-    }
-
-    showResult = setTimeout(function () {
-        var count = 0;
-        setNameAndPoint(sortedList[count].name, sortedList[count].point);
-        repeat = setInterval(function () {
-            count++;
-            setNameAndPoint(sortedList[count].name, sortedList[count].point);
-            if (count == 3) clearInterval(repeat);
-        }, 3000);
-    }, 1000);
 });
 
 //TĂNG TỐC

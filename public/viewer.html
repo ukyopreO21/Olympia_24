@@ -7,7 +7,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>O24 - Màn chiếu</title>
     <link rel="icon" type="image/x-icon" href="./Others/icon.png">
-    </link>
     <link rel="stylesheet" href="viewer.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -62,34 +61,6 @@
             </span>
         </span>
         <span id="ObstacleUI">
-            <span id="showRowAnswerAnimation">
-                <span id="1" class="main"></span>
-                <span id="2" class="name name1">
-                    <label id="name1"></label>
-                </span>
-                <span id="3" class="answer answer1">
-                    <label id="answer1"></label>
-                </span>
-                <span id="4" class="name name2">
-                    <label id="name2"></label>
-                </span>
-                <span id="5" class="answer answer2">
-                    <label id="answer2"></label>
-                </span>
-                <span id="6" class="name name3">
-                    <label id="name3"></label>
-                </span>
-                <span id="7" class="answer answer3">
-                    <label id="answer3"></label>
-                </span>
-                <span id="8" class="name name4">
-                    <label id="name4"></label>
-                </span>
-                <span id="9" class="answer answer4">
-                    <label id="answer4"></label>
-                </span>
-            </span>
-
             <div id="OBS_MainUI">
                 <div class="OBS_Row" id="OBS_Row1">
                     <div class="OBS_Order">1</div>
@@ -194,12 +165,47 @@
                 <div id="OBS_Line" class="Line"></div>
                 <div id="OBS_Question"></div>
             </div>
+            <div id="OBS_Answers">
+                <span id="OBS_outerLine">
+                    <span id="OBS_innerLine"></span>
+                    <span id="OBS_Pinner1" class="OBS_Pinner"></span>
+                    <span id="OBS_Pinner2" class="OBS_Pinner"></span>
+                    <span id="OBS_Pinner3" class="OBS_Pinner"></span>
+                    <span id="OBS_Pinner4" class="OBS_Pinner"></span>
+                </span>
+                <span id="OBS_Player1" class="OBS_Player">
+                    <span class="OBS_Name OBS_nameLeft"></span>
+                    <span class="OBS_Answer">
+                        <label class="OBS_answerText"></label>
+                    </span>
+                </span>
+                <span id="OBS_Player2" class="OBS_Player">
+                    <span class="OBS_Name OBS_nameRight"></span>
+                    <span class="OBS_Answer">
+                        <label class="OBS_answerText"></label>
+                    </span>
+                </span>
+                <span id="OBS_Player3" class="OBS_Player">
+                    <span class="OBS_Name OBS_nameLeft"></span>
+                    <span class="OBS_Answer">
+                        <label class="OBS_answerText"></label>
+                    </span>
+                </span>
+                <span id="OBS_Player4" class="OBS_Player">
+                    <span class="OBS_Name OBS_nameRight"></span>
+                    <span class="OBS_Answer">
+                        <div class="OBS_answerText"></div>
+                    </span>
+                </span>
+            </div>
         </span>
         <span id="AccelerationUI">
             <span id="ACC_questionZone">
-                <span id="ACC_questionBar">
-                    <label id="ACC_Question"></label>
-                </span>
+                <div id="ACC_questionBar">
+                    <span id="ACC_mainQuestionBar">
+                        <label id="ACC_Question"></label>
+                    </span>
+                </div>
                 <span id="ACC_mediaBox">
                     <img id="ACC_imageMedia" class="ACC_Media"></img>
                     <video poster="none.png" id="ACC_videoMedia" class="ACC_Media" width="100%">
@@ -210,49 +216,48 @@
                 </span>
                 <div id="ACC_Shelf"></div>
             </span>
-            <span id="ACC_showAnswerAnimation">
-                <div id="test"></div>
-                <div id="ACC_mainLine"></div>
-                <div id="ACC_Player1" class="ACC_Player">
-                    <span id="ACC_ithCircle1" class="ACC_ithCircle">1</span>
-                    <span id="ACC_Time1" class="ACC_Time">
-                        <label id="ACC_timeLabel1" class="ACC_timeLabel"></label>
+            <span id="ACC_Answers">
+                <span id="ACC_outerLine">
+                    <span id="ACC_innerLine"></span>
+                    <span id="ACC_Pinner1" class="ACC_Pinner"></span>
+                    <span id="ACC_Pinner2" class="ACC_Pinner"></span>
+                    <span id="ACC_Pinner3" class="ACC_Pinner"></span>
+                    <span id="ACC_Pinner4" class="ACC_Pinner"></span>
+                </span>
+                <span id="ACC_Player1" class="ACC_Player">
+                    <span class="ACC_Name ACC_nameLeft"></span>
+                    <span class="ACC_Answer">
+                        <label class="ACC_answerText"></label>
                     </span>
-                    <span id="ACC_Name1" class="ACC_Name">
-                        <label id="ACC_nameLabel1" class="ACC_nameLabel"></label>
+                    <span class="ACC_Time">
+                        <label class="ACC_timeText"></label>
                     </span>
-                    <span id="ACC_Answer1" class="ACC_Answer"></span>
-                </div>
-                <div id="ACC_Player2" class="ACC_Player">
-                    <span id="ACC_ithCircle2" class="ACC_ithCircle">2</span>
-                    <span id="ACC_Time2" class="ACC_Time">
-                        <label id="ACC_timeLabel2" class="ACC_timeLabel"></label>
+                </span>
+                <span id="ACC_Player2" class="ACC_Player">
+                    <span class="ACC_Name ACC_nameRight"></span>
+                    <span class="ACC_Answer">
+                        <label class="ACC_answerText"></label></span>
+                    <span class="ACC_Time">
+                        <label class="ACC_timeText"></label>
                     </span>
-                    <span id="ACC_Name2" class="ACC_Name">
-                        <label id="ACC_nameLabel2" class="ACC_nameLabel"></label>
+                </span>
+                <span id="ACC_Player3" class="ACC_Player">
+                    <span class="ACC_Name ACC_nameLeft"></span>
+                    <span class="ACC_Answer">
+                        <label class="ACC_answerText"></label></span>
+                    <span class="ACC_Time">
+                        <label class="ACC_timeText"></label>
                     </span>
-                    <span id="ACC_Answer2" class="ACC_Answer"></span>
-                </div>
-                <div id="ACC_Player3" class="ACC_Player">
-                    <span id="ACC_ithCircle3" class="ACC_ithCircle">3</span>
-                    <span id="ACC_Time3" class="ACC_Time">
-                        <label id="ACC_timeLabel3" class="ACC_timeLabel"></label>
+                </span>
+                <span id="ACC_Player4" class="ACC_Player">
+                    <span class="ACC_Name ACC_nameRight"></span>
+                    <span class="ACC_Answer">
+                        <div class="ACC_answerText"></div>
                     </span>
-                    <span id="ACC_Name3" class="ACC_Name">
-                        <label id="ACC_nameLabel3" class="ACC_nameLabel"></label>
+                    <span class="ACC_Time">
+                        <label class="ACC_timeText"></label>
                     </span>
-                    <span id="ACC_Answer3" class="ACC_Answer"></span>
-                </div>
-                <div id="ACC_Player4" class="ACC_Player">
-                    <span id="ACC_ithCircle4" class="ACC_ithCircle">4</span>
-                    <span id="ACC_Time4" class="ACC_Time">
-                        <label id="ACC_timeLabel4" class="ACC_timeLabel"></label>
-                    </span>
-                    <span id="ACC_Name4" class="ACC_Name">
-                        <label id="ACC_nameLabel4" class="ACC_nameLabel"></label>
-                    </span>
-                    <span id="ACC_Answer4" class="ACC_Answer"></span>
-                </div>
+                </span>
             </span>
         </span>
         <span id="FinishUI">

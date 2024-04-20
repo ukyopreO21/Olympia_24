@@ -40,6 +40,20 @@ html {
     background-color: white;
 }
 
+:root {
+    --OBS_childRatio: 0.84;
+    --OBS_parentGap: 8%;
+    --OBS_pinHeight: calc(4 * 100% / 63);
+    --OBS_playerHeight: 10%;
+    --OBS_pinTopGap: 0%;
+
+    --ACC_childRatio: 0.84;
+    --ACC_parentGap: 8%;
+    --ACC_pinHeight: calc(4 * 100% / 63);
+    --ACC_playerHeight: 12.5%;
+    --ACC_pinTopGap: 0%;
+}
+
 #currentVersion {
     position: absolute;
     right: 0%;
@@ -396,217 +410,255 @@ html {
     }
 }
 
-@keyframes name {
-    0% {
-        width: 0%;
-    }
-
-    100% {
-        width: 15%;
-    }
-}
-
-@keyframes answer {
-    0% {
-        width: 0%;
-    }
-
-    100% {
-        width: 30%;
-    }
-}
-
-@keyframes main {
-    0% {
-        height: 0%;
-    }
-
-    100% {
-        height: 100%;
-    }
-}
-
-.main {
+#OBS_outerLine {
     position: absolute;
-    left: 49.5%;
-    right: 49.5%;
-    z-index: 3;
-    bottom: 0%;
-    background-image: linear-gradient(to bottom, #b31e0e, #a61a0b, #9a1508, #8d1105, #810c01);
+    top: calc(100% - var(--OBS_parentGap));
+    bottom: var(--OBS_parentGap);
+    left: 48.5%;
+    right: 48.5%;
+    border-radius: 100px;
+    background-color: #adadad;
+    overflow: hidden;
 }
 
-.answer {
+#OBS_innerLine {
     position: absolute;
-    height: 8%;
+    top: 2.5%;
+    bottom: 2.5%;
+    left: 35%;
+    right: 35%;
+    border-radius: 100px;
+    background-color: #4b4b4d;
+}
+
+.OBS_Pinner {
+    position: absolute;
+    width: 100%;
+    height: var(--OBS_pinHeight);
+    border-radius: 50%;
+    background-color: #a80000;
+    border: 0.4vw solid white;
     box-sizing: border-box;
+    z-index: 3;
+    top: calc(110% - var(--OBS_pinHeight));
+}
+
+.OBS_Player {
+    position: absolute;
+    width: 35%;
+    height: var(--OBS_playerHeight);
+    top: calc(var(--OBS_parentGap) + calc(var(--OBS_pinTopGap) * var(--OBS_childRatio)) - calc((var(--OBS_playerHeight) - var(--OBS_pinHeight) * var(--OBS_childRatio)) / 2));
+    scale: 0;
+}
+
+#OBS_Player1 {
+    --OBS_pinTopGap: calc(940% / 63);
+    left: 50.5%;
+}
+
+#OBS_Player2 {
+    --OBS_pinTopGap: calc(2 * 940% / 63 + calc(4 * 100% / 63));
+    right: 50.5%;
+}
+
+#OBS_Player3 {
+    --OBS_pinTopGap: calc(3 * 940% / 63 + 2 * calc(4 * 100% / 63));
+    left: 50.5%;
+}
+
+#OBS_Player4 {
+    --OBS_pinTopGap: calc(4 * 940% / 63 + 3 * calc(4 * 100% / 63));
+    right: 50.5%;
+}
+
+.OBS_Answer {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right bottom, #383a3e, #313235, #2a2a2c, #222223, #1b1b1b);
+    border: 0.3vw solid whitesmoke;
+    border-radius: 2000px;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.OBS_nameLeft {
+    left: 8%;
+}
+
+.OBS_nameRight {
+    right: 8%;
+}
+
+.OBS_Name {
+    position: absolute;
+    top: -30%;
+    width: 40%;
+    background-color: whitesmoke;
+    border-radius: 0.5vw;
+    height: 50%;
     z-index: 2;
+    color: black;
+    font-weight: bolder;
+    font-size: 1.5vw;
     display: flex;
     justify-content: center;
     align-items: center;
-    color: black;
-    font-weight: bold;
-    font-size: calc(175vw/96);
-}
-
-.answer1 {
-    top: 18.5%;
-    left: 50%;
-    border-top-right-radius: 0.6vw;
-    border-bottom-right-radius: 0.6vw;
-    background-image: linear-gradient(to right bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
-}
-
-.answer2 {
-    top: 38.5%;
-    right: 50%;
-    border-top-left-radius: 0.6vw;
-    border-bottom-left-radius: 0.6vw;
-    background-image: linear-gradient(to left bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
-}
-
-.answer3 {
-    top: 58.5%;
-    left: 50%;
-    border-top-right-radius: 0.6vw;
-    border-bottom-right-radius: 0.6vw;
-    background-image: linear-gradient(to right bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
-}
-
-.answer4 {
-    top: 78.5%;
-    right: 50%;
-    border-top-left-radius: 0.6vw;
-    border-bottom-left-radius: 0.6vw;
-    background-image: linear-gradient(to left bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
-}
-
-.name {
-    position: absolute;
-    height: 5%;
+    text-align: center;
     box-sizing: border-box;
-    z-index: 1;
-    display: flex;
-    align-items: center;
+}
+
+.OBS_answerText {
+    position: absolute;
     color: white;
-    font-weight: bold;
-    font-size: calc(125vw/96);
+    font-weight: bolder;
+    font-size: 2vw;
+    top: 15%;
+    left: 3%;
+    right: 3%;
+    bottom: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
 }
 
-.name1 {
-    top: 13.5%;
-    left: 50%;
-    justify-content: start;
-    border-top-right-radius: 150px;
-    border-bottom-right-radius: 150px;
-    background-image: linear-gradient(to right, #b31e0e, #a61a0b, #9a1508, #8d1105, #810c01);
+@keyframes OBS_extendOuter {
+    0% {
+        top: calc(100% - var(--OBS_parentGap));
+    }
+
+    100% {
+        top: var(--OBS_parentGap);
+    }
 }
 
-.name2 {
-    top: 33.5%;
-    right: 50%;
-    justify-content: flex-end;
-    border-top-left-radius: 150px;
-    border-bottom-left-radius: 150px;
-    background-image: linear-gradient(to left, #b31e0e, #a61a0b, #9a1508, #8d1105, #810c01);
+@keyframes OBS_movePinner1 {
+    0% {
+        top: calc(110% - var(--OBS_pinHeight));
+    }
+
+    100% {
+        top: calc(940% / 63);
+    }
 }
 
-.name3 {
-    top: 53.5%;
-    left: 50%;
-    justify-content: flex-start;
-    border-top-right-radius: 150px;
-    border-bottom-right-radius: 150px;
-    background-image: linear-gradient(to right, #b31e0e, #a61a0b, #9a1508, #8d1105, #810c01);
+@keyframes OBS_movePinner2 {
+    0% {
+        top: calc(110% - var(--OBS_pinHeight));
+    }
+
+    100% {
+        top: calc(2 * 940% / 63 + calc(4 * 100% / 63));
+    }
 }
 
-.name4 {
-    top: 73.5%;
-    right: 50%;
-    justify-content: flex-end;
-    border-top-left-radius: 150px;
-    border-bottom-left-radius: 150px;
-    background-image: linear-gradient(to left, #b31e0e, #a61a0b, #9a1508, #8d1105, #810c01);
+@keyframes OBS_movePinner3 {
+    0% {
+        top: calc(110% - var(--OBS_pinHeight));
+    }
+
+    100% {
+        top: calc(3 * 940% / 63 + 2 * calc(4 * 100% / 63));
+    }
 }
 
-.animate {
-    animation-name: main;
+@keyframes OBS_movePinner4 {
+    0% {
+        top: calc(110% - var(--OBS_pinHeight));
+    }
+
+    100% {
+        top: calc(4 * 940% / 63 + 3 * calc(4 * 100% / 63));
+    }
+}
+
+@keyframes OBS_showAnswer {
+    0% {
+        scale: 0;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
+
+.OBS_extendOuter {
+    animation-name: OBS_extendOuter;
     animation-duration: 0.5s;
+    animation-timing-function: ease;
     animation-fill-mode: forwards;
+}
+
+.OBS_movePinner1 {
+    animation-name: OBS_movePinner1;
+    animation-delay: 0.5s;
+    animation-duration: 0.75s;
     animation-timing-function: ease-in-out;
-}
-
-.animateName1 {
-    animation-name: name;
-    animation-duration: 0.75s;
-    animation-delay: 0.5s;
     animation-fill-mode: forwards;
-    animation-timing-function: ease;
 }
 
-.animateAns1 {
-    animation-name: answer;
-    animation-duration: 0.75s;
-    animation-delay: 0.5s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease;
-}
-
-.animateName2 {
-    animation-name: name;
-    animation-duration: 0.75s;
-    animation-delay: 0.6s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease;
-}
-
-.animateAns2 {
-    animation-name: answer;
-    animation-duration: 0.75s;
-    animation-delay: 0.6s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease;
-}
-
-.animateName3 {
-    animation-name: name;
-    animation-duration: 0.75s;
+.OBS_movePinner2 {
+    animation-name: OBS_movePinner2;
     animation-delay: 0.7s;
-    animation-fill-mode: forwards;
-    animation-timing-function: ease;
-}
-
-.animateAns3 {
-    animation-name: answer;
     animation-duration: 0.75s;
-    animation-delay: 0.7s;
+    animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
-    animation-timing-function: ease;
 }
 
-.animateName4 {
-    animation-name: name;
+.OBS_movePinner3 {
+    animation-name: OBS_movePinner3;
+    animation-delay: 0.9s;
     animation-duration: 0.75s;
-    animation-delay: 0.8s;
+    animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
-    animation-timing-function: ease;
 }
 
-.animateAns4 {
-    animation-name: answer;
+.OBS_movePinner4 {
+    animation-name: OBS_movePinner4;
+    animation-delay: 1.1s;
     animation-duration: 0.75s;
-    animation-delay: 0.8s;
+    animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
+}
+
+.OBS_showAnswer1 {
+    animation-name: OBS_showAnswer;
+    animation-duration: 0.5s;
+    animation-delay: 1.15s;
     animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: left center;
 }
 
-#name1,
-#name3 {
-    margin-left: 7%;
+.OBS_showAnswer2 {
+    animation-name: OBS_showAnswer;
+    animation-duration: 0.5s;
+    animation-delay: 1.35s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: right center;
 }
 
-#name2,
-#name4 {
-    margin-right: 7%;
+.OBS_showAnswer3 {
+    animation-name: OBS_showAnswer;
+    animation-duration: 0.5s;
+    animation-delay: 1.55s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: left center;
+}
+
+.OBS_showAnswer4 {
+    animation-name: OBS_showAnswer;
+    animation-duration: 0.5s;
+    animation-delay: 1.75s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: right center;
 }
 
 #Namebar {
@@ -716,9 +768,7 @@ html {
     box-sizing: border-box;
     background-image: linear-gradient(to right bottom, #3e4042, #353638, #2c2d2e, #242424, #1b1b1b);
     border: 0.15625vw solid white;
-    opacity: 1;
     border-radius: 0.5vw;
-    opacity: 1;
 }
 
 #STR_Question {
@@ -746,7 +796,6 @@ html {
     right: 0%;
     width: 20%;
     box-sizing: border-box;
-    opacity: 1;
 }
 
 .STR_Player {
@@ -760,10 +809,8 @@ html {
     background-color: #313131;
     border-bottom: none;
     color: white;
-    opacity: 1;
     border-radius: 0.5vw;
     border: calc(5vw/48) solid #F5F5F5;
-    opacity: 1;
 }
 
 #STR_Player1 {
@@ -813,14 +860,12 @@ html {
     bottom: 13.75%;
     height: 5%;
     background-image: linear-gradient(to right bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
-    opacity: 1;
 }
 
 #STR_Status {
     position: absolute;
     width: 100%;
     height: 100%;
-    opacity: 1;
     background-image: linear-gradient(to right bottom, #3e4042, #353638, #2c2d2e, #242424, #1b1b1b);
     font-size: 1.5vw;
     color: white;
@@ -832,7 +877,6 @@ html {
     border-radius: 0.5vw;
     box-sizing: border-box;
     z-index: 0;
-    opacity: 1;
 }
 
 #STR_statusShelf {
@@ -843,7 +887,6 @@ html {
     height: 50%;
     z-index: -1;
     background-image: linear-gradient(to right bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
-    opacity: 1;
 }
 
 #STR_statusZone {
@@ -925,17 +968,27 @@ html {
 
 #ACC_questionBar {
     position: absolute;
-    border: calc(5vw/96) solid white;
-    background-image: linear-gradient(to right bottom, #b31e0e, #a61a0b, #9a1508, #8d1105, #810c01);
     top: 8%;
     left: 15%;
     right: 15%;
-    height: 7%;
+    height: 14%;
+    transform: perspective(1200px) rotateX(90deg);
+    transform-origin: center bottom;
+    opacity: 0;
+}
+
+#ACC_mainQuestionBar {
+    position: absolute;
+    border: 0.15625vw solid white;
+    background-image: linear-gradient(to right bottom, #b31e0e, #a61a0b, #9a1508, #8d1105, #810c01);
+    top: 0%;
+    width: 100%;
+    height: 50%;
     display: flex;
     box-sizing: border-box;
     align-items: center;
     justify-content: center;
-    opacity: 0;
+    opacity: 1;
 }
 
 #ACC_Question {
@@ -959,7 +1012,7 @@ html {
     display: flex;
     align-items: center;
     justify-content: center;
-    opacity: 0;
+    opacity: 1;
 }
 
 .ACC_Media {
@@ -1147,245 +1200,393 @@ html {
     animation-delay: 0s, 0s, 40s;
 }
 
-#ACC_mainLine {
+#ACC_Shelf {
     position: absolute;
-    top: 0%;
-    height: 0%;
-    left: 38%;
-    width: 2%;
-    background-image: linear-gradient(to bottom, #b31e0e, #a61a0b, #9a1508, #8d1105, #810c01);
-    box-sizing: border-box;
+    left: -20%;
+    right: -20%;
+    height: 5%;
+    bottom: 20%;
+    background-image: linear-gradient(to right bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
+    opacity: 1;
+    z-index: -1;
 }
 
-.ACC_Time {
+#ACC_questionZone {
     position: absolute;
-    left: 0%;
-    top: calc(275%/14);
-    height: calc(10/14 * 100%);
-    width: 26%;
+    width: 100%;
+    bottom: 0%;
+    height: 100%;
     box-sizing: border-box;
-    background-image: linear-gradient(to left, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
-    border-radius: 250px 0px 0px 250px;
-    display: flex;
-    align-items: center;
-    font-size: calc(175vw/48);
-    font-weight: bold;
-    border-right: none;
-    z-index: -1;
+    transform: perspective(1200px) rotateX(80deg);
+    transform-origin: 50% 77.5%;
+    opacity: 0;
+}
 
+.ACC_moveMainUI {
+    animation-name: ACC_moveMainUI;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+.ACC_showBoard {
+    animation-name: ACC_showBoard;
+    animation-duration: 0.75s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+.ACC_showQuestionBar {
+    animation-name: ACC_showQuestionBar;
+    animation-duration: 0.5s;
+    animation-timing-function: ease-out;
+    animation-fill-mode: forwards;
+}
+
+@keyframes ACC_showBoard {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: perspective(1200px) rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes ACC_showQuestionBar {
+    0% {
+        opacity: 1;
+    }
+
+    100% {
+        transform: perspective(1200px) rotateX(0deg);
+        opacity: 1;
+    }
+}
+
+@keyframes ACC_moveMainUI {
+    0% {
+        bottom: -30%;
+        opacity: 1;
+    }
+
+    100% {
+        bottom: 0%;
+        opacity: 1;
+    }
+}
+
+#ACC_outerLine {
+    position: absolute;
+    top: calc(100% - var(--ACC_parentGap));
+    bottom: var(--ACC_parentGap);
+    left: 20%;
+    width: 3%;
+    border-radius: 100px;
+    background-color: #adadad;
+    overflow: hidden;
+}
+
+#ACC_innerLine {
+    position: absolute;
+    top: 2.5%;
+    bottom: 2.5%;
+    left: 35%;
+    right: 35%;
+    border-radius: 100px;
+    background-color: #4b4b4d;
+}
+
+.ACC_Pinner {
+    position: absolute;
+    width: 100%;
+    height: var(--ACC_pinHeight);
+    border-radius: 50%;
+    background-color: #a80000;
+    border: 0.4vw solid white;
+    box-sizing: border-box;
+    z-index: 3;
+    top: calc(110% - var(--ACC_pinHeight));
+}
+
+.ACC_Player {
+    position: absolute;
+    right: 20%;
+    left: 22%;
+    height: var(--ACC_playerHeight);
+    top: calc(var(--ACC_parentGap) + calc(var(--ACC_pinTopGap) * var(--ACC_childRatio)) - calc((var(--ACC_playerHeight) - var(--ACC_pinHeight) * var(--ACC_childRatio)) / 2));
+    scale: 0;
+}
+
+#ACC_Player1 {
+    --ACC_pinTopGap: calc(1109% / 126 + 0 * (19% + var(--ACC_pinHeight)));
+}
+
+#ACC_Player2 {
+    --ACC_pinTopGap: calc(1109% / 126 + 1 * (19% + var(--ACC_pinHeight)));
+}
+
+#ACC_Player3 {
+    --ACC_pinTopGap: calc(1109% / 126 + 2 * (19% + var(--ACC_pinHeight)));
+}
+
+#ACC_Player4 {
+    --ACC_pinTopGap: calc(1109% / 126 + 3 * (19% + var(--ACC_pinHeight)));
 }
 
 .ACC_Name {
     position: absolute;
-    top: 0%;
-    height: calc(3*100%/7);
-    left: 30%;
-    width: 50%;
-    background-image: linear-gradient(to right, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
-    border-radius: 0px 150px 150px 0px;
+    top: -30%;
+    width: 24%;
+    left: 7%;
+    background-color: whitesmoke;
+    border-radius: 0.5vw;
+    height: 50%;
+    z-index: 2;
+    color: black;
+    font-weight: bolder;
+    font-size: 1.5vw;
     display: flex;
+    justify-content: center;
     align-items: center;
-    justify-content: right;
-    font-size: 1.5625vw;
-    font-weight: bold;
+    text-align: center;
     box-sizing: border-box;
 }
 
 .ACC_Answer {
     position: absolute;
-    top: calc(3*100%/7);
-    height: calc(4*100%/7);
-    left: 30%;
-    width: 70%;
-    background-image: linear-gradient(to right bottom, #810101, #7a0101, #730102, #6c0101, #650101);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: calc(175vw/96);
-    font-weight: bolder;
-    border-radius: 0px 150px 150px 0px;
-    box-sizing: border-box;
-    color: white;
-}
-
-.ACC_ithCircle {
-    position: absolute;
-    top: calc(275%/14);
-    height: calc(10/14 * 100%);
-    left: calc(28% - 11.25%/2);
-    width: 11.25%;
-    border-radius: 50%;
-    background-color: #000080;
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    z-index: 1;
-    font-size: calc(25vw/6);
-    font-weight: bolder;
-    transform: scale(1);
-    border: none;
-    opacity: 0;
-}
-
-.ACC_timeLabel {
-    display: flex;
-    justify-content: right;
-    align-items: center;
-    position: absolute;
     top: 0%;
-    bottom: 0%;
-    right: 10%;
-}
-
-.ACC_nameLabel {
-    display: flex;
-    position: absolute;
-    top: 0%;
-    left: 7%;
-    bottom: 0%;
-    right: 3%;
-    justify-content: right;
-    align-items: center;
-}
-
-.ACC_Player {
-    position: absolute;
-    left: 25%;
-    right: 25%;
-    height: 14%;
-    box-sizing: border-box;
-    opacity: 0;
-}
-
-:root {
-    --top-value: 0%;
-    --delay: 0s;
-}
-
-#ACC_Player1 {
-    top: 10.5%;
-    --top-value: 10.5%;
-    --delay: 2s;
-
-}
-
-#ACC_Player2 {
-    top: calc(0.5% + 95%/3);
-    --top-value: calc(0.5% + 95%/3);
-    --delay: 1.65s;
-}
-
-#ACC_Player3 {
-    top: calc(0.5% + 160%/3);
-    --top-value: calc(0.5% + 160%/3);
-    --delay: 1.3s;
-}
-
-#ACC_Player4 {
-    top: 75.5%;
-    --top-value: 75.5%;
-    --delay: 0.95s;
-
-}
-
-#ACC_Shelf {
-    position: absolute;
     left: 0%;
-    width: 100%;
-    height: 5%;
-    bottom: -5%;
-    background-image: linear-gradient(to right bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
-    opacity: 0;
-    z-index: -1;
+    width: 77.5%;
+    height: 100%;
+    background-image: linear-gradient(to right bottom, #383a3e, #313235, #2a2a2c, #222223, #1b1b1b);
+    border: 0.3vw solid whitesmoke;
+    border-radius: 2000px;
+    z-index: 1;
+    box-sizing: border-box;
 }
 
-.ACC_moveMainLine {
-    animation-name: ACC_moveMainLine;
+.ACC_answerText {
+    position: absolute;
+    color: white;
+    font-weight: bolder;
+    font-size: 2.5vw;
+    top: 15%;
+    left: 3%;
+    right: 3%;
+    bottom: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+.ACC_Time {
+    position: absolute;
+    top: 0%;
+    right: 30%;
+    width: 50%;
+    height: 100%;
+    background-color: #a80000;
+    border: 0.3vw solid whitesmoke;
+    border-radius: 2000px;
+    z-index: 0;
+    box-sizing: border-box;
+}
+
+.ACC_timeText {
+    position: absolute;
+    color: white;
+    font-weight: bolder;
+    font-size: 3.5vw;
+    top: 0%;
+    left: 55%;
+    right: 0%;
+    bottom: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+@keyframes ACC_extendOuter {
+    0% {
+        top: calc(100% - var(--ACC_parentGap));
+    }
+
+    100% {
+        top: var(--ACC_parentGap);
+    }
+}
+
+@keyframes ACC_movePinner1 {
+    0% {
+        top: calc(110% - var(--ACC_pinHeight));
+    }
+
+    100% {
+        top: calc(1109% / 126 + 0 * (19% + var(--ACC_pinHeight)));
+    }
+}
+
+@keyframes ACC_movePinner2 {
+    0% {
+        top: calc(110% - var(--ACC_pinHeight));
+    }
+
+    100% {
+        top: calc(1109% / 126 + 1 * (19% + var(--ACC_pinHeight)));
+    }
+}
+
+@keyframes ACC_movePinner3 {
+    0% {
+        top: calc(110% - var(--ACC_pinHeight));
+    }
+
+    100% {
+        top: calc(1109% / 126 + 2 * (19% + var(--ACC_pinHeight)));
+    }
+}
+
+@keyframes ACC_movePinner4 {
+    0% {
+        top: calc(110% - var(--ACC_pinHeight));
+    }
+
+    100% {
+        top: calc(1109% / 126 + 3 * (19% + var(--ACC_pinHeight)));
+    }
+}
+
+@keyframes ACC_showAnswer {
+    0% {
+        scale: 0;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
+
+@keyframes ACC_moveTime {
+    0% {
+        right: 30%;
+    }
+
+    100% {
+        right: 0%;
+    }
+}
+
+.ACC_extendOuter {
+    animation-name: ACC_extendOuter;
     animation-duration: 0.5s;
-    animation-delay: 0s;
-    animation-timing-function: linear;
+    animation-timing-function: ease;
     animation-fill-mode: forwards;
 }
 
-.ACC_playerMove {
-    animation-name: ACC_playerMove;
-    animation-duration: 0.5s;
-    animation-delay: var(--delay);
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-}
-
-.ACC_flipDownQuestion {
-    animation-name: ACC_flipDown;
-    animation-duration: 0.5s;
-    animation-delay: 1s;
-    animation-timing-function: linear;
-    animation-fill-mode: forwards;
-    transform-origin: bottom center;
-}
-
-.ACC_flipDownMedia {
-    animation-name: ACC_flipDown;
-    animation-duration: 0.5s;
+.ACC_movePinner1 {
+    animation-name: ACC_movePinner1;
     animation-delay: 0.5s;
-    animation-timing-function: linear;
+    animation-duration: 0.75s;
+    animation-timing-function: ease-in-out;
     animation-fill-mode: forwards;
-    transform-origin: center bottom;
 }
 
-.ACC_moveShelf {
-    animation-name: ACC_moveShelf;
+.ACC_movePinner2 {
+    animation-name: ACC_movePinner2;
+    animation-delay: 0.7s;
+    animation-duration: 0.75s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.ACC_movePinner3 {
+    animation-name: ACC_movePinner3;
+    animation-delay: 0.9s;
+    animation-duration: 0.75s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.ACC_movePinner4 {
+    animation-name: ACC_movePinner4;
+    animation-delay: 1.1s;
+    animation-duration: 0.75s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.ACC_showAnswer1 {
+    animation-name: ACC_showAnswer;
     animation-duration: 0.5s;
-    animation-delay: 0s;
-    animation-timing-function: linear;
+    animation-delay: 1.15s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: left center;
+}
+
+.ACC_showAnswer2 {
+    animation-name: ACC_showAnswer;
+    animation-duration: 0.5s;
+    animation-delay: 1.35s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: left center;
+}
+
+.ACC_showAnswer3 {
+    animation-name: ACC_showAnswer;
+    animation-duration: 0.5s;
+    animation-delay: 1.55s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: left center;
+}
+
+.ACC_showAnswer4 {
+    animation-name: ACC_showAnswer;
+    animation-duration: 0.5s;
+    animation-delay: 1.75s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: left center;
+}
+
+.ACC_moveTime1 {
+    animation-name: ACC_moveTime;
+    animation-duration: 0.5s;
+    animation-delay: 1.7s;
+    animation-timing-function: ease;
     animation-fill-mode: forwards;
 }
 
-@keyframes ACC_moveMainLine {
-    0% {
-        height: 0%;
-    }
-
-    100% {
-        height: 100%;
-    }
+.ACC_moveTime2 {
+    animation-name: ACC_moveTime;
+    animation-duration: 0.5s;
+    animation-delay: 1.9s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
 }
 
-@keyframes ACC_playerMove {
-    0% {
-        top: calc(var(--top-value) - 100%);
-        opacity: 1;
-    }
-
-    100% {
-        top: var(--top-value);
-        opacity: 1;
-    }
+.ACC_moveTime3 {
+    animation-name: ACC_moveTime;
+    animation-duration: 0.5s;
+    animation-delay: 2.1s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
 }
 
-@keyframes ACC_flipDown {
-    0% {
-        transform: perspective(800px) rotateX(90deg);
-        opacity: 1;
-    }
-
-    100% {
-        transform: perspective(800px) rotateX(0deg);
-        opacity: 1;
-    }
-}
-
-@keyframes ACC_moveShelf {
-    0% {
-        bottom: -5%;
-        opacity: 1;
-    }
-
-    100% {
-        bottom: 20%;
-        opacity: 1;
-    }
+.ACC_moveTime4 {
+    animation-name: ACC_moveTime;
+    animation-duration: 0.5s;
+    animation-delay: 2.3s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
 }
 
 /*VỀ ĐÍCH*/

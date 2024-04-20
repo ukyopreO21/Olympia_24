@@ -664,6 +664,10 @@ io.on("connection", function (socket) {
         io.emit("_OBS_showRowAnswer", rowAnswerData);
     });
 
+    socket.on("OBS_AnswerUI", function () {
+        io.emit("_OBS_AnswerUI");
+    });
+
     socket.on("OBS_backScreen", function () {
         io.emit("_OBS_backScreen");
     });

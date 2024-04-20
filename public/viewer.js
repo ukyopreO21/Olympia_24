@@ -139,7 +139,7 @@ function offObstacleUI() {
 }
 
 function Obstacle_showAnswersUI() {
-    var dad = document.getElementById("showRowAnswerAnimation");
+    var dad = document.getElementById("OBS_Answers");
     var child = dad.querySelectorAll("*");
     for (var i = 0; i < child.length; i++) {
         child[i].style.visibility = "visible";
@@ -147,7 +147,7 @@ function Obstacle_showAnswersUI() {
 }
 
 function offObstacle_showAnswersUI() {
-    var dad = document.getElementById("showRowAnswerAnimation");
+    var dad = document.getElementById("OBS_Answers");
     var child = dad.querySelectorAll("*");
     for (var i = 0; i < child.length; i++) {
         child[i].style.visibility = "hidden";
@@ -189,7 +189,7 @@ function offObstacle_ImageUI() {
 }
 
 function AccelerationUI() {
-    document.getElementById("ACC_Shelf").style.opacity = "1";
+    document.getElementById("ACC_Shelf").style.visibility = "1";
     var dad = document.getElementById("ACC_questionZone");
     dad.style.visibility = "visible";
     var child = dad.querySelectorAll("*");
@@ -197,7 +197,7 @@ function AccelerationUI() {
         child[i].style.visibility = "visible";
     }
 
-    var dad = document.getElementById("ACC_showAnswerAnimation");
+    var dad = document.getElementById("ACC_Answers");
     dad.style.visibility = "hidden";
     var child = dad.querySelectorAll("*");
     for (var i = 0; i < child.length; i++) {
@@ -206,7 +206,7 @@ function AccelerationUI() {
 }
 
 function Acceleration_showAnswerUI() {
-    document.getElementById("ACC_Shelf").style.opacity = "0";
+    document.getElementById("ACC_Shelf").style.visibility = "hidden";
     var dad = document.getElementById("ACC_questionZone");
     dad.style.visibility = "hidden";
     var child = dad.querySelectorAll("*");
@@ -214,7 +214,7 @@ function Acceleration_showAnswerUI() {
         child[i].style.visibility = "hidden";
     }
 
-    var dad = document.getElementById("ACC_showAnswerAnimation");
+    var dad = document.getElementById("ACC_Answers");
     dad.style.visibility = "visible";
     var child = dad.querySelectorAll("*");
     for (var i = 0; i < child.length; i++) {
@@ -223,32 +223,19 @@ function Acceleration_showAnswerUI() {
 }
 
 function Acceleration_offQuestion() {
-    document.getElementById("ACC_questionBar").style.opacity = "0";
-    var dad = document.getElementById("ACC_questionBar");
+    var dad = document.getElementById("ACC_questionZone");
     var child = dad.querySelectorAll("*");
     for (var i = 0; i < child.length; i++) {
-        child[i].style.opacity = "0";
-    }
-
-    document.getElementById("ACC_mediaBox").style.opacity = "0";
-    var dad = document.getElementById("ACC_mediaBox");
-    var child = dad.querySelectorAll("*");
-    for (var i = 0; i < child.length; i++) {
-        child[i].style.opacity = "0";
+        child[i].style.visibility = "hidden";
     }
 }
 
 function Acceleration_openQuestion() {
-    document.getElementById("ACC_questionBar").style.opacity = "1";
-    var dad = document.getElementById("ACC_questionBar");
+    var dad = document.getElementById("ACC_questionZone");
     var child = dad.querySelectorAll("*");
     for (var i = 0; i < child.length; i++) {
-        child[i].style.opacity = "1";
+        child[i].style.visibility = "visible";
     }
-
-    document.getElementById("ACC_mediaBox").style.opacity = "1";
-    document.getElementById("ACC_videoMedia").style.opacity = "1";
-    document.getElementById("ACC_imageMedia").style.opacity = "1";
 }
 
 function offAccelerationUI() {
@@ -546,55 +533,33 @@ socket.on("_OBS_serverObsSignal", function (signalData) {
     document.getElementById("OBS_Signal" + signalData.OBS_numberOfObsSignal).textContent = signalData.OBS_numberOfObsSignal + ". " + signalData.signalDataFromAdmin.name;
 });
 
-function OBS_addAnimation() {
-    document.querySelector(".main").classList.add("animate");
-    for (let i = 1; i <= 4; i++) {
-        document.querySelector(".name" + i).classList.add("animateName" + i);
-        document.querySelector(".answer" + i).classList.add("animateAns" + i);
-    }
-}
-function OBS_removeAnimation() {
-    document.querySelector(".main").classList.remove("animate");
-    for (let i = 1; i <= 4; i++) {
-        document.querySelector(".name" + i).classList.remove("animateName" + i);
-        document.querySelector(".answer" + i).classList.remove("animateAns" + i);
-    }
-    for (let i = 1; i <= 9; i++) {
-        var ele = document.getElementById(i);
-        void ele.offsetWidth;
-    }
-    OBS_addAnimation();
-}
-
-var showAnswer;
+socket.on("_OBS_AnswerUI", function () {
+    offObstacleUI();
+    Obstacle_showAnswersUI();
+    offObstacle_ImageUI();
+});
 
 socket.on("_OBS_showRowAnswer", function (rowAnswerData) {
     OBS_isOpeningRowAnswers = true;
-    clearTimeout(showAnswer);
-    for (let i = 1; i <= 4; i++) {
-        var nameSelector = "name" + i;
-        var answerSelector = "answer" + i;
-        document.querySelector("." + nameSelector).style.opacity = "1";
-        document.querySelector("." + answerSelector).style.opacity = "1";
-    }
-
-    for (let i = 0; i < 4; i++) {
-        document.getElementById("name" + (i + 1)).innerHTML = "";
-        document.getElementById("answer" + (i + 1)).innerHTML = "";
-    }
-    offObstacleUI();
-    offObstacle_ImageUI();
-    Obstacle_showAnswersUI();
+    document.querySelectorAll(".OBS_Player").forEach((element) => {
+        element.style.opacity = "1";
+    });
     OBS_showRowAnswerAudio.pause();
     OBS_showRowAnswerAudio.currentTime = 0;
     OBS_showRowAnswerAudio.play();
-    OBS_removeAnimation();
-    showAnswer = setTimeout(function () {
-        for (let i = 0; i < 4; i++) {
-            document.getElementById("name" + (i + 1)).innerHTML = rowAnswerData.name[i];
-            document.getElementById("answer" + (i + 1)).innerHTML = rowAnswerData.answer[i];
-        }
-    }, 2000);
+    document.getElementById("OBS_outerLine").classList.remove("OBS_extendOuter");
+    void document.getElementById("OBS_outerLine").offsetWidth;
+    document.getElementById("OBS_outerLine").classList.add("OBS_extendOuter");
+    for (let i = 0; i < 4; i++) {
+        document.getElementById("OBS_Pinner" + (i + 1)).classList.remove("OBS_movePinner" + (i + 1));
+        void document.getElementById("OBS_Pinner" + (i + 1)).offsetWidth;
+        document.getElementById("OBS_Pinner" + (i + 1)).classList.add("OBS_movePinner" + (i + 1));
+        document.getElementById("OBS_Player" + (i + 1)).classList.remove("OBS_showAnswer" + (i + 1));
+        void document.getElementById("OBS_Player" + (i + 1)).offsetWidth;
+        document.getElementById("OBS_Player" + (i + 1)).classList.add("OBS_showAnswer" + (i + 1));
+        document.querySelector("#OBS_Player" + (i + 1) + " .OBS_Name").textContent = rowAnswerData.name[i];
+        document.querySelector("#OBS_Player" + (i + 1) + " .OBS_answerText").textContent = rowAnswerData.answer[i];
+    }
 });
 
 socket.on("_OBS_backScreen", function () {
@@ -605,10 +570,7 @@ socket.on("_OBS_backScreen", function () {
 });
 
 socket.on("_OBS_wrongRow", function (numberOfWrongPlayer) {
-    let nameSelector = "name" + numberOfWrongPlayer;
-    let answerSelector = "answer" + numberOfWrongPlayer;
-    document.querySelector("." + nameSelector).style.opacity = "0.5";
-    document.querySelector("." + answerSelector).style.opacity = "0.5";
+    document.getElementById("OBS_Player" + numberOfWrongPlayer).style.opacity = "0.5";
 });
 
 socket.on("_OBS_playRightRow", function (data) {
@@ -778,15 +740,17 @@ socket.on("_STR_openQuestionBoard", function () {
     STR_openQuestionBoard.play();
     document.getElementById("StartUI").style.visibility = "visible";
     let questionBox = document.getElementById("STR_questionBox");
+    questionBox.classList.remove("STR_moveBoard");
     void questionBox.offsetWidth;
     let shelf = document.getElementById("STR_Shelf");
+    shelf.classList.remove("STR_moveQuestionShelf");
     void shelf.offsetWidth;
     let status = document.getElementById("STR_statusZone");
+    status.classList.remove("STR_moveStatus");
     void status.offsetWidth;
-    let statusShelf = document.getElementById("STR_statusShelf");
-    void statusShelf.offsetWidth;
     let players = document.querySelectorAll(".STR_Player");
     for (let i = 0; i < players.length; i++) {
+        players[i].classList.remove("STR_movePlayer");
         players[i].offsetWidth;
         players[i].classList.add("STR_movePlayer");
         document.getElementById(players[i].id).style.animationDelay = (i + 1) * 250 + "ms";
@@ -910,21 +874,28 @@ socket.on("_STR_finishTurn", function () {
 
 //TĂNG TỐC
 socket.on("_ACC_chooseQuestion", function () {
-    document.getElementById("ACC_questionBar").style.opacity = "0";
-    document.getElementById("ACC_mediaBox").style.opacity = "0";
+    Acceleration_openQuestion();
+    document.getElementById("ACC_questionZone").addEventListener("animationend", function (event) {
+        if (event.animationName === "ACC_moveMainUI") {
+            document.getElementById("ACC_questionZone").classList.remove("ACC_showBoard");
+            void document.getElementById("ACC_questionZone").offsetHeight;
+            document.getElementById("ACC_questionZone").classList.add("ACC_showBoard");
+        }
+    });
+    document.getElementById("ACC_questionZone").addEventListener("animationend", function (event) {
+        if (event.animationName === "ACC_showBoard") {
+            document.getElementById("ACC_questionBar").classList.remove("ACC_showQuestionBar");
+            void document.getElementById("ACC_questionBar").offsetHeight;
+            document.getElementById("ACC_questionBar").classList.add("ACC_showQuestionBar");
+        }
+    });
     //chạy animation
-    document.getElementById("ACC_questionBar").classList.remove("ACC_flipDownQuestion");
-    document.getElementById("ACC_mediaBox").classList.remove("ACC_flipDownMedia");
-    document.getElementById("ACC_Shelf").classList.remove("ACC_moveShelf");
-    var bar = document.getElementById("ACC_questionBar");
-    var media = document.getElementById("ACC_mediaBox");
-    var shelf = document.getElementById("ACC_Shelf");
-    void bar.offsetWidth;
-    void media.offsetWidth;
-    void shelf.offsetWidth;
-    document.getElementById("ACC_questionBar").classList.add("ACC_flipDownQuestion");
-    document.getElementById("ACC_mediaBox").classList.add("ACC_flipDownMedia");
-    document.getElementById("ACC_Shelf").classList.add("ACC_moveShelf");
+    document.getElementById("ACC_questionZone").classList.remove("ACC_moveMainUI");
+    document.getElementById("ACC_questionZone").classList.remove("ACC_showBoard");
+    document.getElementById("ACC_questionBar").classList.remove("ACC_showQuestionBar");
+    void document.getElementById("ACC_questionZone").offsetHeight;
+    void document.getElementById("ACC_questionBar").offsetHeight;
+    document.getElementById("ACC_questionZone").classList.add("ACC_moveMainUI");
 
     ACC_openQuestion.pause();
     ACC_openQuestion.currentTime = 0;
@@ -933,7 +904,6 @@ socket.on("_ACC_chooseQuestion", function () {
 });
 
 socket.on("_ACC_openQuestion", function (ACC_questionData) {
-    Acceleration_openQuestion();
     document.getElementById("ACC_videoMedia").style.visibility = "hidden";
     document.getElementById("ACC_Question").textContent = ACC_questionData.question;
     if (ACC_questionData.type == "Video") {
@@ -977,32 +947,31 @@ socket.on("_ACC_startTiming", function (timeData) {
 });
 
 socket.on("_ACC_showAnswer", function (answerData) {
+    Acceleration_showAnswerUI();
     ACC_showAnswersAudio.pause();
     ACC_showAnswersAudio.currentTime = 0;
     ACC_showAnswersAudio.play();
+    document.getElementById("ACC_outerLine").classList.remove("ACC_extendOuter");
+    void document.getElementById("ACC_outerLine").offsetWidth;
+    document.getElementById("ACC_outerLine").classList.add("ACC_extendOuter");
     for (let i = 1; i <= 4; i++) {
-        document.getElementById("ACC_Time" + i).style.opacity = "1";
-        document.getElementById("ACC_Name" + i).style.opacity = "1";
-        document.getElementById("ACC_Answer" + i).style.opacity = "1";
-        document.getElementById("ACC_nameLabel" + i).textContent = answerData[i - 1].name;
+        document.getElementById("ACC_Player" + i).style.opacity = "1";
+        document.querySelector("#ACC_Player" + i + " .ACC_Name").textContent = answerData[i - 1].name;
         let time = String(answerData[i - 1].time);
         if (time[time.length - 2] == ".") time += "0";
-        document.getElementById("ACC_timeLabel" + i).textContent = time;
-        document.getElementById("ACC_Answer" + i).innerHTML = answerData[i - 1].answer;
-    }
+        document.querySelector("#ACC_Player" + i + " .ACC_timeText").textContent = time;
+        document.querySelector("#ACC_Player" + i + " .ACC_answerText").textContent = answerData[i - 1].answer;
 
-    Acceleration_showAnswerUI();
-
-    document.getElementById("ACC_mainLine").classList.remove("ACC_moveMainLine");
-    var player = document.getElementById("ACC_mainLine");
-    void player.offsetWidth;
-    document.getElementById("ACC_mainLine").classList.add("ACC_moveMainLine");
-
-    for (let i = 4; i >= 1; i--) {
-        document.getElementById("ACC_Player" + i).classList.remove("ACC_playerMove");
-        var player = document.getElementById("ACC_Player4");
+        let player = document.getElementById("ACC_Player" + i);
+        document.getElementById("ACC_Pinner" + i).classList.remove("ACC_movePinner" + i);
+        void document.getElementById("ACC_Pinner" + i).offsetWidth;
+        document.getElementById("ACC_Pinner" + i).classList.add("ACC_movePinner" + i);
+        player.classList.remove("ACC_showAnswer" + i);
         void player.offsetWidth;
-        document.getElementById("ACC_Player" + i).classList.add("ACC_playerMove");
+        player.classList.add("ACC_showAnswer" + i);
+        player.querySelector(".ACC_Time").classList.remove("ACC_moveTime" + i);
+        void player.querySelector(".ACC_Time").offsetWidth;
+        player.querySelector(".ACC_Time").classList.add("ACC_moveTime" + i);
     }
 });
 
@@ -1018,9 +987,7 @@ socket.on("_ACC_Right", function (answerData) {
     ACC_RightAudio.play();
     for (let i = 0; i < 4; i++) {
         if (answerData[i].checked == false) {
-            document.getElementById("ACC_Time" + (i + 1)).style.opacity = "0.5";
-            document.getElementById("ACC_Answer" + (i + 1)).style.opacity = "0.5";
-            document.getElementById("ACC_Name" + (i + 1)).style.opacity = "0.5";
+            document.getElementById("ACC_Player" + (i + 1)).style.opacity = "0.5";
         }
     }
 });
@@ -1030,9 +997,7 @@ socket.on("_ACC_Wrong", function () {
     ACC_WrongAudio.currentTime = 0;
     ACC_WrongAudio.play();
     for (let i = 0; i < 4; i++) {
-        document.getElementById("ACC_Time" + (i + 1)).style.opacity = "0.5";
-        document.getElementById("ACC_Name" + (i + 1)).style.opacity = "0.5";
-        document.getElementById("ACC_Answer" + (i + 1)).style.opacity = "0.5";
+        document.getElementById("ACC_Player" + (i + 1)).style.opacity = "0.5";
     }
 });
 

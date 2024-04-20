@@ -285,10 +285,10 @@ function Select() {
         temp.innerHTML += "<span class='text'>Thời gian:&nbsp</span>";
         temp.innerHTML += '<span class="text" id="OBS_rowObsTime">0</span><br>';
         temp.innerHTML += "<span class='text'>Khu vực hàng ngang:&nbsp</span>";
-        temp.innerHTML += '<span class="button" onclick="OBS_showRowAnswer()">Hiện đáp án hàng ngang</span> ';
+        temp.innerHTML += '<span class="button" onclick="OBS_AnswerUI()">Giao diện đáp án</span> ';
+        temp.innerHTML += '<span class="button" onclick="OBS_showRowAnswer()">Hiện đáp án</span> ';
         temp.innerHTML += '<span class="button" onclick="OBS_rightRow()">Đúng hàng ngang</span> ';
-        temp.innerHTML += '<span class="button" onclick="OBS_wrongRow()">Sai hàng ngang</span> ';
-        temp.innerHTML += '<span class="button" onclick="OBS_backScreen()">Về giao diện chính</span><br>';
+        temp.innerHTML += '<span class="button" onclick="OBS_wrongRow()">Sai hàng ngang</span><br>';
         temp.innerHTML += "<span class='text'>Khu vực CNV:&nbsp</span>";
         temp.innerHTML += '<span class="button" onclick="OBS_rightObs()">Đúng CNV</span> ';
         temp.innerHTML += '<span class="button" onclick="OBS_wrongObs()">Sai CNV</span> ';
@@ -296,6 +296,8 @@ function Select() {
         temp.innerHTML += "<span class='text'>Khu vực ảnh:&nbsp</span>";
         temp.innerHTML += '<span class="button" onclick="OBS_ImageUI()">Giao diện ảnh</span> ';
         temp.innerHTML += '<span class="button" onclick="OBS_openCorner()">Mở góc ảnh</span><br>';
+        temp.innerHTML += "<span class='text'>Giao diện chính:&nbsp</span> ";
+        temp.innerHTML += '<span class="button" onclick="OBS_backScreen()">Về giao diện chính</span><br>';
         temp.innerHTML += "<span class='text'>Số điểm tối đa:&nbsp</span>";
         temp.innerHTML += '<b><span class="text" id="OBS_maxObsPoint">60</span></b><br>';
         temp.innerHTML += "<span class='text'>Điểm khuyến nghị CNV:&nbsp</span>";
@@ -552,6 +554,10 @@ socket.on("_OBS_playerObsSignal", function (signalData) {
     let numberOfPlayer = signalData.playerNumber;
     socket.emit("OBS_serverObsSignal", { name, numberOfPlayer });
 });
+
+function OBS_AnswerUI() {
+    socket.emit("OBS_AnswerUI");
+}
 
 function OBS_showRowAnswer() {
     let answer = ["", "", "", ""];
