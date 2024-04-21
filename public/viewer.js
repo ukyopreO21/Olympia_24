@@ -448,11 +448,7 @@ socket.on("_OBS_chooseRow", function (data) {
     }
 
     if (data.rowIth != 5) {
-        for (
-            let j = data.OBS_QnA[Number(data.rowIth - 1)].startPos;
-            j < data.OBS_QnA[Number(data.rowIth - 1)].startPos + data.OBS_QnA[Number(data.rowIth - 1)].rowLength;
-            j++
-        ) {
+        for (let j = data.OBS_QnA[Number(data.rowIth - 1)].startPos; j < data.OBS_QnA[Number(data.rowIth - 1)].startPos + data.OBS_QnA[Number(data.rowIth - 1)].rowLength; j++) {
             setTimeout(function () {
                 let ele = document.getElementById("OBS_Char" + data.rowIth + "." + j);
                 ele.classList.remove("OBS_Chosen");
@@ -540,6 +536,9 @@ socket.on("_OBS_AnswerUI", function () {
 });
 
 socket.on("_OBS_showRowAnswer", function (rowAnswerData) {
+    offObstacleUI();
+    Obstacle_showAnswersUI();
+    offObstacle_ImageUI();
     OBS_isOpeningRowAnswers = true;
     document.querySelectorAll(".OBS_Player").forEach((element) => {
         element.style.opacity = "1";
@@ -581,8 +580,7 @@ socket.on("_OBS_playRightRow", function (data) {
     let currentRowAnswer = String(data.questionData.answer).replace(/\s+/g, "");
     for (let j = data.questionData.startPos; j < data.questionData.startPos + data.questionData.rowLength; j++) {
         document.getElementById("OBS_Char" + data.currentRow + "." + j).textContent = currentRowAnswer[j - data.questionData.startPos];
-        document.getElementById("OBS_Char" + data.currentRow + "." + j).style.backgroundImage =
-            "linear-gradient(to right bottom, #2b8ba6, #0083b0, #007ab9, #006ec0, #0060c1)";
+        document.getElementById("OBS_Char" + data.currentRow + "." + j).style.backgroundImage = "linear-gradient(to right bottom, #2b8ba6, #0083b0, #007ab9, #006ec0, #0060c1)";
     }
 });
 
@@ -596,8 +594,7 @@ socket.on("_OBS_playWrongRow", function (currentRow) {
     OBS_isOpeningQuestionBox = false;
     OBS_wrongAudioPlay();
     for (let i = 1; i <= 18; i++) {
-        document.getElementById("OBS_Char" + currentRow + "." + i).style.backgroundImage =
-            "linear-gradient(to right bottom, #000000, #1b1b1b, #2e2e2e, #444444, #5a5a5a)";
+        document.getElementById("OBS_Char" + currentRow + "." + i).style.backgroundImage = "linear-gradient(to right bottom, #000000, #1b1b1b, #2e2e2e, #444444, #5a5a5a)";
     }
 });
 
@@ -608,6 +605,9 @@ socket.on("_OBS_ImageUI", function () {
 });
 
 socket.on("_OBS_openCorner", function (currentRow) {
+    offObstacleUI();
+    offObstacle_showAnswersUI();
+    Obstacle_ImageUI();
     OBS_openCornerAudio.pause();
     OBS_openCornerAudio.currentTime = 0;
     OBS_openCornerAudio.play();

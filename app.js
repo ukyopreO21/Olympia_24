@@ -350,6 +350,17 @@ async function getData(dbNumber) {
 
 setData(1);
 
+var serverStatus = {
+    currentRoundId: 1,
+    STR_Status: {
+        playerNumber: undefined,
+        questionNumber: undefined,
+    },
+    OBS_Status: {},
+    ACC_Status: {},
+    FIN_Status: {},
+    SFI_Status: {},
+};
 var playerGranted = 0;
 var STR_ithQuestion;
 var OBS_numberOfObsSignal = 0;
@@ -474,7 +485,7 @@ io.on("connection", function (socket) {
     socket.on("hostEnterRoom", function () {
         socket.emit("serverData", { playerName, playerPoint, isReady, databaseChosen });
         socket.emit("_getVersion", appVersion);
-        socket.emit("sendChatLog");
+        socket.emit("sendChatLog", chatLog);
     });
 
     socket.on("signOut", function (playerNumber) {

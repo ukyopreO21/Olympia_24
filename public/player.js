@@ -210,11 +210,12 @@ socket.on("_sendCurrentUI", function (UIData) {
     document.getElementById("roundName").innerHTML = roundName[currentRoundID];
     document.getElementById("currentRound").innerHTML = roundName[currentRoundID];
     if (UIData.UIName == "Phòng chat") {
-        ChatUI();
         offContestUI();
+        ChatUI();
     } else {
-        roundUI();
         offChatUI();
+        ContestUI();
+        roundUI();
     }
     if (UIData.isChatBan == false) document.getElementById("message-input").addEventListener("keypress", sendText);
     else document.getElementById("message-input").removeEventListener("keypress", sendText);
@@ -289,6 +290,7 @@ socket.on("_RoundChosen", function (roundID) {
     currentRoundID = roundID;
     document.getElementById("currentRound").innerHTML = roundName[roundID];
     document.getElementById("roundName").innerHTML = roundName[roundID];
+    roundUI();
 });
 
 //XỬ LÝ CHAT
@@ -532,7 +534,6 @@ function allowBlankAnswer() {
 }
 
 function roundUI() {
-    ContestUI();
     defaultPlayerFunction();
     let parent = document.getElementById("customStatus");
     parent.innerHTML = "";
@@ -555,13 +556,16 @@ function roundUI() {
         document.getElementById("sendSignal").innerHTML = "<i class='fa-solid fa-bell'></i>&nbsp&nbspGIÀNH QUYỀN TRẢ LỜI";
         startRoundAudio.src = "./Finish/Sounds/VDBatDauVongThi.mp3";
     }
+    Array.from(parent.getElementsByTagName("*")).forEach((element) => {
+        element.style.visibility = "visible";
+    });
 }
 
 socket.on("_startRound", function () {
-    roundUI();
     startRoundAudio.pause();
     startRoundAudio.currentTime = 0;
     startRoundAudio.play();
+    ContestUI();
 });
 
 function countDown(startTime, offGranted) {

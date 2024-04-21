@@ -31,7 +31,6 @@ function openEndPart() {
 var roundID;
 var isChatBan = false;
 var STR_signalPlayer;
-var OBS_rowIth;
 var OBS_rowSelected;
 var OBS_imgCornerOpened;
 var OBS_pointChange = 0;
@@ -218,10 +217,9 @@ socket.on("playerDataFromDatabase", function (data) {
 function resetStatus() {
     let roundID = document.getElementById("rounds").value;
     if (roundID == 2) {
-        rowIth = undefined;
-        rowSelected = undefined;
-        imgCornerOpened = undefined;
-        pointChange = 0;
+        OBS_rowSelected = undefined;
+        OBS_imgCornerOpened = undefined;
+        OBS_pointChange = 0;
     } else if (roundID == 4) {
         FIN_currentQuestionPoint = undefined;
         FIN_isStarOn = false;
@@ -279,31 +277,32 @@ function Select() {
         temp.innerHTML += '<span class="button" onclick="OBS_chooseRow()"><i class="fa-solid fa-user-check"></i>&nbsp&nbspConfirm</span><br>';
         temp.innerHTML += "<span class='text'>Khu vực câu hỏi:&nbsp</span>";
         temp.innerHTML += '<span class="button" onclick="OBS_showRowQuestion()"><i class="fa-regular fa-circle-question"></i>&nbsp&nbspMở câu hỏi</span> ';
-        temp.innerHTML += '<span class="button" onclick="OBS_closeRowQuestion()"><i class="fa-solid fa-eye-slash"></i>&nbsp&nbspTắt câu hỏi</span> ';
+        temp.innerHTML += '<span class="button" onclick="OBS_closeRowQuestion()"><i class="fa-solid fa-eye-slash"></i>&nbsp&nbspTắt câu hỏi</span><br>';
+        temp.innerHTML += "<span class='text'>Đếm ngược:&nbsp</span>";
         temp.innerHTML += '<span class="button" onclick="OBS_start15s()"><i class="fa-solid fa-hourglass-start"></i>&nbsp&nbsp15 giây</span> ';
         temp.innerHTML += '<span class="button" onclick="OBS_last15s()"><i class="fa-solid fa-hourglass-start"></i>&nbsp&nbsp15 giây cuối</span><br>';
         temp.innerHTML += "<span class='text'>Thời gian:&nbsp</span>";
         temp.innerHTML += '<span class="text" id="OBS_rowObsTime">0</span><br>';
         temp.innerHTML += "<span class='text'>Khu vực hàng ngang:&nbsp</span>";
-        temp.innerHTML += '<span class="button" onclick="OBS_AnswerUI()"><i class="fa-solid fa-display"></i>&nbsp&nbspGiao diện đáp án</span> ';
         temp.innerHTML += '<span class="button" onclick="OBS_showRowAnswer()"><i class="fa-solid fa-eye"></i>&nbsp&nbspHiện đáp án</span> ';
-        temp.innerHTML += '<span class="button" onclick="OBS_rightRow()"><i class="fa-regular fa-circle-check"></i>&nbsp&nbspĐúng hàng ngang</span> ';
-        temp.innerHTML += '<span class="button" onclick="OBS_wrongRow()"><i class="fa-regular fa-circle-xmark"></i>&nbsp&nbspSai hàng ngang</span><br>';
+        temp.innerHTML += '<span class="button" onclick="OBS_rightRow()"><i class="fa-regular fa-circle-check"></i>&nbsp&nbspĐúng</span> ';
+        temp.innerHTML += '<span class="button" onclick="OBS_wrongRow()"><i class="fa-regular fa-circle-xmark"></i>&nbsp&nbspSai</span><br>';
         temp.innerHTML += "<span class='text'>Khu vực CNV:&nbsp</span>";
         temp.innerHTML += '<span class="button" onclick="OBS_rightObs()"><i class="fa-regular fa-circle-check"></i>&nbsp&nbspĐúng CNV</span> ';
         temp.innerHTML += '<span class="button" onclick="OBS_wrongObs()"><i class="fa-regular fa-circle-xmark"></i>&nbsp&nbspSai CNV</span> ';
-        temp.innerHTML += '<span class="button" onclick="OBS_showObstacle()"><i class="fa-solid fa-eye"></i>&nbsp&nbspMở CNV (không ai đúng)</span><br>';
+        temp.innerHTML += '<span class="button" onclick="OBS_showObstacle()"><i class="fa-solid fa-eye"></i>&nbsp&nbspMở CNV</span><br>';
         temp.innerHTML += "<span class='text'>Khu vực ảnh:&nbsp</span>";
-        temp.innerHTML += '<span class="button" onclick="OBS_ImageUI()"><i class="fa-solid fa-display"></i>&nbsp&nbspGiao diện ảnh</span> ';
         temp.innerHTML += '<span class="button" onclick="OBS_openCorner()"><i class="fa-solid fa-eye"></i>&nbsp&nbspMở góc ảnh</span><br>';
-        temp.innerHTML += "<span class='text'>Giao diện chính:&nbsp</span> ";
-        temp.innerHTML += '<span class="button" onclick="OBS_backScreen()"><i class="fa-solid fa-display"></i>&nbsp&nbspVề giao diện chính</span><br>';
+        temp.innerHTML += "<span class='text'>Giao diện:&nbsp</span>";
+        temp.innerHTML += '<span class="button" onclick="OBS_backScreen()"><i class="fa-solid fa-display"></i>&nbsp&nbspHàng ngang</span> ';
+        temp.innerHTML += '<span class="button" onclick="OBS_AnswerUI()"><i class="fa-solid fa-display"></i>&nbsp&nbspĐáp án</span> ';
+        temp.innerHTML += '<span class="button" onclick="OBS_ImageUI()"><i class="fa-solid fa-display"></i>&nbsp&nbspGiao diện ảnh</span><br>';
         temp.innerHTML += "<span class='text'>Số điểm tối đa:&nbsp</span>";
         temp.innerHTML += '<b><span class="text" id="OBS_maxObsPoint">60</span></b><br>';
         temp.innerHTML += "<span class='text'>Điểm khuyến nghị CNV:&nbsp</span>";
         temp.innerHTML += '<b><span class="text" id="OBS_suggestObsPoint">60</span></b> ';
-        temp.innerHTML += '<span class="button" onclick="OBS_addPoint()"><i class="fa-solid fa-angles-up"></i>&nbsp10</span> ';
-        temp.innerHTML += '<span class="button" onclick="OBS_minusPoint()"><i class="fa-solid fa-angles-down"></i>&nbsp10</span><br>';
+        temp.innerHTML += '<span class="button" onclick="OBS_changePoint(10)"><i class="fa-solid fa-angles-up"></i>&nbsp10</span> ';
+        temp.innerHTML += '<span class="button" onclick="OBS_changePoint(-10)"><i class="fa-solid fa-angles-down"></i>&nbsp10</span><br>';
         temp.innerHTML += '<span class="button" onclick="OBS_deleteSignal()"><i class="fa-solid fa-bell-slash"></i>&nbsp&nbspXoá tín hiệu</span>';
         openEndPart();
     } else if (roundID == "3") {
@@ -421,12 +420,11 @@ function UI() {
     }
 }
 
-function OBS_addPoint() {
+function OBS_changePoint(point) {
     let currentObsPoint = Number(document.getElementById("OBS_suggestObsPoint").textContent);
-    if (currentObsPoint < 60) {
-        currentObsPoint += 10;
-        document.getElementById("OBS_suggestObsPoint").textContent = currentObsPoint;
-        OBS_pointChange -= 10;
+    if ((point < 0 && currentObsPoint > 20) || (point > 0 && currentObsPoint < 60)) {
+        document.getElementById("OBS_suggestObsPoint").textContent = currentObsPoint + point;
+        OBS_pointChange += point;
     }
 }
 
@@ -441,15 +439,6 @@ function OBS_rowTiming() {
         }
         timeleft -= 1;
     }, 1000);
-}
-
-function OBS_minusPoint() {
-    let currentObsPoint = Number(document.getElementById("OBS_suggestObsPoint").textContent);
-    if (currentObsPoint > 20) {
-        maxObsPoint -= 10;
-        document.getElementById("OBS_suggestObsPoint").textContent = currentObsPoint - 10;
-        OBS_pointChange += 10;
-    }
 }
 
 function OBS_deleteSignal() {
@@ -504,12 +493,11 @@ function OBS_chooseRow() {
     let rowIth = Number(document.getElementById("OBS_ithRow").value);
     OBS_rowSelected[rowIth - 1] = true;
     let count = 0;
-    for (let i = 0; i < 4; i++) {
+    for (let i = 0; i < 5; i++) {
         if (OBS_rowSelected[i] == true) count++;
     }
-    document.getElementById("OBS_suggestObsPoint").textContent = 60 - (count - 1) * 10 - OBS_pointChange;
+    document.getElementById("OBS_suggestObsPoint").textContent = 60 - (count - 1) * 10 + OBS_pointChange >= 20 ? 60 - (count - 1) * 10 + OBS_pointChange : 20;
 
-    if (rowIth == 5) document.getElementById("OBS_suggestObsPoint").textContent = 10;
     for (let i = 1; i <= 4; i++) {
         document.getElementById("answer" + i).textContent = "";
     }
@@ -606,13 +594,12 @@ function OBS_openCorner() {
 }
 
 function OBS_rightObs() {
-    let point, currentObsPoint;
-    currentObsPoint = Number(document.getElementById("OBS_suggestObsPoint").textContent);
+    let currentObsPoint = Number(document.getElementById("OBS_suggestObsPoint").textContent);
     for (let i = 1; i <= 4; i++) {
         if (document.getElementById("check" + i).checked == true) {
             let value = document.getElementById("signal" + i).textContent;
             socket.emit("OBS_rightObs", value);
-            point = Number(document.getElementById("player" + i + "Point").value);
+            let point = Number(document.getElementById("player" + i + "Point").value);
             document.getElementById("player" + i + "Point").value = point + currentObsPoint;
         }
         document.getElementById("check" + i).checked = false;

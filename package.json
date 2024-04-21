@@ -1,6 +1,6 @@
 {
   "name": "olympia_24",
-  "version": "1.6.1",
+  "version": "1.6.2",
   "description": "A mini project for OLAN web using Express Node.js server.",
   "main": "app.js",
   "scripts": {
