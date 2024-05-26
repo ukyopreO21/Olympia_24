@@ -9,6 +9,7 @@ const fs = require("fs").promises;
 const os = require("os");
 const readXlsxFile = require("read-excel-file/node");
 const XlsxPopulate = require("xlsx-populate");
+const now = require("nano-time");
 
 var appVersion;
 var ipv4Addresses = [];
@@ -351,15 +352,43 @@ async function getData(dbNumber) {
 setData(1);
 
 var serverStatus = {
-    currentRoundId: 1,
+    currentRoundId: 0,
+    currentUI: undefined,
+    playerGranted: undefined,
+    playerAnswersData: [
+        { answer: "", time: 0 },
+        { answer: "", time: 0 },
+        { answer: "", time: 0 },
+        { answer: "", time: 0 },
+    ],
     STR_Status: {
-        playerNumber: undefined,
-        questionNumber: undefined,
+        playerNumber: 1,
+        questionNumber: 0,
     },
-    OBS_Status: {},
-    ACC_Status: {},
-    FIN_Status: {},
-    SFI_Status: {},
+    OBS_Status: {
+        rowsStatus: [
+            { isOpened: false, isOpening: false, isCorrect: false, isCornerOpened: false },
+            { isOpened: false, isOpening: false, isCorrect: false, isCornerOpened: false },
+            { isOpened: false, isOpening: false, isCorrect: false, isCornerOpened: false },
+            { isOpened: false, isOpening: false, isCorrect: false, isCornerOpened: false },
+            { isOpened: false, isOpening: false, isCorrect: false, isCornerOpened: false },
+        ],
+        obstacleSignal: [],
+        isObstacleOpened: false,
+    },
+    ACC_Status: {
+        questionNumber: 1,
+    },
+    FIN_Status: {
+        playerNumber: 1,
+        questionNumber: 0,
+        packChosen: [0, 0, 0],
+        isStarOn: false,
+    },
+    SFI_Status: {
+        playerNumbers: [],
+        questionNumber: 0,
+    },
 };
 var playerGranted = 0;
 var STR_ithQuestion;
@@ -431,6 +460,7 @@ io.on("connection", function (socket) {
         setData(dbNumber);
         console.log("Đề thi đã được chọn là database " + dbNumber);
     });
+
     //Gửi database
     socket.on("chooseDb", async function (dbNumber) {
         let data = await getData(dbNumber);
@@ -483,7 +513,7 @@ io.on("connection", function (socket) {
     });
 
     socket.on("hostEnterRoom", function () {
-        socket.emit("serverData", { playerName, playerPoint, isReady, databaseChosen });
+        socket.emit("serverData", { playerName, playerPoint, isReady, databaseChosen, serverStatus });
         socket.emit("_getVersion", appVersion);
         socket.emit("sendChatLog", chatLog);
     });
@@ -525,6 +555,7 @@ io.on("connection", function (socket) {
 
     //CHỌN VÒNG THI
     socket.on("RoundChosen", function (roundID) {
+        serverStatus.currentRoundId = Number(roundID);
         io.emit("_RoundChosen", roundID);
     });
 
@@ -556,6 +587,7 @@ io.on("connection", function (socket) {
 
     socket.on("sendCurrentUI", function (UIData) {
         io.emit("_sendCurrentUI", UIData);
+        serverStatus.currentUI = UIData.UIName;
     });
 
     socket.on("resetStatus", function (roundID) {
@@ -577,6 +609,7 @@ io.on("connection", function (socket) {
 
     socket.on("STR_choosePlayer", function (ithStart) {
         io.emit("_STR_choosePlayer", ithStart);
+        serverStatus.STR_Status.playerNumber = Number(ithStart);
     });
 
     socket.on("STR_startPlayerTurn", function () {
@@ -585,17 +618,20 @@ io.on("connection", function (socket) {
 
     socket.on("STR_openQuestionBoard", function () {
         io.emit("_STR_openQuestionBoard");
+        serverStatus.currentUI = "STR_questionBoard";
     });
 
     socket.on("STR_startTurn", function (ithStart) {
         STR_ithQuestion = -1;
         let question = STR_getNextQuestion(Number(ithStart));
         io.emit("_STR_startTurn", question);
+        serverStatus.STR_Status.questionNumber = 1;
     });
 
     socket.on("STR_getNextQuestion", function (ithStart) {
         let question = STR_getNextQuestion(Number(ithStart));
         io.emit("_STR_getNextQuestion", question);
+        serverStatus.STR_Status.questionNumber++;
     });
 
     socket.on("STR_Timing", function (time) {
@@ -606,6 +642,7 @@ io.on("connection", function (socket) {
     socket.on("STR_blockSignal", function (playerNumber) {
         if (!playerGranted) playerGranted = playerNumber;
         io.emit("_STR_blockSignal", playerGranted);
+        serverStatus.playerGranted = playerNumber;
     });
 
     socket.on("STR_Right", function () {
@@ -618,6 +655,7 @@ io.on("connection", function (socket) {
 
     socket.on("STR_finishTurn", function () {
         io.emit("_STR_finishTurn");
+        serverStatus.currentUi = "STR_hideQuestionBoard";
     });
 
     //VCNV
@@ -633,6 +671,7 @@ io.on("connection", function (socket) {
     socket.on("OBS_showRows", function () {
         OBS_numberOfObsSignal = 0;
         io.emit("_OBS_showRows", OBS_CNV);
+        serverStatus.currentUI = "OBS_rowsUI";
     });
 
     socket.on("OBS_getRowsLength", function () {
@@ -641,6 +680,7 @@ io.on("connection", function (socket) {
 
     socket.on("OBS_chooseRow", function (rowIth) {
         io.emit("_OBS_chooseRow", { rowIth, OBS_QnA });
+        serverStatus.OBS_Status.rowsStatus[Number(rowIth) - 1].isOpening = true;
     });
 
     socket.on("OBS_showRowQuestion", function (rowIth) {
@@ -755,13 +795,13 @@ io.on("connection", function (socket) {
     });
 
     socket.on("ACC_startTiming", function (ithQuestion) {
-        ACC_startTime = Date.now();
+        ACC_startTime = now.micro();
         io.emit("_ACC_startTiming", { ithQuestion, ACC_startTime });
     });
 
     socket.on("ACC_sentAnswer", function (answerData) {
-        let catchTime = Date.now() - 2;
-        let costTime = (catchTime - ACC_startTime) / 1000;
+        let catchTime = now.micro() - 2000;
+        let costTime = (catchTime - ACC_startTime) / 1000000;
         if (costTime <= ACC_currentQuestion * 10) {
             costTime = costTime.toFixed(2);
             io.emit("_ACC_sentAnswer", { answerData, costTime });

@@ -411,21 +411,21 @@ html {
     position: absolute;
     bottom: 0%;
     right: 0%;
-    width: 6%;
+    width: 7%;
 }
 
 #upFont {
     position: absolute;
     bottom: 0%;
-    right: 6%;
-    width: 6%;
+    right: 7%;
+    width: 7%;
 }
 
 #allowBlankAnswer {
     position: absolute;
     bottom: 0%;
-    right: 12%;
-    width: 17%;
+    right: 14%;
+    width: 19%;
 }
 
 #questionStatus {
