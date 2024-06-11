@@ -29,7 +29,8 @@
         <span class="button" id="database" onclick="openDatabase()"><i class="fa-solid fa-database"></i>&nbsp&nbspQuản
             lý đề thi</span>
         <span class="button" id="otherMedia" onclick="openMedia()"><i class="fa-solid fa-music"></i>&nbsp&nbspMedia
-            ngoài</span><br>
+            ngoài</span>
+        <br>
         <span class="text">Bộ đề thi:&nbsp</span>
         <select id="dbNumber">
             <option value="1" selected>Database 1</option>
@@ -190,11 +191,20 @@
             <label style="color: #f1a621"><i class="fa-solid fa-align-left"></i>&nbsp;&nbsp;ĐÁP ÁN:</label><br>
             <div id="answerText"></div>
         </div>
+        <div id="note">
+            <label style="color: #f1a621"><i class="fa-solid fa-align-left"></i>&nbsp;&nbsp;GHI CHÚ:</label><br>
+            <div id="noteText"></div>
+        </div>
     </div>
     <div id="StatusZone">
+        <div id="STR_Info"></div>
         <div id="OBS_Info"></div>
         <div id="ACC_Info"></div>
-        <div id="FIN_chooseQuestionBoard" style="visibility: hidden"></div>
+        <div id="FIN_Info">
+            <div id="FIN_chooseQuestionBoard" style="visibility: hidden"></div>
+            <div id="FIN_Media"></div>
+        </div>
+
     </div>
     <div id="blurbg" onclick="closeExtraUI()" style="visibility: hidden;"></div>
     <iframe src="" id="dbFrame" style="visibility: hidden;"></iframe>

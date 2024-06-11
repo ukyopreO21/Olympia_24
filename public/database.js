@@ -266,7 +266,7 @@ socket.on("_chooseDb", function (dbData) {
         div.querySelector("textarea.OBS_question").value = dbData.obstacleDb[i - 1].question;
         div.querySelector("textarea.OBS_answer").value = dbData.obstacleDb[i - 1].answer;
         div.querySelector("textarea.OBS_note").value = dbData.obstacleDb[i - 1].note;
-        div.querySelector("textarea.OBS_media").media = dbData.obstacleDb[i - 1].media;
+        div.querySelector("textarea.OBS_media").value = dbData.obstacleDb[i - 1].media;
         autoResizeByServer("OBS_row" + i);
         if (i < 5) {
             document.getElementById("OBS_startPos" + i).value = dbData.obstacleDb[i - 1].startPos;
@@ -308,9 +308,7 @@ socket.on("_chooseDb", function (dbData) {
 });
 
 function updateData() {
-    if (
-        confirm("Bạn có chắc chắn với thao tác cập nhật dữ liệu chưa? Sau khi bạn ấn OK, dữ liệu sẽ bị thay đổi. Vui lòng sao lưu dữ liệu trước để tránh sự cố mất mát")
-    ) {
+    if (confirm("Bạn có chắc chắn với thao tác cập nhật dữ liệu chưa? Sau khi bạn ấn OK, dữ liệu sẽ bị thay đổi. Vui lòng sao lưu dữ liệu trước để tránh sự cố mất mát")) {
         let data = [];
         let dbNumber = document.getElementById("db").value;
         //Start

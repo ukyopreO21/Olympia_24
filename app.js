@@ -176,7 +176,6 @@ function saveMatchData(dbNumber) {
 }
 
 //DATABASE
-
 async function readDatabase(path, isReadBase64) {
     let startDb = [];
     let obstacleDb = [];
@@ -391,6 +390,7 @@ var serverStatus = {
     },
 };
 var playerGranted = 0;
+var mediaUrl;
 var STR_ithQuestion;
 var OBS_numberOfObsSignal = 0;
 var ACC_currentQuestion;
@@ -401,6 +401,8 @@ var SFI_openedQuestion;
 
 function STR_getNextQuestion(ithStart) {
     STR_ithQuestion++;
+    if ((ithStart < 5 && STR_ithQuestion > 5) || (ithStart == 5 && STR_ithQuestion > 11)) return undefined;
+    mediaUrl = STR_QnA[ithStart - 1][STR_ithQuestion].media;
     return STR_QnA[ithStart - 1][STR_ithQuestion];
 }
 
@@ -414,8 +416,15 @@ async function ACC_base64Video(filePath) {
 }
 
 function FIN_getQuestion(i) {
-    if (FIN_questionPos[i - 1].point == 20) return FIN_QnA[FIN_currentPlayer - 1][FIN_questionPos[i - 1].pos];
-    else return FIN_QnA[FIN_currentPlayer - 1][3 + FIN_questionPos[i - 1].pos];
+    if (FIN_questionPos[i - 1].point == 20) {
+        let questionData = FIN_QnA[FIN_currentPlayer - 1][FIN_questionPos[i - 1].pos];
+        mediaUrl = questionData.media;
+        return questionData;
+    } else {
+        let questionData = FIN_QnA[FIN_currentPlayer - 1][3 + FIN_questionPos[i - 1].pos];
+        mediaUrl = questionData.media;
+        return questionData;
+    }
 }
 
 function SFI_getQuestion(i) {
@@ -502,6 +511,10 @@ io.on("connection", function (socket) {
         console.log("Player " + playerNumber + " entered the room.");
     });
 
+    socket.on("getPlayerData", () => {
+        io.emit("_getPlayerData");
+    });
+
     socket.on("playerEnterRoom", function (playerNumber) {
         if (!validSlot[playerNumber - 1] && userID[playerNumber - 1] != "") {
             //login from slot/main
@@ -573,6 +586,10 @@ io.on("connection", function (socket) {
         io.emit("_changeChatRules", rule);
     });
 
+    socket.on("blankSound", () => {
+        io.emit("_blankSound");
+    });
+
     socket.on("ContestUI", function () {
         io.emit("_ContestUI");
     });
@@ -600,11 +617,19 @@ io.on("connection", function (socket) {
             playerName[i] = adminData.currentPlayerName[i];
             playerPoint[i] = adminData.currentPlayerPoint[i];
         }
-        saveMatchData(databaseChosen);
+        //saveMatchData(databaseChosen);
         io.emit("_sendAdminData", adminData);
     });
 
     //Xử lý TRONG PHẦN THI
+    socket.on("playMedia", () => {
+        io.emit("_playMedia", mediaUrl);
+    });
+
+    socket.on("closeMedia", () => {
+        io.emit("_closeMedia");
+    });
+
     //KHỞI ĐỘNG
 
     socket.on("STR_choosePlayer", function (ithStart) {
@@ -684,6 +709,7 @@ io.on("connection", function (socket) {
     });
 
     socket.on("OBS_showRowQuestion", function (rowIth) {
+        mediaUrl = OBS_QnA[rowIth - 1].media;
         io.emit("_OBS_showRowQuestion", OBS_QnA[rowIth - 1]);
     });
 
@@ -776,7 +802,6 @@ io.on("connection", function (socket) {
     });
 
     //TĂNG TỐC
-
     socket.on("ACC_chooseQuestion", function () {
         io.emit("_ACC_chooseQuestion");
     });

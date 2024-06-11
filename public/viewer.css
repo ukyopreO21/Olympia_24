@@ -759,6 +759,21 @@ html {
     height: 30%;
 }
 
+#STR_Image {
+    position: absolute;
+    left: 10%;
+    width: 50%;
+    top: 10%;
+    height: 50%;
+}
+
+#STR_Image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 0.15625vw solid white;
+}
+
 #STR_questionBox {
     position: absolute;
     left: -85%;
@@ -1701,6 +1716,35 @@ html {
     right: 0%;
     left: 0%;
     bottom: 0%;
+}
+
+#FIN_Image {
+    position: absolute;
+    left: 10%;
+    width: 50%;
+    top: 10%;
+    height: 50%;
+    justify-content: center;
+    align-items: center;
+}
+
+#FIN_Image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 0.15625vw solid white;
+}
+
+#FIN_Video {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    z-index: 20;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    padding: 0;
 }
 
 #FIN_Shelf {

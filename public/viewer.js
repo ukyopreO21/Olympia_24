@@ -64,6 +64,8 @@ socket.on("_getVersion", function (appVersion) {
     document.getElementById("currentVersion").textContent = appVersion;
 });
 
+socket.emit("getPlayerData");
+
 offContestUI();
 
 //TRẠNG THÁI VÒNG THI
@@ -263,6 +265,9 @@ function FinishUI() {
     for (var i = 0; i < child.length; i++) {
         child[i].style.visibility = "visible";
     }
+    //media
+    document.getElementById("FIN_Image").style.visibility = "visible";
+    document.getElementById("FIN_Video").style.visibility = "visible";
 }
 
 function SubFinishUI() {
@@ -293,6 +298,9 @@ function offFinishUI() {
     for (var i = 0; i < child.length; i++) {
         child[i].style.visibility = "hidden";
     }
+
+    document.getElementById("FIN_Image").style.visibility = "hidden";
+    document.getElementById("FIN_Video").style.visibility = "hidden";
 }
 
 function offResultUI() {
@@ -342,6 +350,11 @@ socket.on("_sendAdminData", function (adminData) {
 });
 
 //Xử lý TRONG PHẦN THI
+socket.on("_blankSound", () => {
+    let blankSound = new Audio("./Others/Sounds/blank.mp3");
+    blankSound.play();
+});
+
 socket.on("_RoundChosen", function (roundID) {
     currentRoundID = roundID;
 });
@@ -411,6 +424,210 @@ socket.on("_startRound", function () {
     startRoundAudio.pause();
     startRoundAudio.currentTime = 0;
     startRoundAudio.play();
+});
+
+var downloadTimer;
+
+function getMediaType(mediaUrl) {
+    if (mediaUrl) {
+        let extension = mediaUrl.split(".").pop().toLowerCase();
+        if (extension === "jpg" || extension === "jpeg" || extension === "png" || extension === "gif") return "image";
+        else if (extension === "mp4" || extension === "avi" || extension === "mov" || extension === "wmv") return "video";
+        else if (extension === "mp3" || extension === "wav" || extension === "ogg") return "audio";
+    }
+    return "unknown";
+}
+
+socket.on("_playMedia", (mediaUrl) => {
+    let mediaType = getMediaType(mediaUrl);
+    if (mediaType == "audio") {
+        questionAudio.pause();
+        questionAudio.src = mediaUrl;
+        questionAudio.currentTime = 0;
+        questionAudio.play();
+    } else if (mediaType == "video") {
+        let media = document.getElementById("FIN_Video");
+        media.src = mediaUrl;
+        if (media) {
+            media.play();
+            media.onended = () => {
+                document.getElementById("FIN_Video").src = "";
+            };
+        }
+    }
+});
+
+socket.on("_closeMedia", () => {
+    questionAudio.pause();
+    let media = document.getElementById("FIN_Video");
+    if (media) {
+        media.pause();
+        document.getElementById("FIN_Video").src = "";
+    }
+});
+
+//TÍN HIỆU PHẦN KĐ
+var STR_currentPlayer;
+var STR_ithQuestion;
+var STR_signalPlayer;
+
+socket.on("_STR_choosePlayer", function (ithStart) {
+    STR_removeAllGranted();
+    STR_currentPlayer = Number(ithStart);
+    if (STR_currentPlayer != 5) document.getElementById("STR_Player" + STR_currentPlayer).classList.add("STR_Granted");
+});
+
+socket.on("_STR_startPlayerTurn", function () {
+    STR_ithQuestion = 0;
+    STR_startTurn.pause();
+    STR_startTurn.currentTime = 0;
+    STR_startTurn.play();
+});
+
+function STR_printPlayerData() {
+    for (let i = 0; i < 4; i++) {
+        document.getElementById("STR_Name" + (i + 1)).textContent = i + 1 + ". " + allPlayerName[i];
+        document.getElementById("STR_Point" + (i + 1)).textContent = allPlayerPoint[i];
+    }
+}
+
+socket.on("_STR_openQuestionBoard", function () {
+    StartUI();
+    STR_printPlayerData();
+    STR_openQuestionBoard.pause();
+    STR_openQuestionBoard.currentTime = 0;
+    STR_openQuestionBoard.play();
+    document.getElementById("StartUI").style.visibility = "visible";
+    let questionBox = document.getElementById("STR_questionBox");
+    questionBox.classList.remove("STR_moveBoard");
+    void questionBox.offsetWidth;
+    let shelf = document.getElementById("STR_Shelf");
+    shelf.classList.remove("STR_moveQuestionShelf");
+    void shelf.offsetWidth;
+    let status = document.getElementById("STR_statusZone");
+    status.classList.remove("STR_moveStatus");
+    void status.offsetWidth;
+    let players = document.querySelectorAll(".STR_Player");
+    for (let i = 0; i < players.length; i++) {
+        players[i].classList.remove("STR_movePlayer");
+        players[i].offsetWidth;
+        players[i].classList.add("STR_movePlayer");
+        document.getElementById(players[i].id).style.animationDelay = (i + 1) * 250 + "ms";
+    }
+    questionBox.classList.add("STR_moveBoard");
+    shelf.classList.add("STR_moveQuestionShelf");
+    status.classList.add("STR_moveStatus");
+});
+
+function STR_removeAllGranted() {
+    for (let i = 1; i <= 4; i++) {
+        document.getElementById("STR_Player" + i).classList.remove("STR_Granted");
+    }
+}
+
+function STR_printNextQuestion(question) {
+    document.getElementById("STR_Image").innerHTML = "";
+    questionAudio.pause();
+    if (getMediaType(question.media) == "image") document.getElementById("STR_Image").innerHTML += "<img src='" + question.media + "'>";
+    document.getElementById("STR_Question").textContent = question.question;
+    if (STR_currentPlayer == 5) STR_removeAllGranted();
+}
+
+function STR_printPassStatus() {
+    if (STR_currentPlayer != 5) document.getElementById("STR_Status").textContent = "Câu " + STR_ithQuestion + "/6";
+    else document.getElementById("STR_Status").textContent = "Câu " + STR_ithQuestion + "/12";
+}
+
+socket.on("_STR_startTurn", function (question) {
+    STR_ithQuestion++;
+    STR_printNextQuestion(question);
+    STR_printPassStatus();
+    STR_mainTime.src = "./Start/Sounds/KDLoop1.mp3";
+    STR_mainTime.play();
+});
+
+function STR_countDown(time) {
+    clearInterval(downloadTimer);
+    document.getElementById("STR_Time").textContent = time;
+    let timeLeft = time - 1;
+    downloadTimer = setInterval(function () {
+        document.getElementById("STR_Time").textContent = timeLeft;
+        if (timeLeft <= 0) {
+            clearInterval(downloadTimer);
+        }
+        timeLeft -= 1;
+    }, 1000);
+}
+
+socket.on("_STR_Timing", function (time) {
+    if (STR_currentPlayer != 5 && STR_ithQuestion == 6 && time == 5) {
+        STR_mainTime.src = "./Start/Sounds/KDLoop4.mp3";
+        STR_mainTime.play();
+    } else if (STR_currentPlayer == 5 && STR_ithQuestion == 12 && time == 5) {
+        STR_mainTime.src = "./Start/Sounds/KDLoop4.mp3";
+        STR_mainTime.play();
+        if (!STR_signalPlayer) return;
+    }
+    STR_countDown(time);
+});
+
+socket.on("_STR_blockSignal", function (player) {
+    FIN_signalAudio.pause();
+    FIN_signalAudio.currentTime = 0;
+    FIN_signalAudio.play();
+    document.getElementById("STR_Player" + player).classList.add("STR_Granted");
+    STR_signalPlayer = player;
+});
+
+socket.on("_STR_Right", function () {
+    let STR_Right = new Audio("./Start/Sounds/KDDung.mp3");
+    STR_Right.play();
+});
+
+socket.on("_STR_Wrong", function () {
+    let STR_Wrong = new Audio("./Start/Sounds/KDSai.mp3");
+    STR_Wrong.play();
+});
+
+socket.on("_STR_getNextQuestion", function (questionData) {
+    if (STR_currentPlayer == 5) STR_removeAllGranted();
+    STR_signalPlayer = 0;
+    STR_ithQuestion++;
+    STR_printNextQuestion(questionData);
+    STR_printPassStatus();
+    if (STR_currentPlayer != 5) {
+        if (STR_ithQuestion == 3) {
+            STR_mainTime.src = "./Start/Sounds/KDLoop2.mp3";
+            STR_mainTime.play();
+        } else if (STR_ithQuestion == 5) {
+            STR_mainTime.src = "./Start/Sounds/KDLoop3.mp3";
+            STR_mainTime.play();
+        }
+    } else {
+        if (STR_ithQuestion == 6) {
+            STR_mainTime.src = "./Start/Sounds/KDLoop2.mp3";
+            STR_mainTime.play();
+        } else if (STR_ithQuestion == 11) {
+            STR_mainTime.src = "./Start/Sounds/KDLoop3.mp3";
+            STR_mainTime.play();
+        }
+    }
+    clearInterval(downloadTimer);
+    document.getElementById("STR_Time").textContent = "";
+});
+
+socket.on("_STR_finishTurn", function () {
+    document.getElementById("STR_Image").innerHTML = "";
+    document.getElementById("STR_Time").textContent = "";
+    STR_removeAllGranted();
+    offStartUI();
+    STR_mainTime.pause();
+    document.getElementById("STR_Question").textContent = "";
+    document.getElementById("STR_Status").textContent = "";
+    STR_finishTurn.pause();
+    STR_finishTurn.currentTime = 0;
+    STR_finishTurn.play();
+    document.getElementById("StartUI").style.visibility = "hidden";
 });
 
 socket.on("_OBS_showNumberOfCharacter", function () {
@@ -500,8 +717,6 @@ function OBS_mainObsTime() {
     OBS_playObsTime.currentTime = 0;
     OBS_playObsTime.play();
 }
-
-var downloadTimer;
 
 socket.on("_OBS_start15s", function () {
     //audio
@@ -652,224 +867,6 @@ socket.on("_OBS_last15s", function () {
 socket.on("_OBS_showObs", function (obsData) {
     OBS_showObstacle(obsData);
     document.getElementById("OBS_printSignal").innerHTML = "";
-});
-
-var showResult, repeat;
-
-socket.on("_result", function () {
-    offContestUI();
-    ResultUI();
-    clearTimeout(showResult);
-    clearInterval(repeat);
-    document.getElementById("resultName").textContent = "";
-    document.getElementById("resultPoint").textContent = "";
-    var sortedList = new Array(4);
-    for (var i = 1; i <= 4; i++) {
-        var playerName = allPlayerName[i - 1];
-        var playerPoint = allPlayerPoint[i - 1];
-        sortedList.push({ name: playerName, point: playerPoint });
-    }
-
-    sortedList.sort(function (a, b) {
-        return a.point - b.point;
-    });
-
-    resultAudio.pause();
-    resultAudio.currentTime = 0;
-    resultAudio.play();
-    document.querySelector(".Namebar").classList.remove("namebarMove");
-    var namebarMove = document.getElementById("Namebar");
-    void namebarMove.offsetWidth;
-    document.querySelector(".Namebar").classList.add("namebarMove");
-
-    document.querySelector(".Pointbar").classList.remove("pointbarMove");
-    var pointbarMove = document.getElementById("Pointbar");
-    void pointbarMove.offsetWidth;
-    document.querySelector(".Pointbar").classList.add("pointbarMove");
-
-    function setNameAndPoint(name, point) {
-        document.getElementById("resultName").textContent = name;
-        document.getElementById("resultPoint").textContent = point;
-    }
-
-    showResult = setTimeout(function () {
-        var count = 0;
-        setNameAndPoint(sortedList[count].name, sortedList[count].point);
-        repeat = setInterval(function () {
-            count++;
-            setNameAndPoint(sortedList[count].name, sortedList[count].point);
-            if (count == 3) clearInterval(repeat);
-        }, 3000);
-    }, 1000);
-});
-
-socket.on("_endGame", function () {
-    offContestUI();
-});
-
-//TÍN HIỆU PHẦN KĐ
-var STR_currentPlayer;
-var STR_ithQuestion;
-var STR_signalPlayer;
-
-socket.on("_STR_choosePlayer", function (ithStart) {
-    STR_removeAllGranted();
-    STR_currentPlayer = Number(ithStart);
-    if (STR_currentPlayer != 5) document.getElementById("STR_Player" + STR_currentPlayer).classList.add("STR_Granted");
-});
-
-socket.on("_STR_startPlayerTurn", function () {
-    STR_ithQuestion = 0;
-    STR_startTurn.pause();
-    STR_startTurn.currentTime = 0;
-    STR_startTurn.play();
-});
-
-function STR_printPlayerData() {
-    for (let i = 0; i < 4; i++) {
-        document.getElementById("STR_Name" + (i + 1)).textContent = i + 1 + ". " + allPlayerName[i];
-        document.getElementById("STR_Point" + (i + 1)).textContent = allPlayerPoint[i];
-    }
-}
-
-socket.on("_STR_openQuestionBoard", function () {
-    StartUI();
-    STR_printPlayerData();
-    STR_openQuestionBoard.pause();
-    STR_openQuestionBoard.currentTime = 0;
-    STR_openQuestionBoard.play();
-    document.getElementById("StartUI").style.visibility = "visible";
-    let questionBox = document.getElementById("STR_questionBox");
-    questionBox.classList.remove("STR_moveBoard");
-    void questionBox.offsetWidth;
-    let shelf = document.getElementById("STR_Shelf");
-    shelf.classList.remove("STR_moveQuestionShelf");
-    void shelf.offsetWidth;
-    let status = document.getElementById("STR_statusZone");
-    status.classList.remove("STR_moveStatus");
-    void status.offsetWidth;
-    let players = document.querySelectorAll(".STR_Player");
-    for (let i = 0; i < players.length; i++) {
-        players[i].classList.remove("STR_movePlayer");
-        players[i].offsetWidth;
-        players[i].classList.add("STR_movePlayer");
-        document.getElementById(players[i].id).style.animationDelay = (i + 1) * 250 + "ms";
-    }
-    questionBox.classList.add("STR_moveBoard");
-    shelf.classList.add("STR_moveQuestionShelf");
-    status.classList.add("STR_moveStatus");
-});
-
-function STR_removeAllGranted() {
-    for (let i = 1; i <= 4; i++) {
-        document.getElementById("STR_Player" + i).classList.remove("STR_Granted");
-    }
-}
-
-function STR_printNextQuestion(question) {
-    questionAudio.pause();
-    if (question.subject && question.subject.toUpperCase() == "TIẾNG ANH") {
-        questionAudio.src = question.media;
-        questionAudio.play();
-    }
-    document.getElementById("STR_Question").textContent = question.question;
-    if (STR_currentPlayer == 5) STR_removeAllGranted();
-}
-
-function STR_printPassStatus() {
-    if (STR_currentPlayer != 5) document.getElementById("STR_Status").textContent = "Câu " + STR_ithQuestion + "/6";
-    else document.getElementById("STR_Status").textContent = "Câu " + STR_ithQuestion + "/12";
-}
-
-socket.on("_STR_startTurn", function (question) {
-    STR_ithQuestion++;
-    STR_printNextQuestion(question);
-    STR_printPassStatus();
-    STR_mainTime.src = "./Start/Sounds/KDLoop1.mp3";
-    STR_mainTime.play();
-});
-
-function STR_countDown(time) {
-    clearInterval(downloadTimer);
-    document.getElementById("STR_Time").textContent = time;
-    let timeLeft = time - 1;
-    downloadTimer = setInterval(function () {
-        document.getElementById("STR_Time").textContent = timeLeft;
-        if (timeLeft <= 0) {
-            clearInterval(downloadTimer);
-        }
-        timeLeft -= 1;
-    }, 1000);
-}
-
-socket.on("_STR_Timing", function (time) {
-    if (STR_currentPlayer != 5 && STR_ithQuestion == 6 && time == 5) {
-        STR_mainTime.src = "./Start/Sounds/KDLoop4.mp3";
-        STR_mainTime.play();
-    } else if (STR_currentPlayer == 5 && STR_ithQuestion == 12 && time == 5) {
-        STR_mainTime.src = "./Start/Sounds/KDLoop4.mp3";
-        STR_mainTime.play();
-        if (!STR_signalPlayer) return;
-    }
-    STR_countDown(time);
-});
-
-socket.on("_STR_blockSignal", function (player) {
-    FIN_signalAudio.pause();
-    FIN_signalAudio.currentTime = 0;
-    FIN_signalAudio.play();
-    document.getElementById("STR_Player" + player).classList.add("STR_Granted");
-    STR_signalPlayer = player;
-});
-
-socket.on("_STR_Right", function () {
-    let STR_Right = new Audio("./Start/Sounds/KDDung.mp3");
-    STR_Right.play();
-});
-
-socket.on("_STR_Wrong", function () {
-    let STR_Wrong = new Audio("./Start/Sounds/KDSai.mp3");
-    STR_Wrong.play();
-});
-
-socket.on("_STR_getNextQuestion", function (questionData) {
-    if (STR_currentPlayer == 5) STR_removeAllGranted();
-    STR_signalPlayer = 0;
-    STR_ithQuestion++;
-    STR_printNextQuestion(questionData);
-    STR_printPassStatus();
-    if (STR_currentPlayer != 5) {
-        if (STR_ithQuestion == 3) {
-            STR_mainTime.src = "./Start/Sounds/KDLoop2.mp3";
-            STR_mainTime.play();
-        } else if (STR_ithQuestion == 5) {
-            STR_mainTime.src = "./Start/Sounds/KDLoop3.mp3";
-            STR_mainTime.play();
-        }
-    } else {
-        if (STR_ithQuestion == 6) {
-            STR_mainTime.src = "./Start/Sounds/KDLoop2.mp3";
-            STR_mainTime.play();
-        } else if (STR_ithQuestion == 11) {
-            STR_mainTime.src = "./Start/Sounds/KDLoop3.mp3";
-            STR_mainTime.play();
-        }
-    }
-    clearInterval(downloadTimer);
-    document.getElementById("STR_Time").textContent = "";
-});
-
-socket.on("_STR_finishTurn", function () {
-    document.getElementById("STR_Time").textContent = "";
-    STR_removeAllGranted();
-    offStartUI();
-    STR_mainTime.pause();
-    document.getElementById("STR_Question").textContent = "";
-    document.getElementById("STR_Status").textContent = "";
-    STR_finishTurn.pause();
-    STR_finishTurn.currentTime = 0;
-    STR_finishTurn.play();
-    document.getElementById("StartUI").style.visibility = "hidden";
 });
 
 //TĂNG TỐC
@@ -1179,6 +1176,8 @@ socket.on("_FIN_packChosen", function (list) {
 });
 
 socket.on("_FIN_chooseQuestion", function (question) {
+    document.getElementById("FIN_Image").innerHTML = "";
+    if (getMediaType(question.questionData.media) == "image") document.getElementById("FIN_Image").innerHTML += "<img src='" + question.questionData.media + "'>";
     for (let i = 1; i <= 3; i++) {
         if (i == Number(question.ithQuestion)) document.getElementById("FIN_" + i).classList.add("FIN_chosenQuestion");
         else document.getElementById("FIN_" + i).classList.remove("FIN_chosenQuestion");
@@ -1259,6 +1258,7 @@ socket.on("_FIN_5s", function () {
 });
 
 socket.on("_FIN_finishTurn", function () {
+    document.getElementById("FIN_Image").innerHTML = "";
     FIN_finishTurnAudio.pause();
     FIN_finishTurnAudio.currentTime = 0;
     FIN_finishTurnAudio.play();
@@ -1272,7 +1272,6 @@ socket.on("_FIN_finishTurn", function () {
 });
 
 //CÂU HỎI PHỤ
-
 function SFI_printPlayerData() {
     for (let i = 1; i <= 4; i++) {
         let ele = document.getElementById("SFI_Name" + i);
@@ -1354,8 +1353,61 @@ socket.on("_SFI_blockSignal", function (player) {
     document.getElementById("SFI_Line").style.animationPlayState = "paused";
 });
 
+var showResult, repeat;
+
+socket.on("_result", function () {
+    offContestUI();
+    ResultUI();
+    clearTimeout(showResult);
+    clearInterval(repeat);
+    document.getElementById("resultName").textContent = "";
+    document.getElementById("resultPoint").textContent = "";
+    var sortedList = new Array(4);
+    for (var i = 1; i <= 4; i++) {
+        var playerName = allPlayerName[i - 1];
+        var playerPoint = allPlayerPoint[i - 1];
+        sortedList.push({ name: playerName, point: playerPoint });
+    }
+
+    sortedList.sort(function (a, b) {
+        return a.point - b.point;
+    });
+
+    resultAudio.pause();
+    resultAudio.currentTime = 0;
+    resultAudio.play();
+    document.querySelector(".Namebar").classList.remove("namebarMove");
+    var namebarMove = document.getElementById("Namebar");
+    void namebarMove.offsetWidth;
+    document.querySelector(".Namebar").classList.add("namebarMove");
+
+    document.querySelector(".Pointbar").classList.remove("pointbarMove");
+    var pointbarMove = document.getElementById("Pointbar");
+    void pointbarMove.offsetWidth;
+    document.querySelector(".Pointbar").classList.add("pointbarMove");
+
+    function setNameAndPoint(name, point) {
+        document.getElementById("resultName").textContent = name;
+        document.getElementById("resultPoint").textContent = point;
+    }
+
+    showResult = setTimeout(function () {
+        var count = 0;
+        setNameAndPoint(sortedList[count].name, sortedList[count].point);
+        repeat = setInterval(function () {
+            count++;
+            setNameAndPoint(sortedList[count].name, sortedList[count].point);
+            if (count == 3) clearInterval(repeat);
+        }, 3000);
+    }, 1000);
+});
+
+socket.on("_endGame", function () {
+    offContestUI();
+});
+
 //SOUND NGOÀI
-let audio = new Audio();
+var audio = new Audio();
 document.body.appendChild(audio);
 
 socket.on("_OUT_introVideo", function () {
@@ -1366,41 +1418,49 @@ socket.on("_OUT_introVideo", function () {
         document.getElementById("intro").style.visibility = "hidden";
     };
 });
+
 socket.on("_OUT_introAudio", function () {
     audio.pause();
     audio.src = "./Others/Sounds/Intro.mp3";
     audio.play();
 });
+
 socket.on("_OUT_MC", function () {
     audio.pause();
     audio.src = "./Others/Sounds/MCLenSanKhau.mp3";
     audio.play();
 });
+
 socket.on("_OUT_Player", function () {
     audio.pause();
     audio.src = "./Others/Sounds/ThiSinhLenSanKhau.mp3";
     audio.play();
 });
+
 socket.on("_OUT_Introduce", function (num) {
     audio.pause();
     audio.src = "./Others/Sounds/misc_introduction" + num + ".mp3";
     audio.play();
 });
+
 socket.on("_OUT_Flower", function (num) {
     audio.pause();
     audio.src = "./Others/Sounds/TangHoa" + num + ".mp3";
     audio.play();
 });
+
 socket.on("_OUT_Ambience", function () {
     audio.pause();
     audio.src = "./Others/Sounds/Anticipation.mp3";
     audio.play();
 });
+
 socket.on("_OUT_Result", function (num) {
     audio.pause();
     audio.src = "./Others/Sounds/Ve" + num + ".mp3";
     audio.play();
 });
+
 socket.on("_OUT_Prize", function (num) {
     audio.pause();
     audio.src = "./Others/Sounds/Award" + num + ".mp3";
