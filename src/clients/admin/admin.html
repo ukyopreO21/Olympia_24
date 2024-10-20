@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="src/assets/Others/icon.png">
+    <link rel="stylesheet" type="text/css" href="/src/clients/admin/css/style.css">
+    <title>O24 - Điều khiển trận đấu</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://kit.fontawesome.com/c8df32ec7c.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="password-interface">
+        <div>Nhập mật khẩu quản lý</div>
+        <span>
+            <input id="password-input">
+            <button onclick="sendAdminPassword()">Kiểm tra</button>
+        </span>
+    </div>
+    <label id="current-version"></label>
+    <div id="technical-zone">
+        <span class="button" onclick="openDatabase()"><i class="fa-solid fa-database"></i>&nbsp;&nbsp;Quản lý đề thi</span>
+        <span class="button" onclick="openMedia()"><i class="fa-solid fa-music"></i>&nbsp;&nbsp;Media ngoài</span>
+        <br>
+        <span class="text">Bộ đề thi:&nbsp;</span>
+        <select id="database-number">
+            <option value="1" selected>Database 1</option>
+            <option value="2">Database 2</option>
+            <option value="3">Database 3</option>
+            <option value="4">Database 4</option>
+        </select>
+        <span class="button" onclick="chooseDatabase()"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;Chọn bộ đề thi</span><br>
+        <span class="text">Chọn vòng thi:&nbsp;</span>
+        <select id="rounds">
+            <option value="0" selected hidden></option>
+            <option value="1">Khởi động</option>
+            <option value="2">Vượt chướng ngại vật</option>
+            <option value="3">Tăng tốc</option>
+            <option value="4">Về đích</option>
+            <option value="5">Câu hỏi phụ</option>
+        </select>
+        <span class="button" onclick="chooseRound()"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;Xác nhận</span>
+        <div class="setting">
+            <div class="technical-title">CHUẨN BỊ</div>
+            <span class="button" onclick="changeChatRules()"><i class="fa-solid fa-message"></i>&nbsp;&nbsp;Chat</span>
+            <span class="text" id="chat-status">Trạng thái: Đang bật</span><br>
+            <span class="button" onclick="changeInterface()"><i class="fa-solid fa-display"></i>&nbsp;&nbsp;Giao diện </span>
+            <span class="text" id="interface-name">Phòng chat</span><br>
+            <span class="button" onclick="resetStatus()"><i class="fa-solid fa-arrow-rotate-left"></i>&nbsp;&nbsp;Reset trạng thái vòng thi</span>
+        </div>
+        <div id="round-controller">
+        </div>
+        <div id="finish-round">
+            <div class="technical-title">KẾT THÚC</div>
+            <span class="button" onclick="summarize()"><i class="fa-solid fa-list-ol"></i>&nbsp;&nbsp;Tổng kết điểm</span>
+            <span class="button" onclick="finishRound()"><i class="fa-solid fa-power-off"></i>&nbsp;&nbsp;Kết thúc vòng thi</span>
+        </div>
+    </div>
+    <div id="player-zone">
+        <div class="title"><i class="fa-solid fa-pen-to-square"></i>&nbsp;&nbsp;ĐIỂM SỐ HIỆN TẠI</div>
+        <div class="player-main">
+            <div class="player-data player-data-1">
+                <span class="player-name">TS1: </span>
+                <input maxlength="30" autocomplete="off" id="player-name-1" class="name-input" width="10%">
+                <input autocomplete="off" id="player-point-1" class="point-input" width="10%" value="0">
+            </div>
+            <div class="player-data player-data-2">
+                <span class="player-name">TS2: </span>
+                <input maxlength="30" autocomplete="off" id="player-name-2" class="name-input" width="10%">
+                <input autocomplete="off" id="player-point-2" class="point-input" width="10%" value="0">
+            </div>
+            <div class="player-data player-data-3">
+                <span class="player-name">TS3: </span>
+                <input maxlength="30" autocomplete="off" id="player-name-3" class="name-input" width="10%">
+                <input autocomplete="off" id="player-point-3" class="point-input" width="10%" value="0">
+            </div>
+            <div class="player-data player-data-4">
+                <span class="player-name">TS4: </span>
+                <input maxlength="30" autocomplete="off" id="player-name-4" class="name-input" width="10%">
+                <input autocomplete="off" id="player-point-4" class="point-input" width="10%" value="0">
+            </div>
+        </div>
+        <button id="send-player-data" onclick="sendPlayerData()"><i class="fa-solid fa-check"></i>&nbsp;&nbsp;XÁC NHẬN</button>
+    </div>
+    <div id="answer-zone">
+        <div class="title"><i class="fa-solid fa-keyboard"></i>&nbsp;&nbsp;ĐÁP ÁN GỬI VỀ</div>
+        <div class="table">
+            <table>
+                <tr style="height: 10%;">
+                    <th class="order-number">STT</th>
+                    <th class="player">THÍ SINH</th>
+                    <th class="answer">ĐÁP ÁN</th>
+                    <th class="time">THỜI GIAN</th>
+                    <th class="tick">CHỌN</th>
+                </tr>
+                <tr style="height: 22.5%;" id="player-1">
+                    <td class="order-number">
+                        <label id="signal-1"></label>
+                    </td>
+                    <td class="player">
+                        <label id="name-1"></label>
+                    </td>
+                    <td class="answer">
+                        <label id="answer-1"></label>
+                    </td>
+                    <td class="time">
+                        <label id="time-1"></label>
+                    </td>
+                    <td class="tick">
+                        <input id="check-1" type="checkbox">
+                    </td>
+                </tr>
+                <tr style="height: 22.5%;" id="player-2">
+                    <td class="order-number">
+                        <label id="signal-2"></label>
+                    </td>
+                    <td class="player">
+                        <label id="name-2"></label>
+                    </td>
+                    <td class="answer">
+                        <label id="answer-2"></label>
+                    </td>
+                    <td class="time">
+                        <label id="time-2"></label>
+                    </td>
+                    <td class="tick">
+                        <input id="check-2" type="checkbox">
+                    </td>
+                </tr>
+                <tr style="height: 22.5%;" id="player-3">
+                    <td class="order-number">
+                        <label id="signal-3"></label>
+                    </td>
+                    <td class="player">
+                        <label id="name-3"></label>
+                    </td>
+                    <td class="answer">
+                        <label id="answer-3"></label>
+                    </td>
+                    <td class="time">
+                        <label id="time-3"></label>
+                    </td>
+                    <td class="tick">
+                        <input id="check-3" type="checkbox">
+                    </td>
+                </tr>
+                <tr style="height: 22.5%;" id="player-4">
+                    <td class="order-number">
+                        <label id="signal-4"></label>
+                    </td>
+                    <td class="player">
+                        <label id="name-4"></label>
+                    </td>
+                    <td class="answer">
+                        <label id="answer-4"></label>
+                    </td>
+                    <td class="time">
+                        <label id="time-4"></label>
+                    </td>
+                    <td class="tick">
+                        <input id="check-4" type="checkbox">
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+    <div id="chat-zone">
+        <div class="title"><i class="fa-regular fa-comments"></i>&nbsp;&nbsp;CHAT - THÔNG BÁO - LỆNH</div>
+        <div id="chat-box"></div>
+        <input id="chat-input" placeholder="Nhập tin nhắn và nhấn Enter để gửi">
+    </div>
+    <div id="question-zone">
+        <div id="question">
+            <label style="color: orange"><i class="fa-solid fa-align-left"></i>&nbsp;&nbsp;CÂU HỎI:</label>
+            <div id="question-text"></div>
+        </div>
+        <div id="answer">
+            <label style="color: orange"><i class="fa-solid fa-align-left"></i>&nbsp;&nbsp;ĐÁP ÁN:</label><br>
+            <div id="answer-text"></div>
+        </div>
+        <div id="note">
+            <label style="color: orange"><i class="fa-solid fa-align-left"></i>&nbsp;&nbsp;GHI CHÚ:</label><br>
+            <div id="note-text"></div>
+        </div>
+    </div>
+    <div id="status-zone">
+        <div id="STR_info"></div>
+        <div id="OBS_info"></div>
+        <div id="ACC_info"></div>
+        <div id="FIN_info">
+            <div id="FIN_choose-question-board" style="visibility: hidden"></div>
+            <div id="FIN_media"></div>
+        </div>
+
+    </div>
+    <div id="blur-background" onclick="closeExtraUI()" style="visibility: hidden;"></div>
+    <iframe src="" id="database-interface" style="visibility: hidden;"></iframe>
+    <div id="media" style="visibility: hidden;">
+        <div class="media-type">BẮT ĐẦU CHƯƠNG TRÌNH</div>
+        <span class="media-title">- Intro chương trình:</span>
+        <button onclick="OUT_introVideo()">Video</button>
+        <button onclick="OUT_introAudio()">Audio</button><br>
+        <span class="media-title">- MC lên sân khấu:</span>
+        <button onclick="OUT_MC()">MC lên sân khấu</button>
+        <br>
+        <span class="media-title">- Giới thiệu thí sinh:</span>
+        <button onclick="OUT_Player()">Thí sinh lên sân khấu</button>
+
+        <div class="media-type">GIỚI THIỆU ĐẠI BIỂU</div>
+        <span class="media-title"></span>
+        <button name="1" onclick="OUT_Introduce(this)">Audio 1</button>
+        <button name="2" onclick="OUT_Introduce(this)">Audio 2</button>
+        <button name="3" onclick="OUT_Introduce(this)">Audio 3</button>
+        <button name="4" onclick="OUT_Introduce(this)">Audio 4</button>
+        <button name="5" onclick="OUT_Introduce(this)">Audio 5</button>
+
+        <div class="media-type">NHẠC ĐA CẤP</div>
+        <span class="media-title"></span>
+        <button name="1" onclick="OUT_Flower(this)">Victory 10 - Bond</button>
+        <button name="2" onclick="OUT_Flower(this)">Một cái gì đó tìm được ở trên YTB</button>
+
+        <div class="media-type">NHẠC TRONG TRẬN ĐẤU</div>
+        <span class="media-title">- Nhạc hồi hộp:</span>
+        <button onclick="OUT_Ambience()">Ambience</button>
+
+        <div class="media-type">KẾT THÚC CHƯƠNG TRÌNH</div>
+        <span class="media-title">- Công bố điểm & vị trí:</span>
+        <button name="1" onclick="OUT_result(this)">Về thứ nhất</button>
+        <button name="2" onclick="OUT_result(this)">Về thứ nhì</button>
+        <button name="3" onclick="OUT_result(this)">Về thứ ba</button>
+        <button name="4" onclick="OUT_result(this)">Về thứ tư</button>
+        <br>
+        <span class="media-title">- Trao giải cho thí sinh:</span>
+        <button name="1" onclick="OUT_Prize(this)">Nhạc thường</button>
+        <button name="2" onclick="OUT_Prize(this)">Nhạc Olympic</button>
+        <br>
+        <span class="media-title">- Dừng tất cả các audio đang phát:</span>
+        <button onclick="OUT_closeAllAudio()">Tắt</button>
+    </div>
+
+</body>
+<script type="module" src="/src/clients/admin/js/main.js"></script>
+
+</html>

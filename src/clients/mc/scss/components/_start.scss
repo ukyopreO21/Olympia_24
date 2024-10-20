@@ -1,0 +1,63 @@
+#start-interface {
+    font-size: 1.25vw;
+    font-weight: bold;
+    visibility: hidden;
+    color: white;
+}
+
+#STR_turn {
+    position: absolute;
+    top: 4%;
+    left: 2%;
+}
+
+#STR_question-number {
+    position: absolute;
+    top: 11%;
+    left: 2%;
+}
+
+#STR_question .label {
+    position: absolute;
+    top: 18%;
+    left: 2%;
+}
+
+#STR_question .question-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 24%;
+    left: 2%;
+    width: 80%;
+    height: 16%;
+}
+
+#STR_answer .label {
+    position: absolute;
+    top: 43%;
+    left: 2%;
+}
+
+#STR_answer .answer-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 49%;
+    left: 2%;
+    width: 80%;
+    height: 8%;
+}
+
+#STR_note .label {
+    position: absolute;
+    top: 60%;
+    left: 2%;
+}
+
+#STR_note .note-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 66%;
+    left: 2%;
+    width: 80%;
+    height: 16%;
+}

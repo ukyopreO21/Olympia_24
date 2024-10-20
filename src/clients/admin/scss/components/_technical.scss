@@ -1,0 +1,135 @@
+#technical-zone {
+    user-select: none;
+    position: absolute;
+    top: 2%;
+    left: 1%;
+    width: 30%;
+    bottom: 2%;
+    color: white;
+    border-right: calc(5vw / 48) solid rgb(255, 255, 255, 0.3);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+#technical-zone span {
+    margin: 1% 0;
+}
+
+#blur-background {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    right: 0%;
+    bottom: 0%;
+    background-color: rgb(0, 0, 0, 0.8);
+    z-index: 9;
+}
+
+#database-interface,
+#media {
+    border: calc(10vw / 48) solid orange;
+    z-index: 10;
+    position: absolute;
+    top: 3%;
+    height: 94%;
+    left: 3%;
+    width: 94%;
+}
+
+#media {
+    user-select: none;
+    background: linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url("/src/assets/Others/Background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+
+#media button {
+    margin-top: 1%;
+    margin-left: 0.5%;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.95vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 0.2vw solid #a80000;
+    cursor: pointer;
+    transition: border-color 0.5s ease;
+    box-sizing: border-box;
+    color: white;
+    height: 2.4vw;
+}
+
+#media button:hover {
+    border-color: orange;
+}
+
+.media-title {
+    margin-left: 1%;
+    font-size: 1vw;
+    color: white;
+    font-weight: bold;
+}
+
+.media-type {
+    margin-left: 1%;
+    margin-top: 1%;
+    font-size: 1.5vw;
+    color: orange;
+    font-weight: bolder;
+}
+
+#rounds {
+    width: 40%;
+}
+
+#database-number {
+    width: 30%;
+}
+
+.text {
+    display: inline-block;
+    height: 2vw;
+    font-size: 0.9vw;
+    color: white;
+    box-sizing: border-box;
+    padding: 0.5vh 0;
+}
+
+.button,
+.SFI_player {
+    display: inline-block;
+    padding: 0.5vh 0.75vh;
+    height: 2vw;
+    font-size: 0.8vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 0.2vw solid #a80000;
+    color: white;
+    cursor: pointer;
+    transition: border-color 0.5s ease;
+    box-sizing: border-box;
+}
+
+/*title*/
+.technical-title {
+    color: orange;
+    font-size: 1vw;
+    font-weight: bold;
+    margin: 2% 0;
+}
+
+.button:hover,
+#send-player-data:hover {
+    border-color: orange;
+}
+
+#play-media,
+#close-media {
+    opacity: 0.5;
+    pointer-events: none;
+}
+
+
+#finish-round {
+    visibility: hidden;
+}

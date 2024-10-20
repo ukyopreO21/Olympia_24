@@ -1,0 +1,90 @@
+#player-zone {
+    position: absolute;
+    top: 3%;
+    right: 1%;
+    left: 65%;
+    bottom: 73%;
+    color: white;
+    border: calc(5vw / 48) dotted grey;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#player-zone .player-main {
+    position: absolute;
+    left: 0.5vw;
+    right: 0.5vw;
+    top: 20%;
+    height: 60%;
+}
+
+#send-player-data {
+    position: absolute;
+    bottom: 0.5vw;
+    right: 0.5vw;
+    font-family: Montserrat;
+    height: calc(100% / 6);
+    font-size: 0.8vw;
+    background-color: rgba(0, 0, 0, 0.5);
+    border: 0.2vw solid #a80000;
+    color: white;
+    cursor: pointer;
+    transition: border-color 0.5s ease;
+    box-sizing: border-box;
+}
+
+.player-data {
+    position: absolute;
+    width: 100%;
+    height: 25%;
+    box-sizing: border-box;
+}
+
+.player-data-1 {
+    top: 0%;
+}
+
+.player-data-2 {
+    top: 25%;
+}
+
+.player-data-3 {
+    top: 50%;
+}
+
+.player-data-4 {
+    top: 75%;
+}
+
+.player-name {
+    position: absolute;
+    height: 100%;
+    font-size: 0.95vw;
+    font-weight: bold;
+}
+
+.name-input,
+.point-input {
+    position: absolute;
+    background: transparent;
+    outline: none;
+    border: none;
+    border-bottom: calc(5vw / 96) solid white;
+    transition: border-color 0.5s ease;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.9vw;
+    height: 1.1vw;
+    color: white;
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+.name-input {
+    left: 10%;
+    width: 70%;
+}
+
+.point-input {
+    width: 10%;
+    right: 1%;
+}

@@ -1,0 +1,96 @@
+html {
+    font-family: "Montserrat", sans-serif;
+    background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/src/assets/Others/Background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 100% 100%;
+    overflow: hidden;
+}
+
+#current-version {
+    position: fixed;
+    right: 0%;
+    bottom: 0%;
+    opacity: 0.5;
+    color: white;
+    font-size: 0.85vw;
+}
+
+/* width */
+::-webkit-scrollbar {
+    width: 0.3vw;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background-color: #a80000;
+    border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: white;
+}
+
+select {
+    display: inline-block;
+    font-family: "Montserrat", sans-serif;
+    background: none;
+    border: calc(5vw / 96) solid white;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    font-size: 0.9vw;
+    height: 2.75%;
+}
+
+select option {
+    color: black;
+}
+
+.title {
+    position: absolute;
+    left: 0.5vw;
+    top: 0.5vw;
+    font-size: 1vw;
+    font-weight: bold;
+    color: cyan;
+}
+
+#OBS_row-number,
+#STR_player-number,
+#ACC_question-number,
+#FIN_player-number,
+#FIN_question-number,
+#SFI_question-number {
+    width: auto;
+    text-align: center;
+}
+
+#OBS_row-number:hover,
+#STR_player-number:hover,
+#ACC_question-number:hover,
+.name-input:hover,
+.point-input:hover,
+.name-input:focus,
+.point-input:focus,
+#FIN_player-number:hover,
+#FIN_question-number:hover,
+#SFI_question-number:hover {
+    border-color: #a80000;
+}
+
+#OBS_row-number:focus,
+#STR_player-number:focus,
+#ACC_question-number:focus,
+#FIN_player-number:focus,
+#FIN_question-number:focus,
+#SFI_question-number:focus {
+    border-color: #a80000;
+}

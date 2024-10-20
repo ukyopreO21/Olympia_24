@@ -1,0 +1,671 @@
+html {
+  font-family: "Montserrat", sans-serif;
+  background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/src/assets/Others/Background.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: 100% 100%;
+  overflow: hidden;
+  user-select: none;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 0.3vw;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background-color: #a80000;
+  border-radius: 100px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: white;
+}
+
+#password-interface {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  left: 0%;
+  bottom: 0%;
+  background-color: aliceblue;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#password-interface div {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  text-align: center;
+  font-size: 1.75vw;
+  font-weight: bold;
+}
+
+#password-interface span {
+  position: absolute;
+  height: 5%;
+  width: 20%;
+}
+
+#password-interface input {
+  position: absolute;
+  left: 0%;
+  width: 60%;
+  text-align: center;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.5vw;
+  border: 0.2vw solid #a80000;
+  background: none;
+}
+
+#password-interface input:focus {
+  border: orange;
+}
+
+#password-interface button {
+  border: 0.2vw solid #a80000;
+  position: absolute;
+  right: 0%;
+  width: 35%;
+  background: none;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  height: 100%;
+  transition: all 0.2s ease;
+  font-size: 1.2vw;
+}
+
+#password-interface button:hover {
+  background-color: orange;
+}
+
+#current-version {
+  position: fixed;
+  right: 0%;
+  bottom: 0%;
+  opacity: 0.5;
+  color: white;
+  font-size: 0.85vw;
+}
+
+#round-name {
+  position: absolute;
+  left: 3%;
+  right: 3%;
+  top: 5%;
+  height: 7.5%;
+  border: 0.2vw solid white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: white;
+  font-size: 2vw;
+  font-weight: bolder;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#rounds-interface {
+  position: absolute;
+  border: 0.2vw solid orange;
+  top: 16%;
+  left: 3%;
+  right: 25.5%;
+  bottom: 5%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+#current-point {
+  position: absolute;
+  border: 0.2vw solid white;
+  top: 35%;
+  right: 3%;
+  left: 76%;
+  height: 26.5%;
+  color: white;
+  font-weight: bold;
+  background-color: rgba(0, 0, 0, 0.5);
+  font-size: 1vw;
+}
+
+.current-point {
+  position: absolute;
+  width: 100%;
+  height: 25%;
+}
+
+#current-point-1 {
+  top: 0%;
+}
+
+#current-point-2 {
+  top: 25%;
+}
+
+#current-point-3 {
+  top: 50%;
+}
+
+#current-point-4 {
+  top: 75%;
+}
+
+.Name {
+  position: absolute;
+  height: 100%;
+  left: 0%;
+  width: 90%;
+  font-size: 1vw;
+  display: flex;
+  justify-content: left;
+  text-align: left;
+  align-items: center;
+  padding-left: 2%;
+}
+
+.Point {
+  position: absolute;
+  height: 100%;
+  right: 0%;
+  width: 10%;
+  font-size: 1.5vw;
+  display: flex;
+  justify-content: right;
+  text-align: right;
+  align-items: center;
+  padding-right: 2%;
+}
+
+#player-answers {
+  position: absolute;
+  top: 65%;
+  bottom: 5%;
+  right: 3%;
+  left: 76%;
+  border: 0.2vw solid white;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.answer-name {
+  position: absolute;
+  height: 100%;
+  left: 1%;
+  width: 40%;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  text-align: left;
+  font-size: 1vw;
+  color: white;
+}
+
+.answer-text {
+  position: absolute;
+  height: 100%;
+  left: 42%;
+  right: 1%;
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  text-align: right;
+  font-size: 1vw;
+  color: white;
+}
+
+.answer {
+  position: absolute;
+  width: 100%;
+  height: 25%;
+}
+
+#answer-1 {
+  top: 0%;
+}
+
+#answer-2 {
+  top: 25%;
+}
+
+#answer-3 {
+  top: 50%;
+}
+
+#answer-4 {
+  top: 75%;
+}
+
+#time-left {
+  position: absolute;
+  border: 0.2vw solid white;
+  left: 76%;
+  height: 15.5%;
+  right: 3%;
+  top: 16%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-size: 6vw;
+  font-weight: bold;
+  color: white;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.granted {
+  background-image: linear-gradient(to right bottom, #df2453, #e12048, #e21d3c, #e21e2f, #e12121);
+}
+
+.label {
+  color: orange;
+  font-weight: bolder;
+  font-size: 1.25vw;
+}
+
+.question-content,
+.answer-content,
+.note-content {
+  position: absolute;
+  overflow-y: auto;
+  color: white;
+  font-size: 1vw;
+  font-weight: normal;
+  text-align: left;
+}
+
+.question-content label,
+.answer-content label,
+.note-content label {
+  position: absolute;
+  margin-left: 1%;
+  margin-right: 0.5%;
+  margin-top: 0.5%;
+}
+
+#start-interface {
+  font-size: 1.25vw;
+  font-weight: bold;
+  visibility: hidden;
+  color: white;
+}
+
+#STR_turn {
+  position: absolute;
+  top: 4%;
+  left: 2%;
+}
+
+#STR_question-number {
+  position: absolute;
+  top: 11%;
+  left: 2%;
+}
+
+#STR_question .label {
+  position: absolute;
+  top: 18%;
+  left: 2%;
+}
+
+#STR_question .question-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 24%;
+  left: 2%;
+  width: 80%;
+  height: 16%;
+}
+
+#STR_answer .label {
+  position: absolute;
+  top: 43%;
+  left: 2%;
+}
+
+#STR_answer .answer-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 49%;
+  left: 2%;
+  width: 80%;
+  height: 8%;
+}
+
+#STR_note .label {
+  position: absolute;
+  top: 60%;
+  left: 2%;
+}
+
+#STR_note .note-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 66%;
+  left: 2%;
+  width: 80%;
+  height: 16%;
+}
+
+#obstacle-interface {
+  color: white;
+  visibility: hidden;
+}
+
+#obstacle-interface tr,
+#obstacle-interface th,
+#obstacle-interface td {
+  border: 0.1vw solid orange;
+}
+
+#obstacle-interface table {
+  position: absolute;
+  top: 4%;
+  right: 2%;
+  width: 40%;
+  height: 35%;
+  border-collapse: collapse;
+  text-align: center;
+  font-size: 1vw;
+}
+
+#OBS_index {
+  width: 30%;
+  font-weight: bolder;
+}
+
+#OBS_num-char {
+  width: 20%;
+  font-weight: bolder;
+}
+
+#OBS_row-answer {
+  width: 50%;
+  font-weight: bolder;
+}
+
+#OBS_image-zone {
+  position: absolute;
+  top: 45%;
+  right: 2%;
+  width: 30%;
+  height: 48.2700421941%;
+}
+
+#OBS_image-zone > * {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+}
+
+#OBS_question .label {
+  position: absolute;
+  top: 4%;
+  left: 2%;
+}
+
+#OBS_question .question-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 10%;
+  left: 2%;
+  width: 50%;
+  height: 16%;
+}
+
+#OBS_answer .label {
+  position: absolute;
+  top: 29%;
+  left: 2%;
+}
+
+#OBS_answer .answer-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 35%;
+  left: 2%;
+  width: 50%;
+  height: 8%;
+}
+
+#OBS_note .label {
+  position: absolute;
+  top: 46%;
+  left: 2%;
+}
+
+#OBS_note .note-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 52%;
+  left: 2%;
+  width: 60%;
+  height: 24%;
+}
+
+#OBS_signals .label {
+  position: absolute;
+  top: 79%;
+  left: 2%;
+}
+
+#OBS_signals .OBS_print-signal {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 85%;
+  left: 2%;
+  width: 60%;
+  height: 7%;
+}
+
+.OBS_signal {
+  position: absolute;
+  width: 25%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.95vw;
+  background-image: linear-gradient(to right bottom, #df2453, #e12048, #e21d3c, #e21e2f, #e12121);
+  border: 0.1041666667vw solid orange;
+  color: white;
+  font-weight: bold;
+  box-sizing: border-box;
+}
+
+#acceleration-interface {
+  font-size: 1.25vw;
+  font-weight: bold;
+  color: white;
+  visibility: hidden;
+}
+
+#ACC_question-number {
+  position: absolute;
+  top: 4%;
+  left: 2%;
+}
+
+#ACC_question .label {
+  position: absolute;
+  top: 11%;
+  left: 2%;
+}
+
+#ACC_question .question-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 17%;
+  left: 2%;
+  width: 50%;
+  height: 8%;
+}
+
+#ACC_answer .label {
+  position: absolute;
+  top: 28%;
+  left: 2%;
+}
+
+#ACC_answer .answer-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 34%;
+  left: 2%;
+  width: 50%;
+  height: 8%;
+}
+
+#ACC_note .label {
+  position: absolute;
+  top: 11%;
+  left: 55%;
+}
+
+#ACC_note .note-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 17%;
+  left: 55%;
+  right: 2%;
+  height: 25%;
+}
+
+#ACC_media {
+  position: absolute;
+  left: 2%;
+  right: 2%;
+  bottom: 4%;
+  top: 47%;
+  border: 0.1vw solid white;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#ACC_media > * {
+  position: absolute;
+  object-fit: contain;
+  max-width: 100%;
+  max-height: 100%;
+}
+
+#finish-interface,
+#sub-finish-interface {
+  font-size: 1.25vw;
+  font-weight: bold;
+  visibility: hidden;
+}
+
+#FIN_turn,
+#SFI_question-number {
+  position: absolute;
+  top: 4%;
+  left: 2%;
+  color: white;
+}
+
+#FIN_question .label,
+#SFI_question .label {
+  position: absolute;
+  top: 11%;
+  left: 2%;
+}
+
+#FIN_question .question-content,
+#SFI_question .question-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 17%;
+  left: 2%;
+  width: 85%;
+  height: 24%;
+}
+
+#FIN_answer .label,
+#SFI_answer .label {
+  position: absolute;
+  top: 44%;
+  left: 2%;
+}
+
+#FIN_answer .answer-content,
+#SFI_answer .answer-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 50%;
+  left: 2%;
+  width: 85%;
+  height: 12%;
+}
+
+#FIN_note .label,
+#SFI_note .label {
+  position: absolute;
+  top: 65%;
+  left: 2%;
+}
+
+#FIN_note .note-content,
+#SFI_note .note-content {
+  border: 0.1vw solid white;
+  position: absolute;
+  top: 71%;
+  left: 2%;
+  width: 85%;
+  height: 24%;
+}
+
+#FIN_list {
+  position: absolute;
+  top: 4%;
+  right: 13%;
+  height: 8%;
+  width: 15%;
+  border: 0.1vw solid white;
+}
+
+#FIN_list > * {
+  position: absolute;
+  height: 100%;
+  width: 33.3333333333%;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2vw;
+  box-sizing: border-box;
+}
+
+#FIN_question-1 {
+  left: 0%;
+}
+
+#FIN_question-2 {
+  left: 33.3333333333%;
+  border-left: 0.1vw solid white;
+  border-right: 0.1vw solid white;
+}
+
+#FIN_question-3 {
+  left: 66.6666666667%;
+}
+
+#FIN_star {
+  position: absolute;
+  top: 1%;
+  right: 2%;
+  width: 8%;
+  visibility: hidden;
+}

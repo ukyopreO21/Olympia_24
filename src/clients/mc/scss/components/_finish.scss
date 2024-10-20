@@ -1,0 +1,108 @@
+#finish-interface,
+#sub-finish-interface {
+    font-size: 1.25vw;
+    font-weight: bold;
+    visibility: hidden;
+}
+
+#FIN_turn,
+#SFI_question-number {
+    position: absolute;
+    top: 4%;
+    left: 2%;
+    color: white;
+}
+
+#FIN_question .label,
+#SFI_question .label {
+    position: absolute;
+    top: 11%;
+    left: 2%;
+}
+
+#FIN_question .question-content,
+#SFI_question .question-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 17%;
+    left: 2%;
+    width: 85%;
+    height: 24%;
+}
+
+#FIN_answer .label,
+#SFI_answer .label {
+    position: absolute;
+    top: 44%;
+    left: 2%;
+}
+
+#FIN_answer .answer-content,
+#SFI_answer .answer-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 50%;
+    left: 2%;
+    width: 85%;
+    height: 12%;
+}
+
+#FIN_note .label,
+#SFI_note .label {
+    position: absolute;
+    top: 65%;
+    left: 2%;
+}
+
+#FIN_note .note-content,
+#SFI_note .note-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 71%;
+    left: 2%;
+    width: 85%;
+    height: 24%;
+}
+
+#FIN_list {
+    position: absolute;
+    top: 4%;
+    right: 13%;
+    height: 8%;
+    width: 15%;
+    border: 0.1vw solid white;
+}
+
+#FIN_list>* {
+    position: absolute;
+    height: 100%;
+    width: calc(100% / 3);
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 2vw;
+    box-sizing: border-box;
+}
+
+#FIN_question-1 {
+    left: 0%;
+}
+
+#FIN_question-2 {
+    left: calc(100% / 3);
+    border-left: 0.1vw solid white;
+    border-right: 0.1vw solid white;
+}
+
+#FIN_question-3 {
+    left: calc(200% / 3);
+}
+
+#FIN_star {
+    position: absolute;
+    top: 1%;
+    right: 2%;
+    width: 8%;
+    visibility: hidden;
+}

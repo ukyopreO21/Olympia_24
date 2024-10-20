@@ -1,0 +1,63 @@
+#question-zone {
+    position: absolute;
+    top: 3%;
+    left: 33%;
+    right: 37%;
+    height: 40%;
+}
+
+#question label,
+#answer label,
+#note label {
+    position: absolute;
+    top: 0%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    font-weight: bold;
+    font-size: 0.9vw;
+    user-select: none;
+}
+
+#question-text,
+#answer-text,
+#note-text {
+    position: absolute;
+    padding-top: 0.1vw;
+    padding-bottom: 0.1vw;
+    padding-left: 0.2vw;
+    padding-right: 1%;
+    line-height: 1.5;
+    font-size: 1vw;
+    top: 1.5vw;
+    bottom: 0%;
+    left: 0%;
+    right: 0%;
+    text-align: justify;
+    overflow-y: auto;
+    color: white;
+    border: calc(5vw / 48) dotted rgba(255, 255, 255, 0.5);
+    background-color: rgba(0, 0, 0, 0.2);
+    box-sizing: border-box;
+}
+
+#question {
+    position: absolute;
+    top: 0%;
+    height: 48%;
+    width: 100%;
+}
+
+#answer {
+    position: absolute;
+    top: 50%;
+    height: 24%;
+    width: 100%;
+}
+
+#note {
+    position: absolute;
+    top: 76%;
+    bottom: 0%;
+    width: 100%;
+}

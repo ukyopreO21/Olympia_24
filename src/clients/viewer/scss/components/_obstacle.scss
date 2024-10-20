@@ -1,0 +1,515 @@
+#OBS_main-interface {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    height: 100%;
+    width: 100%;
+    visibility: hidden;
+}
+
+.OBS_row {
+    position: absolute;
+    width: 80%;
+    height: 7%;
+    left: 10%;
+    display: flex;
+}
+
+#OBS_row-1 {
+    top: 10%;
+}
+
+#OBS_row-2 {
+    top: 24%;
+}
+
+#OBS_row-3 {
+    top: 38%;
+}
+
+#OBS_row-4 {
+    top: 52%;
+}
+
+.OBS_order {
+    position: absolute;
+    right: 0%;
+    height: 110%;
+    font-size: 3.5vw;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    width: calc(693% / 128);
+    border-radius: 15px;
+    background-color: rgb(0, 0, 0, 0.5);
+    font-weight: bold;
+    color: white;
+}
+
+.OBS_char {
+    position: relative;
+    width: calc(315% / 64);
+    height: 100%;
+    box-sizing: border-box;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    align-items: center;
+    font-size: 2.5vw;
+    font-weight: bold;
+    margin-left: 0.15%;
+    margin-right: 0.15%;
+    background-color: #808080;
+    border: 0.15625vw solid white;
+    visibility: hidden;
+    color: white;
+    opacity: 0;
+}
+
+.OBS_right-row {
+    background-image: linear-gradient(to right bottom, #2b8ba6, #0083b0, #007ab9, #006ec0, #0060c1);
+}
+
+.OBS_wrong-row {
+    background-image: linear-gradient(to right bottom, #000000, #1b1b1b, #2e2e2e, #444444, #5a5a5a);
+}
+
+.OBS_chosen {
+    animation-name: OBS_chosen;
+    animation-duration: 0.5s;
+    animation-timing-function: linear;
+    animation-fill-mode: forwards;
+}
+
+@keyframes OBS_chosen {
+    0% {
+        background-color: #808080;
+    }
+
+    100% {
+        background-color: #A80000;
+    }
+}
+
+#OBS_hiders,
+#OBS_image {
+    position: absolute;
+    height: calc(640%/9);
+    width: 40%;
+    transform: translate(-50%, -50%);
+    left: 50%;
+    top: 50%;
+    visibility: hidden;
+}
+
+#OBS_hiders img {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+}
+
+#OBS_image {
+    z-index: -1;
+    border: calc(5vw/96) solid white;
+}
+
+.OBS_signal {
+    position: absolute;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15vw;
+    background-image: linear-gradient(to right bottom, #d42828, #bc2125, #a51a21, #8e141d, #780f18);
+    border: calc(5vw/96) solid white;
+    color: white;
+    font-weight: 600;
+}
+
+.OBS_landscape-signal {
+    width: 24.25%;
+    height: 100%;
+    top: 0%;
+}
+
+.OBS_landscape-1 {
+    left: 0%;
+}
+
+.OBS_landscape-2 {
+    left: 25.25%;
+}
+
+.OBS_landscape-3 {
+    left: 50.5%;
+}
+
+.OBS_landscape-4 {
+    left: 75.75%;
+}
+
+.OBS_portrait-signal {
+    width: 100%;
+    height: 22.75%;
+    left: 0%;
+}
+
+.OBS_portrait-1 {
+    top: 0%;
+}
+
+.OBS_portrait-2 {
+    top: 25.75%;
+}
+
+.OBS_portrait-3 {
+    top: 51.5%;
+}
+
+.OBS_portrait-4 {
+    top: 77.25%;
+}
+
+.OBS_landscape-signals {
+    position: absolute;
+    left: 10%;
+    top: 63%;
+    width: 48%;
+    height: 5%;
+    z-index: 10;
+}
+
+.OBS_portrait-signals {
+    position: absolute;
+    left: 1%;
+    top: 49.5%;
+    width: 12%;
+    height: 20%;
+    z-index: 10;
+}
+
+#OBS_shelf {
+    position: absolute;
+    left: 0%;
+    width: 100%;
+    bottom: -5%;
+    height: 5%;
+    background-image: linear-gradient(to right bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
+}
+
+#OBS_question-zone {
+    position: absolute;
+    left: -85%;
+    width: 80%;
+    height: 22%;
+    bottom: 6.5%;
+    background-image: linear-gradient(to right bottom, #3e4042, #353638, #2c2d2e, #242424, #1b1b1b);
+    border: 0.15625vw solid white;
+}
+
+#OBS_question {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: justify;
+    font-size: 1.5625vw;
+    line-height: 1.25;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
+    color: white;
+    box-sizing: border-box;
+}
+
+.OBS_move-shelf {
+    animation-name: OBS_move-shelf;
+    animation-timing-function: ease-in-out;
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes OBS_move-shelf {
+    0% {
+        bottom: -5%;
+    }
+
+    100% {
+        bottom: 15%;
+    }
+}
+
+.OBS_move-question-zone {
+    animation-name: OBS_move-question-zone;
+    animation-timing-function: ease-in-out;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes OBS_move-question-zone {
+    0% {
+        left: -85%;
+    }
+
+    100% {
+        left: 10%;
+    }
+}
+
+#OBS_outer-line {
+    position: absolute;
+    top: calc(100% - var(--OBS_parentGap));
+    bottom: var(--OBS_parentGap);
+    left: 48.5%;
+    right: 48.5%;
+    border-radius: 100px;
+    background-color: #adadad;
+    overflow: hidden;
+}
+
+#OBS_inner-line {
+    position: absolute;
+    top: 2.5%;
+    bottom: 2.5%;
+    left: 35%;
+    right: 35%;
+    border-radius: 100px;
+    background-color: #4b4b4d;
+}
+
+.OBS_pinner {
+    position: absolute;
+    width: 100%;
+    height: var(--OBS_pinHeight);
+    border-radius: 50%;
+    background-color: #a80000;
+    border: 0.4vw solid white;
+    box-sizing: border-box;
+    z-index: 3;
+    top: calc(110% - var(--OBS_pinHeight));
+}
+
+.OBS_player {
+    position: absolute;
+    width: 35%;
+    height: var(--OBS_playerHeight);
+    top: calc(var(--OBS_parentGap) + calc(var(--OBS_pinTopGap) * var(--OBS_childRatio)) - calc((var(--OBS_playerHeight) - var(--OBS_pinHeight) * var(--OBS_childRatio)) / 2));
+    scale: 0;
+}
+
+#OBS_player-1 {
+    --OBS_pinTopGap: calc(940% / 63);
+    left: 50.5%;
+}
+
+#OBS_player-2 {
+    --OBS_pinTopGap: calc(2 * 940% / 63 + calc(4 * 100% / 63));
+    right: 50.5%;
+}
+
+#OBS_player-3 {
+    --OBS_pinTopGap: calc(3 * 940% / 63 + 2 * calc(4 * 100% / 63));
+    left: 50.5%;
+}
+
+#OBS_player-4 {
+    --OBS_pinTopGap: calc(4 * 940% / 63 + 3 * calc(4 * 100% / 63));
+    right: 50.5%;
+}
+
+.OBS_answer {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right bottom, #383a3e, #313235, #2a2a2c, #222223, #1b1b1b);
+    border: 0.15vw solid whitesmoke;
+    border-radius: 2000px;
+    z-index: 1;
+    box-sizing: border-box;
+}
+
+.OBS_name-left {
+    left: 8%;
+}
+
+.OBS_name-right {
+    right: 8%;
+}
+
+.OBS_name {
+    position: absolute;
+    top: -25%;
+    width: 45%;
+    background-color: whitesmoke;
+    border-radius: 0.5vw;
+    height: 50%;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    box-sizing: border-box;
+}
+
+.OBS_name-text {
+    color: black;
+    font-weight: bold;
+    font-size: 1.5vw;
+    text-align: center;
+}
+
+.OBS_answer-text {
+    position: absolute;
+    color: white;
+    font-weight: bold;
+    font-size: 2.5vw;
+    top: 15%;
+    left: 3%;
+    right: 3%;
+    bottom: 0%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+}
+
+@keyframes OBS_extend-outer {
+    0% {
+        top: calc(100% - var(--OBS_parentGap));
+    }
+
+    100% {
+        top: var(--OBS_parentGap);
+    }
+}
+
+@keyframes OBS_move-pinner-1 {
+    0% {
+        top: calc(110% - var(--OBS_pinHeight));
+    }
+
+    100% {
+        top: calc(940% / 63);
+    }
+}
+
+@keyframes OBS_move-pinner-2 {
+    0% {
+        top: calc(110% - var(--OBS_pinHeight));
+    }
+
+    100% {
+        top: calc(2 * 940% / 63 + calc(4 * 100% / 63));
+    }
+}
+
+@keyframes OBS_move-pinner-3 {
+    0% {
+        top: calc(110% - var(--OBS_pinHeight));
+    }
+
+    100% {
+        top: calc(3 * 940% / 63 + 2 * calc(4 * 100% / 63));
+    }
+}
+
+@keyframes OBS_move-pinner-4 {
+    0% {
+        top: calc(110% - var(--OBS_pinHeight));
+    }
+
+    100% {
+        top: calc(4 * 940% / 63 + 3 * calc(4 * 100% / 63));
+    }
+}
+
+@keyframes OBS_show-answer {
+    0% {
+        scale: 0;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
+
+.OBS_extend-outer {
+    animation-name: OBS_extend-outer;
+    animation-duration: 0.5s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.OBS_move-pinner-1 {
+    animation-name: OBS_move-pinner-1;
+    animation-delay: 0.5s;
+    animation-duration: 0.75s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.OBS_move-pinner-2 {
+    animation-name: OBS_move-pinner-2;
+    animation-delay: 0.7s;
+    animation-duration: 0.75s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.OBS_move-pinner-3 {
+    animation-name: OBS_move-pinner-3;
+    animation-delay: 0.9s;
+    animation-duration: 0.75s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.OBS_move-pinner-4 {
+    animation-name: OBS_move-pinner-4;
+    animation-delay: 1.1s;
+    animation-duration: 0.75s;
+    animation-timing-function: ease-in-out;
+    animation-fill-mode: forwards;
+}
+
+.OBS_show-answer-1 {
+    animation-name: OBS_show-answer;
+    animation-duration: 0.5s;
+    animation-delay: 1.15s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: left center;
+}
+
+.OBS_show-answer-2 {
+    animation-name: OBS_show-answer;
+    animation-duration: 0.5s;
+    animation-delay: 1.35s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: right center;
+}
+
+.OBS_show-answer-3 {
+    animation-name: OBS_show-answer;
+    animation-duration: 0.5s;
+    animation-delay: 1.55s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: left center;
+}
+
+.OBS_show-answer-4 {
+    animation-name: OBS_show-answer;
+    animation-duration: 0.5s;
+    animation-delay: 1.75s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    transform-origin: right center;
+}

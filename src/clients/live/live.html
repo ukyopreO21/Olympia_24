@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O24 - LIVE</title>
+    <link rel="icon" type="image/x-icon" href="/src/assets/Others/icon.png">
+    <link rel="stylesheet preload" as="style" href="/src/clients/live/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <video id="intro-video" width="100%">
+        <source type="video/mp4">
+    </video>
+
+    <div id="rounds-interface">
+        <span id="start-interface">
+            <div id="STR_shelf"></div>
+            <span id="STR_main-interface">
+                <span id="STR_players-data">
+                    <span id="STR_player-1" class="STR_player">
+                        <label class="STR_name" id="STR_name-1"></label>
+                        <label class="STR_point" id="STR_point-1"></label>
+                        <div class="STR_player-shelf"></div>
+                    </span>
+                    <span id="STR_player-2" class="STR_player">
+                        <label class="STR_name" id="STR_name-2"></label>
+                        <label class="STR_point" id="STR_point-2"></label>
+                        <div class="STR_player-shelf"></div>
+                    </span>
+                    <span id="STR_player-3" class="STR_player">
+                        <label class="STR_name" id="STR_name-3"></label>
+                        <label class="STR_point" id="STR_point-3"></label>
+                        <div class="STR_player-shelf"></div>
+                    </span>
+                    <span id="STR_player-4" class="STR_player">
+                        <label class="STR_name" id="STR_name-4"></label>
+                        <label class="STR_point" id="STR_point-4"></label>
+                        <div class="STR_player-shelf"></div>
+                    </span>
+                </span>
+
+                <span id="STR_question-zone">
+                    <div id="STR_image"></div>
+                    <label id="STR_question"></label>
+                    <label id="STR_time"></label>
+                </span>
+
+                <div id="STR_status-zone">
+                    <div id="STR_status"></div>
+                    <div id="STR_status-shelf"></div>
+                </div>
+            </span>
+        </span>
+        <span id="obstacle-interface">
+            <div id="OBS_print-signal"></div>
+            <div id="OBS_shelf"></div>
+            <div id="OBS_question-zone">
+                <div id="OBS_circle" class="circle"></div>
+                <div id="OBS_line" class="line"></div>
+                <div id="OBS_question"></div>
+            </div>
+        </span>
+        <span id="finish-interface">
+            <video id="FIN_video" disablePictureInPicture controlsList='nodownload'></video>
+            <span id="FIN_pack-interface">
+                <span id="FIN_pack-shelf"></span>
+                <span id="FIN_pack-20" class="FIN_pack">
+                    <span class="FIN_check-box">
+                        <span id="FIN_1.20" class="FIN_1"></span>
+                        <span id="FIN_2.20" class="FIN_2"></span>
+                        <span id="FIN_3.20" class="FIN_3"></span>
+                    </span>
+                    <span class="FIN_pack-point">20</span>
+                </span>
+                <span id="FIN_pack-30" class="FIN_pack">
+                    <span class="FIN_check-box">
+                        <span id="FIN_1.30" class="FIN_1"></span>
+                        <span id="FIN_2.30" class="FIN_2"></span>
+                        <span id="FIN_3.30" class="FIN_3"></span>
+                    </span>
+                    <span class="FIN_pack-point">30</span>
+                </span>
+            </span>
+            <div id="FIN_shelf"></div>
+            <span id="FIN_main-interface">
+                <span id="FIN_points">
+                    <span id="FIN_point-1" class="FIN_point">
+                        <label id="FIN_data-1"></label>
+                    </span>
+                    <span id="FIN_point-2" class="FIN_point">
+                        <label id="FIN_data-2"></label>
+                    </span>
+                    <span id="FIN_point-3" class="FIN_point">
+                        <label id="FIN_data-3"></label>
+                    </span>
+                    <span id="FIN_point-4" class="FIN_point">
+                        <label id="FIN_data-4"></label>
+                    </span>
+                </span>
+
+                <span id="FIN_question-zone">
+                    <label id="FIN_question"></label>
+                    <div id="FIN_circle" class="circle"></div>
+                    <div id="FIN_line" class="line"></div>
+                    <div class="FIN_star">
+                        <img id="FIN_star" width="100%" height="auto" src=""></img>
+                    </div>
+                </span>
+
+                <span id="FIN_question-status">
+                    <span id="FIN_1" class="FIN_question-list"></span>
+                    <span id="FIN_2" class="FIN_question-list"></span>
+                    <span id="FIN_3" class="FIN_question-list"></span>
+                </span>
+
+                <span id="FIN_current-point"></span>
+            </span>
+        </span>
+        <span id="sub-finish-interface">
+            <div id="SFI_shelf"></div>
+            <span id="SFI_main-interface">
+                <span id="SFI_round-name">CÂU HỎI PHỤ</span>
+                <span id="SFI_players-tab">
+                </span>
+                <span id="SFI_question-zone">
+                    <div id="SFI_circle" class="circle"></div>
+                    <div id="SFI_line" class=line></div>
+                    <label id="SFI_question"></label>
+                </span>
+            </span>
+        </span>
+    </div>
+
+    <div id="summary-interface">
+        <div id="summary-name">
+            <label id="summary-name-label"></label>
+        </div>
+        <div id="summary-point">
+            <label id="summary-point-label"></label>
+        </div>
+    </div>
+</body>
+<script type="module" src="/src/clients/live/js/main.js">
+</script>
+
+</html>

@@ -1,0 +1,507 @@
+html {
+  font-family: "Montserrat", sans-serif;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/src/assets/Others/Background.png");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  background-size: 100% 100%;
+  color: white;
+}
+
+body {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  margin: 0;
+}
+
+select option {
+  color: black;
+}
+
+::placeholder {
+  color: white;
+  opacity: 0.4;
+}
+
+::-webkit-scrollbar {
+  width: 0.4vw;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #A80000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: white;
+}
+
+button {
+  height: 2vw;
+  font-family: "Montserrat", bold;
+  font-size: 0.8vw;
+  border: 0.1041666667vw solid #A80000;
+  color: white;
+  cursor: pointer;
+  transition: border-color 0.5s ease;
+  background-color: rgba(0, 0, 0, 0.5);
+  margin-bottom: 1%;
+  z-index: 20;
+}
+
+button:hover {
+  border-color: white;
+}
+
+textarea {
+  resize: none;
+  font-size: 0.8vw;
+  font-family: "Montserrat", sans-serif;
+  border: 0.0520833333vw solid #A80000;
+  color: white;
+  outline: none;
+  box-sizing: border-box;
+  height: auto;
+  background: none;
+  text-align: justify;
+}
+
+textarea:last-line {
+  text-align: left;
+}
+
+textarea:focus {
+  border: 0.0520833333vw solid cyan;
+}
+
+#password-interface {
+  position: absolute;
+  top: 0%;
+  right: 0%;
+  left: 0%;
+  bottom: 0%;
+  background-color: aliceblue;
+  z-index: 99;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+#password-interface div {
+  position: absolute;
+  top: 40%;
+  width: 100%;
+  text-align: center;
+  font-size: 1.75vw;
+  font-weight: bold;
+  color: black;
+}
+
+#password-interface span {
+  position: absolute;
+  height: 5%;
+  width: 20%;
+}
+
+#password-interface input {
+  position: absolute;
+  left: 0%;
+  width: 60%;
+  text-align: center;
+  height: 100%;
+  box-sizing: border-box;
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.5vw;
+  border: 0.2vw solid #A80000;
+  background: none;
+}
+
+#password-interface input:focus {
+  border: orange;
+}
+
+#password-interface button {
+  border: 0.2vw solid #A80000;
+  position: absolute;
+  right: 0%;
+  width: 35%;
+  background: none;
+  cursor: pointer;
+  font-family: "Montserrat", sans-serif;
+  font-weight: bold;
+  height: 100%;
+  transition: all 0.2s ease;
+  font-size: 1.2vw;
+  color: black;
+}
+
+#password-interface button:hover {
+  background-color: orange;
+}
+
+#header {
+  padding: 0.46875vw;
+}
+
+#header label {
+  font-size: 1vw;
+}
+
+#header #database-select {
+  font-family: "Montserrat", sans-serif;
+  background: none;
+  border: 0.0520833333vw solid white;
+  outline: none;
+  color: white;
+  cursor: pointer;
+  width: 8%;
+  font-size: 0.9vw;
+}
+
+form {
+  position: absolute;
+  right: 0.5%;
+  width: 30%;
+  height: 2vw;
+}
+
+input[type=file] {
+  position: absolute;
+  padding-top: 0.8%;
+  height: 100%;
+  width: 80%;
+  font-family: Montserrat;
+  font-weight: bold;
+  font-size: 1vw;
+}
+
+input[type=submit] {
+  position: absolute;
+  right: 0;
+  height: 2vw;
+  font-weight: bold;
+  font-family: "Montserrat", bold;
+  font-size: 0.8vw;
+  border: 0.1041666667vw solid #A80000;
+  color: white;
+  cursor: pointer;
+  transition: border-color 0.5s ease;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+input[type=submit]:hover {
+  border-color: white;
+}
+
+#content {
+  margin-left: 0.5%;
+  margin-right: 0.5%;
+  flex-grow: 1;
+  overflow: auto;
+  padding-top: 0.5208333333vw;
+  padding-left: 0.78125vw;
+  padding-right: 1.18125vw;
+  border: 0.15625vw solid rgba(255, 255, 255, 0.5);
+  background: rgba(0, 0, 0, 0.5);
+}
+
+#main {
+  position: relative;
+}
+
+.round {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+}
+
+.title {
+  display: block;
+  font-size: 1vw;
+  margin: 1% 0;
+  color: orange;
+  font-weight: bolder;
+}
+
+.row {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  gap: 0.2vw;
+  margin-bottom: 0.5%;
+  display: flex;
+  align-items: center;
+}
+
+.STR_subject {
+  width: 10%;
+}
+
+.STR_question {
+  width: 45%;
+}
+
+.STR_answer {
+  width: 15%;
+}
+
+.STR_media {
+  width: 15%;
+}
+
+.STR_note {
+  width: 15%;
+}
+
+#OBS_image-url {
+  position: absolute;
+  height: 2vw;
+  width: 22vw;
+  box-sizing: border-box;
+  outline: none;
+  border: 0.0520833333vw solid #A80000;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.85vw;
+  color: white;
+  background: none;
+}
+
+#OBS_image-url:focus {
+  border: 0.0520833333vw solid cyan;
+}
+
+.OBS_image button {
+  position: absolute;
+  left: 22.5vw;
+  width: 7.5vw;
+  height: 2vw;
+}
+
+#slider-value {
+  font-size: 0.9vw;
+  height: 1vw;
+}
+
+.OBS_image #simulator {
+  width: 15vw;
+  font-size: 0.8vw;
+  height: 1vw;
+}
+
+#simulator {
+  accent-color: orange;
+}
+
+#OBS_hiders {
+  height: 30vw;
+  width: 30vw;
+  border: 0.1041666667vw solid;
+}
+
+#OBS_hiders .OBS_hider {
+  position: absolute;
+  height: inherit;
+  z-index: 1;
+  opacity: 0;
+}
+
+#OBS_image-setting {
+  width: 30vw;
+  margin-top: 1%;
+  height: 2vw;
+}
+
+#OBS_image {
+  position: absolute;
+  height: inherit;
+  z-index: 0;
+}
+
+.OBS_rows input {
+  width: 50%;
+  height: 2vw;
+  outline: none;
+  border: 0.0520833333vw solid #A80000;
+  font-family: "Montserrat", sans-serif;
+  font-size: 0.9vw;
+  color: white;
+  text-transform: uppercase;
+  text-align: right;
+  background: none;
+  gap: 2%;
+}
+
+.OBS_rows input:focus {
+  border: 0.0520833333vw solid cyan;
+}
+
+.OBS_rows {
+  top: 0%;
+  position: absolute;
+  width: 65%;
+  right: 0%;
+  text-align: right;
+}
+
+.OBS_row {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  gap: 0.2vw;
+  margin-bottom: 1%;
+}
+
+.OBS_row span {
+  display: flex;
+  align-items: center;
+  justify-content: right;
+  height: 2vw;
+  width: 10vw;
+  font-size: 0.9vw;
+}
+
+.OBS_orders {
+  position: absolute;
+  width: 55%;
+  right: 0%;
+  display: flex;
+  justify-content: center;
+}
+
+.OBS_orders table {
+  position: absolute;
+  width: 100%;
+  box-sizing: border-box;
+  font-size: 0.9vw;
+  text-align: center;
+}
+
+.OBS_orders table tr {
+  height: 2vw;
+}
+
+.OBS_orders table tr,
+.OBS_orders table th {
+  border: 0.1vw solid greenyellow;
+}
+
+.OBS_orders table input {
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  border: none;
+}
+
+.OBS_orders table input:focus {
+  border: none;
+}
+
+.OBS_col-1 {
+  width: 20%;
+}
+
+.OBS_col-2 {
+  width: 25%;
+}
+
+.OBS_col-3 {
+  width: 30%;
+}
+
+.OBS_col-4 {
+  width: 25%;
+}
+
+.OBS_question {
+  width: 36%;
+}
+
+.ACC_order-number {
+  font-size: 0.9vw;
+  width: 2%;
+}
+
+.ACC_question {
+  width: 25%;
+}
+
+.ACC_answer {
+  width: 15%;
+}
+
+.ACC_media-type {
+  width: 7.5%;
+}
+
+.ACC_note {
+  width: 15%;
+}
+
+.ACC_media {
+  width: 20%;
+}
+
+.ACC_answer-image {
+  width: 20%;
+}
+
+.FIN_order-number {
+  font-size: 0.9vw;
+  width: 8%;
+}
+
+.FIN_question {
+  width: 40%;
+}
+
+.FIN_answer {
+  width: 20%;
+}
+
+.FIN_note {
+  width: 15%;
+}
+
+.FIN_media {
+  width: 15%;
+}
+
+.SFI_order-number {
+  width: 2%;
+  font-size: 0.9vw;
+}
+
+.SFI_question {
+  width: 50%;
+}
+
+.SFI_answer {
+  width: 20%;
+}
+
+.SFI_note {
+  width: 15%;
+}
+
+.SFI_media {
+  width: 15%;
+}
+
+#footer {
+  padding: 1.0416666667vw;
+}
+
+#current-version {
+  position: absolute;
+  right: 0%;
+  bottom: 0%;
+  opacity: 0.5;
+  color: white;
+  font-size: 0.85vw;
+}

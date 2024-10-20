@@ -1,0 +1,83 @@
+#STR_player {
+    position: absolute;
+    height: 100%;
+    left: 0%;
+    width: calc(2700% / 89);
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+#STR_progress {
+    position: absolute;
+    height: 100%;
+    left: 33.63%;
+    width: calc(2700% / 89);
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+#STR_subject {
+    position: absolute;
+    height: 100%;
+    left: 71%;
+    width: 28%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    color: orange;
+}
+
+#OBS_ACC_SFI_status {
+    position: absolute;
+    width: 99%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+#FIN_star {
+    position: absolute;
+    height: 100%;
+    left: 0%;
+    width: 8%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+#FIN_star img {
+    height: 250%;
+}
+
+#FIN_player {
+    position: absolute;
+    height: 100%;
+    left: 10%;
+    width: 31%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+#FIN_pack {
+    position: absolute;
+    height: 100%;
+    left: 45%;
+    width: 24%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}
+
+#FIN_question {
+    position: absolute;
+    height: 100%;
+    right: 1%;
+    width: 25%;
+    display: flex;
+    align-items: center;
+    justify-content: right;
+}

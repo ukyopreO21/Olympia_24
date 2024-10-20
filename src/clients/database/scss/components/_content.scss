@@ -1,0 +1,296 @@
+#content {
+    margin-left: 0.5%;
+    margin-right: 0.5%;
+    flex-grow: 1;
+    overflow: auto;
+    padding-top: calc(25vw/48);
+    padding-left: calc(25vw/32);
+    padding-right: calc(calc(25vw/32) + 0.4vw);
+    border: calc(5vw/32) solid rgb(255, 255, 255, 0.5);
+    background: rgb(0, 0, 0, 0.5);
+}
+
+#main {
+    position: relative;
+}
+
+.round {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    width: 100%;
+}
+
+.title {
+    display: block;
+    font-size: 1vw;
+    margin: 1% 0;
+    color: orange;
+    font-weight: bolder;
+}
+
+.row {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    gap: 0.2vw;
+    margin-bottom: 0.5%;
+    display: flex;
+    align-items: center;
+}
+
+.STR_subject {
+    width: 10%;
+}
+
+.STR_question {
+    width: 45%;
+}
+
+.STR_answer {
+    width: 15%;
+}
+
+.STR_media {
+    width: 15%;
+}
+
+.STR_note {
+    width: 15%;
+}
+
+#OBS_image-url {
+    position: absolute;
+    height: 2vw;
+    width: 22vw;
+    box-sizing: border-box;
+    outline: none;
+    border: calc(5vw/96) solid #A80000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.85vw;
+    color: white;
+    background: none;
+}
+
+#OBS_image-url:focus {
+    border: calc(5vw/96) solid cyan;
+}
+
+.OBS_image button {
+    position: absolute;
+    left: 22.5vw;
+    width: 7.5vw;
+    height: 2vw;
+}
+
+#slider-value {
+    font-size: 0.9vw;
+    height: 1vw;
+}
+
+.OBS_image #simulator {
+    width: 15vw;
+    font-size: 0.8vw;
+    height: 1vw;
+}
+
+#simulator {
+    accent-color: orange;
+}
+
+#OBS_hiders {
+    height: 30vw;
+    width: 30vw;
+    border: calc(5vw/48) solid;
+}
+
+#OBS_hiders .OBS_hider {
+    position: absolute;
+    height: inherit;
+    z-index: 1;
+    opacity: 0;
+}
+
+#OBS_image-setting {
+    width: 30vw;
+    margin-top: 1%;
+    height: 2vw;
+}
+
+#OBS_image {
+    position: absolute;
+    height: inherit;
+    z-index: 0;
+}
+
+.OBS_rows input {
+    width: 50%;
+    height: 2vw;
+    outline: none;
+    border: calc(5vw/96) solid #A80000;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 0.9vw;
+    color: white;
+    text-transform: uppercase;
+    text-align: right;
+    background: none;
+    gap: 2%;
+}
+
+
+.OBS_rows input:focus {
+    border: calc(5vw/96) solid cyan;
+}
+
+.OBS_rows {
+    top: 0%;
+    position: absolute;
+    width: 65%;
+    right: 0%;
+    text-align: right;
+}
+
+.OBS_row {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    gap: 0.2vw;
+    margin-bottom: 1%;
+}
+
+.OBS_row span {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    height: 2vw;
+    width: 10vw;
+    font-size: 0.9vw;
+}
+
+.OBS_orders {
+    position: absolute;
+    width: 55%;
+    right: 0%;
+    display: flex;
+    justify-content: center;
+}
+
+.OBS_orders table {
+    position: absolute;
+    width: 100%;
+    box-sizing: border-box;
+    font-size: 0.9vw;
+    text-align: center;
+}
+
+.OBS_orders table tr {
+    height: 2vw;
+}
+
+.OBS_orders table tr,
+.OBS_orders table th {
+    border: 0.1vw solid greenyellow;
+}
+
+.OBS_orders table input {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: center;
+    border: none;
+}
+
+.OBS_orders table input:focus {
+    border: none;
+}
+
+.OBS_col-1 {
+    width: 20%;
+}
+
+.OBS_col-2 {
+    width: 25%;
+}
+
+.OBS_col-3 {
+    width: 30%;
+}
+
+.OBS_col-4 {
+    width: 25%;
+}
+
+.OBS_question {
+    width: 36%;
+}
+
+.ACC_order-number {
+    font-size: 0.9vw;
+    width: 2%;
+}
+
+.ACC_question {
+    width: 25%;
+}
+
+.ACC_answer {
+    width: 15%;
+}
+
+.ACC_media-type {
+    width: 7.5%;
+}
+
+.ACC_note {
+    width: 15%;
+}
+
+.ACC_media {
+    width: 20%;
+}
+
+.ACC_answer-image {
+    width: 20%;
+}
+
+.FIN_order-number {
+    font-size: 0.9vw;
+    width: 8%;
+}
+
+.FIN_question {
+    width: 40%;
+}
+
+.FIN_answer {
+    width: 20%;
+}
+
+.FIN_note {
+    width: 15%;
+}
+
+.FIN_media {
+    width: 15%;
+}
+
+.SFI_order-number {
+    width: 2%;
+    font-size: 0.9vw;
+}
+
+.SFI_question {
+    width: 50%;
+}
+
+.SFI_answer {
+    width: 20%;
+}
+
+.SFI_note {
+    width: 15%;
+}
+
+.SFI_media {
+    width: 15%;
+}

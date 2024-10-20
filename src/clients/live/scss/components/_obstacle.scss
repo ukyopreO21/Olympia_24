@@ -1,0 +1,93 @@
+#OBS_print-signal {
+    position: absolute;
+    left: 10%;
+    top: 63%;
+    width: 48%;
+    height: 5%;
+    z-index: 10;
+}
+
+.OBS_signal {
+    position: absolute;
+    width: 24.25%;
+    height: 100%;
+    top: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.15vw;
+    background-image: linear-gradient(to right bottom, #d42828, #bc2125, #a51a21, #8e141d, #780f18);
+    border: calc(5vw/96) solid white;
+    color: white;
+    font-weight: 600;
+}
+
+#OBS_shelf {
+    position: absolute;
+    left: 0%;
+    width: 100%;
+    bottom: -5%;
+    height: 5%;
+    background-image: linear-gradient(to right bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
+}
+
+#OBS_question-zone {
+    position: absolute;
+    left: -85%;
+    width: 80%;
+    height: 22%;
+    bottom: 6.5%;
+    background-image: linear-gradient(to right bottom, #3e4042, #353638, #2c2d2e, #242424, #1b1b1b);
+    border: 0.15625vw solid white;
+}
+
+#OBS_question {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    text-align: justify;
+    font-size: 1.5625vw;
+    line-height: 1.25;
+    padding-top: 1%;
+    padding-bottom: 1%;
+    padding-left: 1.5%;
+    padding-right: 1.5%;
+    color: white;
+    box-sizing: border-box;
+}
+
+.OBS_move-shelf {
+    animation-name: OBS_move-shelf;
+    animation-timing-function: ease-in-out;
+    animation-duration: 0.5s;
+    animation-delay: 0s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes OBS_move-shelf {
+    0% {
+        bottom: -5%;
+    }
+
+    100% {
+        bottom: 15%;
+    }
+}
+
+.OBS_move-question-zone {
+    animation-name: OBS_move-question-zone;
+    animation-timing-function: ease-in-out;
+    animation-duration: 0.5s;
+    animation-delay: 0.5s;
+    animation-fill-mode: forwards;
+}
+
+@keyframes OBS_move-question-zone {
+    0% {
+        left: -85%;
+    }
+
+    100% {
+        left: 10%;
+    }
+}

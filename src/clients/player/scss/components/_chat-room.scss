@@ -1,0 +1,288 @@
+#round-status {
+    position: absolute;
+    left: 1%;
+    right: 1%;
+    top: 3%;
+    font-size: 0.9vw;
+}
+
+#round-status>* {
+    background-color: rgb(0, 0, 0, 0.4);
+}
+
+#round-name {
+    color: orange;
+}
+
+#chat-room {
+    position: absolute;
+    top: 6%;
+    left: 1%;
+    right: 1%;
+    bottom: 10%;
+}
+
+#chat-box {
+    position: absolute;
+    width: 75%;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    border: calc(5vw / 96) solid orange;
+    overflow-y: auto;
+    transition: border-color 0.5s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+    color: white;
+    overflow-y: auto;
+}
+
+#chat-box div {
+    margin: 0.5% 1%;
+    font-size: 1vw;
+    word-wrap: break-word;
+    line-height: 1.5;
+}
+
+#chat-box div .chat-media {
+    max-width: 60%;
+    width: auto;
+}
+
+#user-settings {
+    position: absolute;
+    left: 77%;
+    top: 0;
+    right: 0;
+    height: 36%;
+    border: calc(5vw / 96) solid orange;
+    transition: border-color 0.5s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+
+}
+
+.settings {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    left: 2%;
+    right: 2%;
+    top: 13%;
+    bottom: 5%;
+    font-size: 1vw;
+    color: white;
+    line-height: 2.7;
+}
+
+.settings-flex-1 {
+    flex: 1;
+}
+
+#chat-room-volume-slider {
+    appearance: none;
+    width: 50%;
+    transform: translate(0, 10%);
+    accent-color: orange;
+    outline: none;
+    height: 20%;
+    border-radius: 0.95vw;
+    background-color: white;
+    opacity: 0.7;
+    transition: all 0.3s;
+}
+
+#chat-room-volume-slider::-webkit-slider-thumb,
+#chat-room-font-size-slider::-webkit-slider-thumb {
+    appearance: none;
+    width: 1vw;
+    height: 1vw;
+    border-radius: 50%;
+    background: orange;
+    cursor: pointer;
+}
+
+#chat-room-volume-slider:hover,
+#chat-room-font-size-slider:hover {
+    opacity: 1;
+}
+
+#chat-room-volume-input,
+#chat-room-font-size-input {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1vw;
+    width: 15%;
+    background: transparent;
+    border: none;
+    border-bottom: 0.1vw solid white;
+    color: white;
+    outline: none;
+}
+
+#chat-room-blank-answer {
+    font-family: "Montserrat", sans-serif;
+    font-size: 1vw;
+    width: 25%;
+    border-radius: 5px;
+    border: none;
+    background-color: white;
+}
+
+#chat-room-blank-answer:hover{
+    background-color: orange;
+    cursor: pointer;
+}
+
+#chat-room-font-size-slider {
+    appearance: none;
+    width: 30%;
+    transform: translate(0, 10%);
+    accent-color: orange;
+    outline: none;
+    height: 20%;
+    border-radius: 0.95vw;
+    background-color: white;
+    opacity: 0.7;
+    transition: all 0.3s;
+}
+
+#chat-room-demo-text {
+    margin-top: 1%;
+    border: 1px solid white;
+    padding-left: 1%;
+    padding-right: 1%;
+    line-height: 1.5;
+    position: relative;
+    height: 100%;
+    overflow-y: auto;
+    flex: 2;
+    outline: none;
+}
+
+#point-table {
+    position: absolute;
+    top: 40%;
+    left: 77%;
+    right: 0;
+    height: 50%;
+    border: calc(5vw / 96) solid orange;
+    transition: border-color 0.5s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#ready-button {
+    position: absolute;
+    left: 77%;
+    right: 0;
+    height: 6%;
+    bottom: 0%;
+    cursor: pointer;
+    border-radius: calc(25vw / 96);
+    font-family: "Montserrat", sans-serif;
+    font-weight: bold;
+    font-size: 1vw;
+    border: none;
+    color: black;
+    background-color: orange;
+    transition: color ease-in-out 0.5s, background-color ease-in-out 0.5s;
+}
+
+#ready-button.active {
+    color: white;
+    background-color: rgba(0, 0, 0, 0.7);
+    border: calc(5vw / 96) solid orange;
+}
+
+#message-input {
+    position: absolute;
+    bottom: 3%;
+    left: 1%;
+    right: 1%;
+    height: 4.5%;
+    background: transparent;
+    border: calc(5vw / 96) solid orange;
+    outline: none;
+    font-family: "Montserrat", sans-serif;
+    font-size: 0.75vw;
+    transition: border-color 0.5s ease;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+#message-input:hover,
+#chat-box:hover,
+#user-settings:hover,
+#point-table:hover {
+    border-color: white;
+}
+
+.title {
+    color: orange;
+    position: absolute;
+    top: 0.5vw;
+    font-size: 0.9vw;
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content: center;
+}
+
+.chat-room-player {
+    position: absolute;
+    width: 100%;
+    height: 17%;
+    color: white;
+}
+
+#chat-room-player-1 {
+    top: 12%;
+}
+
+#chat-room-player-2 {
+    top: 34%;
+}
+
+#chat-room-player-3 {
+    top: 56%;
+}
+
+#chat-room-player-4 {
+    top: 78%;
+}
+
+.avatar {
+    position: absolute;
+    top: 10%;
+    box-sizing: border-box;
+    height: 80%;
+    border: 0.15625vw solid white;
+    border-radius: 50%;
+    left: 0.5vw;
+    z-index: 0;
+}
+
+.ready {
+    position: absolute;
+    left: 10%;
+    height: 40%;
+    z-index: 1;
+}
+
+.chat-room-name {
+    position: absolute;
+    height: 100%;
+    left: 20%;
+    width: 50%;
+    display: flex;
+    justify-content: left;
+    align-items: center;
+    font-size: 1vw;
+}
+
+.chat-room-point {
+    position: absolute;
+    height: 100%;
+    right: 0.5vw;
+    width: 10%;
+    display: flex;
+    justify-content: right;
+    align-items: center;
+    font-size: 1.5vw;
+}

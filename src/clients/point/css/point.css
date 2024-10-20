@@ -1,0 +1,102 @@
+html {
+    overflow: hidden;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url("/src/assets/Others/Background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 100% 100%;
+    -webkit-touch-callout: none;
+    /* iOS Safari */
+    -webkit-user-select: none;
+    /* Safari */
+    -khtml-user-select: none;
+    /* Konqueror HTML */
+    -moz-user-select: none;
+    /* Old versions of Firefox */
+    -ms-user-select: none;
+    /* Internet Explorer/Edge */
+    user-select: none;
+    /* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+#name-zone {
+    position: absolute;
+    top: 0%;
+    left: 0%;
+    right: 0%;
+    height: 20%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: whitesmoke;
+}
+
+#point-zone {
+    position: absolute;
+    top: 20%;
+    left: 0%;
+    right: 0%;
+    bottom: 0%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#name {
+    font-family: "Wix Madefor Display", sans-serif;
+    font-size: 7vw;
+    font-weight: 800;
+    color: black;
+}
+
+#point {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: bold;
+    font-size: 35vw;
+    color: white;
+}
+
+#prompt-box {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    right: 30%;
+    bottom: 30%;
+    z-index: 1;
+    background-color: grey;
+    border: 0.2vw solid white;
+}
+
+.slot {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1vw;
+    z-index: 2;
+    cursor: pointer;
+    position: absolute;
+    height: 15%;
+    left: 35%;
+    right: 35%;
+    background-color: white;
+    border: 0.2vw solid black;
+    transition: 0.25s;
+}
+
+.slot:hover {
+    background-color: orange;
+}
+
+#slot-1 {
+    top: 12.5%;
+}
+
+#slot-2 {
+    top: 32.5%;
+}
+
+#slot-3 {
+    top: 52.5%;
+}
+
+#slot-4 {
+    top: 72.5%;
+}

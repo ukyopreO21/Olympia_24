@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html id="main">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Điểm - O24</title>
+    <link rel="icon" type="image/x-icon" href="/src/assets/Others/icon.png">
+    </link>
+    <link rel="stylesheet" href="/src/clients/point/css/point.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Wix+Madefor+Display:wght@400..800&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <div id="prompt-box">
+        <div id="buttons">
+            <button id="slot-1" class="slot" name="1" onclick="chooseSlot(this)">Vị trí 1</button>
+            <button id="slot-2" class="slot" name="2" onclick="chooseSlot(this)">Vị trí 2</button>
+            <button id="slot-3" class="slot" name="3" onclick="chooseSlot(this)">Vị trí 3</button>
+            <button id="slot-4" class="slot" name="4" onclick="chooseSlot(this)">Vị trí 4</button>
+        </div>
+    </div>
+    <div id="name-zone">
+        <div id="name"></div>
+    </div>
+    <div id="point-zone">
+        <div id="point"></div>
+    </div>
+</body>
+
+<script src="/src/clients/point/js/point.js">
+</script>
+
+</html>

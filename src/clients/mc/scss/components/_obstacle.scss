@@ -1,0 +1,125 @@
+#obstacle-interface {
+    color: white;
+    visibility: hidden;
+}
+
+#obstacle-interface tr,
+#obstacle-interface th,
+#obstacle-interface td {
+    border: 0.1vw solid orange;
+}
+
+#obstacle-interface table {
+    position: absolute;
+    top: 4%;
+    right: 2%;
+    width: 40%;
+    height: 35%;
+    border-collapse: collapse;
+    text-align: center;
+    font-size: 1vw;
+}
+
+#OBS_index {
+    width: 30%;
+    font-weight: bolder;
+}
+
+#OBS_num-char {
+    width: 20%;
+    font-weight: bolder;
+}
+
+#OBS_row-answer {
+    width: 50%;
+    font-weight: bolder;
+}
+
+#OBS_image-zone {
+    position: absolute;
+    top: 45%;
+    right: 2%;
+    width: 30%;
+    height: calc(572 * 100% / 1185);
+}
+
+#OBS_image-zone>* {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+}
+
+#OBS_question .label {
+    position: absolute;
+    top: 4%;
+    left: 2%;
+}
+
+#OBS_question .question-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 10%;
+    left: 2%;
+    width: 50%;
+    height: 16%;
+}
+
+#OBS_answer .label {
+    position: absolute;
+    top: 29%;
+    left: 2%;
+}
+
+#OBS_answer .answer-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 35%;
+    left: 2%;
+    width: 50%;
+    height: 8%;
+}
+
+#OBS_note .label {
+    position: absolute;
+    top: 46%;
+    left: 2%;
+}
+
+#OBS_note .note-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 52%;
+    left: 2%;
+    width: 60%;
+    height: 24%;
+}
+
+#OBS_signals .label {
+    position: absolute;
+    top: 79%;
+    left: 2%;
+}
+
+#OBS_signals .OBS_print-signal {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 85%;
+    left: 2%;
+    width: 60%;
+    height: 7%;
+}
+
+.OBS_signal {
+    position: absolute;
+    width: 25%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95vw;
+    background-image: linear-gradient(to right bottom, #df2453, #e12048, #e21d3c, #e21e2f, #e12121);
+    border: calc(5vw / 48) solid orange;
+    color: white;
+    font-weight: bold;
+    box-sizing: border-box;
+}

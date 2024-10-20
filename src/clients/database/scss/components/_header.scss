@@ -1,0 +1,53 @@
+#header {
+    padding: calc(15vw/32);
+}
+
+#header label {
+    font-size: 1vw;
+}
+
+#header #database-select {
+    font-family: 'Montserrat', sans-serif;
+    background: none;
+    border: calc(5vw/96) solid white;
+    outline: none;
+    color: white;
+    cursor: pointer;
+    width: 8%;
+    font-size: 0.9vw;
+}
+
+form {
+    position: absolute;
+    right: 0.5%;
+    width: 30%;
+    height: 2vw;
+}
+
+input[type="file"] {
+    position: absolute;
+    padding-top: 0.8%;
+    height: 100%;
+    width: 80%;
+    font-family: Montserrat;
+    font-weight: bold;
+    font-size: 1vw;
+}
+
+input[type='submit'] {
+    position: absolute;
+    right: 0;
+    height: 2vw;
+    font-weight: bold;
+    font-family: 'Montserrat', bold;
+    font-size: 0.8vw;
+    border: calc(5vw/48) solid #A80000;
+    color: white;
+    cursor: pointer;
+    transition: border-color 0.5s ease;
+    background-color: rgb(0, 0, 0, 0.5);
+}
+
+input[type='submit']:hover {
+    border-color: white;
+}

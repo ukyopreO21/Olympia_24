@@ -1,0 +1,227 @@
+#STR_main-interface {
+    position: absolute;
+    left: 5%;
+    right: 5%;
+    bottom: 5%;
+    height: 30%;
+}
+
+#STR_image {
+    position: absolute;
+    left: 10%;
+    width: 50%;
+    top: 10%;
+    height: 50%;
+}
+
+#STR_image img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border: 0.15625vw solid white;
+}
+
+#STR_question-zone {
+    position: absolute;
+    left: -85%;
+    width: 75%;
+    height: 75%;
+    bottom: 0%;
+    box-sizing: border-box;
+    background-image: linear-gradient(to right bottom, #3e4042, #353638, #2c2d2e, #242424, #1b1b1b);
+    border: 0.15625vw solid white;
+    border-radius: 0.5vw;
+}
+
+#STR_question {
+    position: absolute;
+    top: 0%;
+    right: 0%;
+    left: 0%;
+    bottom: 0%;
+    margin-left: 1%;
+    margin-right: 1%;
+    margin-top: 1%;
+    margin-bottom: 1%;
+    text-align: justify;
+    font-size: calc(45vw/32);
+    color: white;
+    line-height: 1.25;
+    box-sizing: border-box;
+}
+
+#STR_players-data {
+    position: absolute;
+    height: 75%;
+    bottom: 0%;
+    right: 0%;
+    width: 20%;
+    box-sizing: border-box;
+}
+
+.STR_player {
+    position: absolute;
+    height: 22%;
+    width: 100%;
+    right: -130%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    background-color: #313131;
+    border-bottom: none;
+    color: white;
+    border-radius: 0.5vw;
+    border: calc(5vw/48) solid #F5F5F5;
+}
+
+#STR_player-1 {
+    top: 0%;
+}
+
+#STR_player-2 {
+    top: 26%
+}
+
+#STR_player-3 {
+    top: 52%;
+}
+
+#STR_player-4 {
+    top: 78%;
+}
+
+.STR_name {
+    position: absolute;
+    left: 0;
+    font-size: calc(115vw/96);
+    margin-left: 3%;
+    font-weight: 650;
+}
+
+.STR_point {
+    position: absolute;
+    right: 0;
+    margin-right: 3%;
+    font-size: calc(125vw/96);
+    font-weight: bolder;
+}
+
+.STR_player-shelf {
+    position: absolute;
+    background-color: #F5F5F5;
+    height: 35%;
+    left: 100%;
+    width: 50%;
+}
+
+#STR_shelf {
+    position: absolute;
+    left: -50%;
+    width: 50%;
+    bottom: 13.75%;
+    height: 5%;
+    background-image: linear-gradient(to right bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
+}
+
+#STR_status {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right bottom, #3e4042, #353638, #2c2d2e, #242424, #1b1b1b);
+    font-size: 1.5vw;
+    color: white;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 0.15vw solid white;
+    border-radius: 0.5vw;
+    box-sizing: border-box;
+    z-index: 0;
+}
+
+#STR_status-shelf {
+    position: absolute;
+    top: 25%;
+    right: 100%;
+    width: 50%;
+    height: 50%;
+    z-index: -1;
+    background-image: linear-gradient(to right bottom, #b4b4b4, #c0c0c1, #cbcdcd, #d8dad9, #e5e6e4);
+}
+
+#STR_status-zone {
+    position: absolute;
+    width: 12%;
+    height: 20%;
+    top: 0;
+    left: -20%;
+}
+
+#STR_time {
+    position: absolute;
+    right: 1%;
+    bottom: 0;
+    color: white;
+    font-weight: bolder;
+    font-size: 3.125vw;
+    opacity: 0.6;
+}
+
+@keyframes STR_move-board {
+    100% {
+        left: 0%;
+    }
+}
+
+@keyframes STR_move-question-shelf {
+    100% {
+        left: 0%;
+    }
+}
+
+@keyframes STR_move-player {
+    100% {
+        right: 0%;
+    }
+}
+
+@keyframes STR_move-status {
+    100% {
+        left: 0%;
+    }
+}
+
+.STR_move-board {
+    animation-name: STR_move-board;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.STR_move-question-shelf {
+    animation-name: STR_move-question-shelf;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+}
+
+.STR_move-player {
+    animation-name: STR_move-player;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    animation-delay: 0.8s;
+}
+
+.STR_move-status {
+    animation-name: STR_move-status;
+    animation-duration: 1s;
+    animation-timing-function: ease;
+    animation-fill-mode: forwards;
+    animation-delay: 1.8s;
+}
+
+.STR_granted {
+    background-color: #A80000;
+}

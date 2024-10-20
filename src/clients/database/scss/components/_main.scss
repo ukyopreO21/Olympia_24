@@ -1,0 +1,79 @@
+html {
+    font-family: 'Montserrat', sans-serif;
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("/src/assets/Others/Background.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center;
+    background-size: 100% 100%;
+    color: white;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    margin: 0;
+}
+
+select option {
+    color: black;
+}
+
+::placeholder {
+    color: white;
+    opacity: 0.4;
+}
+
+::-webkit-scrollbar {
+    width: 0.4vw;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background-color: #A80000;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: white;
+}
+
+button {
+    height: 2vw;
+    font-family: 'Montserrat', bold;
+    font-size: 0.8vw;
+    border: calc(5vw/48) solid #A80000;
+    color: white;
+    cursor: pointer;
+    transition: border-color 0.5s ease;
+    background-color: rgb(0, 0, 0, 0.5);
+    margin-bottom: 1%;
+    z-index: 20;
+}
+
+button:hover {
+    border-color: white;
+}
+
+textarea {
+    resize: none;
+    font-size: 0.8vw;
+    font-family: 'Montserrat', sans-serif;
+    border: calc(5vw/96) solid #A80000;
+    color: white;
+    outline: none;
+    box-sizing: border-box;
+    height: auto;
+    background: none;
+    text-align: justify;
+}
+
+textarea:last-line {
+    text-align: left;
+}
+
+textarea:focus {
+    border: calc(5vw/96) solid cyan;
+}

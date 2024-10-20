@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" type="image/x-icon" href="/src/assets/Others/icon.png">
+    </link>
+    <link rel="stylesheet" href="/src/clients/mc/css/style.css">
+    <title>O24 - MC</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Chivo+Mono&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+
+<body>
+    <div id="password-interface">
+        <div>Nhập mật khẩu quản lý</div>
+        <span>
+            <input id="password-input">
+            <button onclick="sendAdminPassword()">Kiểm tra</button>
+        </span>
+    </div>
+    <label id="current-version"></label>
+
+    <div id="round-name"></div>
+    <div id="rounds-interface">
+        <div id="start-interface">
+            <div id="STR_turn">
+                <font color="orange">Lượt: </font>
+            </div>
+            <div id="STR_question-number">
+                <font color="orange">Câu hỏi số: </font>
+            </div>
+            <div id="STR_question">
+                <div class="label">Câu hỏi:</div>
+                <div class="question-content"><label></label></div>
+            </div>
+            <div id="STR_answer">
+                <div class="label">Đáp án:</div>
+                <div class="answer-content"><label></label></div>
+            </div>
+            <div id="STR_note">
+                <div class="label">Ghi chú:</div>
+                <div class="note-content"><label></label></div>
+            </div>
+        </div>
+
+        <div id="obstacle-interface">
+            <table>
+                <tr>
+                    <td id="OBS_index">HN/OTT/CNV</td>
+                    <td id="OBS_num-char">Số kí tự</td>
+                    <td id="OBS_row-answer">Đáp án</td>
+                </tr>
+                <tr id="OBS_row-1">
+                    <td>Hàng ngang 1</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="OBS_row-2">
+                    <td>Hàng ngang 2</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="OBS_row-3">
+                    <td>Hàng ngang 3</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="OBS_row-4">
+                    <td>Hàng ngang 4</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="OBS_row-5">
+                    <td>Ô trung tâm</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr id="OBS_keyword">
+                    <td>Chướng ngại vật</td>
+                    <td></td>
+                    <td></td>
+                </tr>
+            </table>
+
+            <div id="OBS_image-zone">
+                <img id="OBS_image">
+                <img class="OBS_hider" src="/src/assets/Obstacle/Hider/Obstacles_Hider1.png">
+                <img class="OBS_hider" src="/src/assets/Obstacle/Hider/Obstacles_Hider2.png">
+                <img class="OBS_hider" src="/src/assets/Obstacle/Hider/Obstacles_Hider3.png">
+                <img class="OBS_hider" src="/src/assets/Obstacle/Hider/Obstacles_Hider4.png">
+                <img class="OBS_hider" src="/src/assets/Obstacle/Hider/Obstacles_Hider5.png">
+            </div>
+
+            <div id="OBS_question">
+                <div class="label">Câu hỏi:</div>
+                <div class="question-content"><label></label></div>
+            </div>
+            <div id="OBS_answer">
+                <div class="label">Đáp án:</div>
+                <div class="answer-content"><label></label></div>
+            </div>
+            <div id="OBS_note">
+                <div class="label">Giải thích CNV:</div>
+                <div class="note-content"><label></label></div>
+            </div>
+
+            <div id="OBS_signals">
+                <div class="label">Tín hiệu CNV:</div>
+                <div class="OBS_print-signal"></div>
+            </div>
+        </div>
+
+        <div id="acceleration-interface">
+            <div id="ACC_question-number">
+                <font color="orange">Câu số: </font>
+            </div>
+
+            <div id="ACC_question">
+                <div class="label">Câu hỏi:</div>
+                <div class="question-content"><label></label></div>
+            </div>
+
+            <div id="ACC_answer">
+                <div class="label">Đáp án:</div>
+                <div class="answer-content"><label></label></div>
+            </div>
+
+            <div id="ACC_note">
+                <div class="label">Ghi chú:</div>
+                <div class="note-content"><label></label></div>
+            </div>
+
+            <div id="ACC_media">
+                <img id="ACC_image">
+                <video id="ACC_video"></video>
+            </div>
+        </div>
+
+        <div id="finish-interface">
+            <div id="FIN_turn">
+                <font color="orange">Lượt: </font>
+            </div>
+
+            <img id="FIN_star" src="/src/assets/Finish/PlayerStar.gif">
+            <div id="FIN_list">
+                <div id="FIN_question-1"></div>
+                <div id="FIN_question-2"></div>
+                <div id="FIN_question-3"></div>
+            </div>
+
+            <div id="FIN_question">
+                <div class="label">Câu hỏi:</div>
+                <div class="question-content"><label></label></div>
+            </div>
+            <div id="FIN_answer">
+                <div class="label">Đáp án:</div>
+                <div class="answer-content"><label></label></div>
+            </div>
+            <div id="FIN_note">
+                <div class="label">Ghi chú:</div>
+                <div class="note-content"><label></label></div>
+            </div>
+        </div>
+
+        <div id="sub-finish-interface">
+            <div id="SFI_question-number">
+                <font color="orange">Câu hỏi số: </font>
+            </div>
+
+            <div id="SFI_question">
+                <div class="label">Câu hỏi:</div>
+                <div class="question-content"><label></label></div>
+            </div>
+            <div id="SFI_answer">
+                <div class="label">Đáp án:</div>
+                <div class="answer-content"><label></label></div>
+            </div>
+            <div id="SFI_note">
+                <div class="label">Ghi chú:</div>
+                <div class="note-content"><label></label></div>
+            </div>
+        </div>
+    </div>
+    <div id="current-point">
+        <div class="current-point" id="current-point-1">
+            <div class="Name" id="Name1"></div>
+            <div class="Point" id="Point1"></div>
+        </div>
+        <div class="current-point" id="current-point-2">
+            <div class="Name" id="Name2"></div>
+            <div class="Point" id="Point2"></div>
+        </div>
+        <div class="current-point" id="current-point-3">
+            <div class="Name" id="Name3"></div>
+            <div class="Point" id="Point3"></div>
+        </div>
+        <div class="current-point" id="current-point-4">
+            <div class="Name" id="Name4"></div>
+            <div class="Point" id="Point4"></div>
+        </div>
+    </div>
+
+    <div id="player-answers">
+        <div class="answer" id="answer-1">
+            <div class="answer-name" id="answer-name-1"></div>
+            <div class="answer-text" id="answer-text-1"></div>
+        </div>
+        <div class="answer" id="answer-2">
+            <div class="answer-name" id="answer-name-2"></div>
+            <div class="answer-text" id="answer-text-2"></div>
+        </div>
+        <div class="answer" id="answer-3">
+            <div class="answer-name" id="answer-name-3"></div>
+            <div class="answer-text" id="answer-text-3"></div>
+        </div>
+        <div class="answer" id="answer-4">
+            <div class="answer-name" id="answer-name-4"></div>
+            <div class="answer-text" id="answer-text-4"></div>
+        </div>
+    </div>
+
+    <div id="time-left"></div>
+</body>
+
+<script type="module" src="/src/clients/mc/js/main.js"></script>
+
+</html>

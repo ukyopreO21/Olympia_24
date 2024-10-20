@@ -1,0 +1,49 @@
+#chat-zone {
+    position: absolute;
+    padding: 0.5vw;
+    top: 70%;
+    right: 1%;
+    left: 65%;
+    bottom: 3%;
+    color: white;
+    border: calc(5vw / 48) dotted grey;
+    background-color: rgba(0, 0, 0, 0.2);
+}
+
+#chat-box {
+    position: absolute;
+    top: 15%;
+    left: 0.5vw;
+    right: 0.5vw;
+    bottom: calc(0.5vw + 11%);
+    border: calc(5vw / 48) dotted grey;
+    font-size: 0.9vw;
+    line-height: 1.2;
+    overflow-y: auto;
+    line-height: 1.5;
+    padding: 1% 2%;
+}
+
+#chat-box div .chat-media {
+    max-width: 60%;
+    width: auto;
+}
+
+#chat-input {
+    position: absolute;
+    height: 10%;
+    bottom: 0.5vw;
+    left: 0.5vw;
+    right: 0.5vw;
+    background: rgb(0, 0, 0, 0.5);
+    outline: none;
+    border: calc(5vw / 48) solid white;
+    color: white;
+    font-size: 0.8vw;
+    font-family: Montserrat;
+    transition: border-color ease 0.5s;
+}
+
+.chat-input:hover {
+    border-color: #a80000;
+}

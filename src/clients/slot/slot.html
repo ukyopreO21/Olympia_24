@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O24 - Chọn vị trí</title>
+    <link rel="icon" type="image/x-icon" href="/src/assets/Others/icon.png">
+    <link rel="stylesheet" href="/src/clients/slot/css/slot.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="https://kit.fontawesome.com/c8df32ec7c.js" crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <div id="current-version"></div>
+    <div class="container">
+        <div class="slot" id="slot-1">
+            <div class="slot-number">Vị trí số 1</div>
+            <div class="info">
+                <div><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Thông tin vị trí:</div>
+                <div class="name-from-admin" id="name-1">Tên thí sinh:</div>
+                <div class="valid" id="valid-1">Vị trí đang trống: Có</div>
+            </div>
+            <button class="sign-in" name="1" onclick="selectSlot(this)" id="button-1"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;&nbsp;ĐĂNG
+                NHẬP</button>
+        </div>
+        <div class="slot" id="slot-2">
+            <div class="slot-number">Vị trí số 2</div>
+            <div class="info">
+                <div><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Thông tin vị trí:</div>
+                <div class="name-from-admin" id="name-2">Tên thí sinh:</div>
+                <div class="valid" id="valid-2">Vị trí đang trống: Có</div>
+            </div>
+            <button class="sign-in" name="2" onclick="selectSlot(this)" id="button-2"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;&nbsp;ĐĂNG
+                NHẬP</button>
+        </div>
+        <div class="slot" id="slot-3">
+            <div class="slot-number">Vị trí số 3</div>
+            <div class="info">
+                <div><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Thông tin vị trí:</div>
+                <div class="name-from-admin" id="name-3">Tên thí sinh:</div>
+                <div class="valid" id="valid-3">Vị trí đang trống: Có</div>
+            </div>
+            <button class="sign-in" name="3" onclick="selectSlot(this)" id="button-3"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;&nbsp;ĐĂNG
+                NHẬP</button>
+        </div>
+        <div class="slot" id="slot-4">
+            <div class="slot-number">Vị trí số 4</div>
+            <div class="info">
+                <div><i class="fa-solid fa-list"></i>&nbsp;&nbsp;Thông tin vị trí:</div>
+                <div class="name-from-admin" id="name-4">Tên thí sinh:</div>
+                <div class="valid" id="valid-4">Vị trí đang trống: Có</div>
+            </div>
+            <button class="sign-in" name="4" onclick="selectSlot(this)" id="button-4"><i class="fa-solid fa-right-to-bracket"></i>&nbsp;&nbsp;ĐĂNG
+                NHẬP</button>
+        </div>
+    </div>
+</body>
+
+<script type="module" src="/src/clients/slot/js/slot.js">
+</script>
+
+</html>

@@ -1,0 +1,76 @@
+#acceleration-interface {
+    font-size: 1.25vw;
+    font-weight: bold;
+    color: white;
+    visibility: hidden;
+}
+
+#ACC_question-number {
+    position: absolute;
+    top: 4%;
+    left: 2%;
+}
+
+#ACC_question .label {
+    position: absolute;
+    top: 11%;
+    left: 2%;
+}
+
+#ACC_question .question-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 17%;
+    left: 2%;
+    width: 50%;
+    height: 8%;
+}
+
+#ACC_answer .label {
+    position: absolute;
+    top: 28%;
+    left: 2%;
+}
+
+#ACC_answer .answer-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 34%;
+    left: 2%;
+    width: 50%;
+    height: 8%;
+}
+
+#ACC_note .label {
+    position: absolute;
+    top: 11%;
+    left: 55%;
+}
+
+#ACC_note .note-content {
+    border: 0.1vw solid white;
+    position: absolute;
+    top: 17%;
+    left: 55%;
+    right: 2%;
+    height: 25%;
+}
+
+#ACC_media {
+    position: absolute;
+    left: 2%;
+    right: 2%;
+    bottom: 4%;
+    top: 47%;
+    border: 0.1vw solid white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#ACC_media>* {
+    position: absolute;
+    object-fit: contain;
+    max-width: 100%;
+    max-height: 100%;
+}
